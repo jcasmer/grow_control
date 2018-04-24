@@ -33,7 +33,6 @@
 
 <script>
 import { LocalStorage } from 'quasar'
-import axios from 'axios'
 export default {
   name: 'Login',
   data () {
@@ -51,7 +50,7 @@ export default {
   },
   methods: {
     login (callback) {
-      axios.post('/login/login/', {
+      this.$axios.post('/login/login/', {
         'username': this.credentials.username,
         'password': this.credentials.password
       }).then(response => {
@@ -68,7 +67,7 @@ export default {
         LocalStorage.set('full_name', response.data['full_name'])
         LocalStorage.set('token', response.data['token'])
         LocalStorage.set('is_superuser', response.data['is_superuser'])
-        axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token') /** estructuradel token */
+        this.$axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token') /** estructuradel token */
         this.credentials.username = ''
         this.credentials.password = ''
         this.$router.push({path: '/city'})
@@ -115,8 +114,6 @@ export default {
     font-size: 18px;
     text-align: center;
     animation-name: fade-up;
-    animation-duration: 1s;
-    animation-delay: 1s;
     margin-top: 8%;
   }
 .lbl-error {
@@ -145,8 +142,6 @@ export default {
     background: linear-gradient(-90deg, #1f4399, #22c0f0);
     text-align: center;
     z-index: -10;
-    animation-name: fade-star;
-    animation-duration: 2s;
     top: 0;
     left: 0;
   }
