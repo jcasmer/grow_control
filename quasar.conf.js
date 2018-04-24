@@ -14,7 +14,7 @@ module.exports = function (ctx) {
       ctx.theme.mat ? 'roboto-font' : null,
       'material-icons'
       // 'ionicons',
-      // 'mdi',
+      // 'mdi',quas
       // 'fontawesome'
     ],
     supportIE: true,
@@ -23,6 +23,13 @@ module.exports = function (ctx) {
       remove: []
     },
     build: {
+      env: ctx.dev
+        ? { // so on dev we'll have
+          API: JSON.stringify('http://192.168.1.59:8005/api/')
+        }
+        : { // and on build (production):
+          API: JSON.stringify('http://growcontrolbackend.emtelco.co/api/')
+        },
       scopeHoisting: true,
       vueRouterMode: 'history',
       // gzip: true,
@@ -49,6 +56,7 @@ module.exports = function (ctx) {
         'QLayout',
         'QLayoutHeader',
         'QLayoutDrawer',
+        'QLayoutFooter',
         'QPageContainer',
         'QPage',
         'QToolbar',
@@ -59,14 +67,43 @@ module.exports = function (ctx) {
         'QListHeader',
         'QItem',
         'QItemMain',
-        'QItemSide'
+        'QItemSide',
+        'QTooltip',
+        'QField',
+        'QInput',
+        'QItemSeparator',
+        'QCard',
+        'QCardTitle',
+        'QCardMain',
+        'QCardMedia',
+        'QCardSeparator',
+        'QCardActions',
+        'QBreadcrumbs',
+        'QBreadcrumbsEl',
+        'QCheckbox',
+        'QTable',
+        'QTh',
+        'QTr',
+        'QTd',
+        'QTableColumns',
+        'QDialog',
+        'QSelect',
+        'QDatetime',
+        'QPageSticky',
+        'QFab',
+        'QFabAction',
+        'QModal',
+        'QToggle',
+        'QBtnGroup',
+        'QSpinner'
       ],
       directives: [
         'Ripple'
       ],
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify',
+        'Dialog'
       ]
     },
     // animations: 'all' --- includes all animations
