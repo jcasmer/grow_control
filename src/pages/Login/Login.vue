@@ -10,16 +10,16 @@
         <small>Ingresa tus datos</small>
         <div class="text-left">
           <q-input @keyup.enter="simulateProgress" v-model="credentials.username" float-label="Usuario" />
-          <div class="lbl-error" v-if="errors.username != 0">
-              {{ errors.username }}
+          <div class="lbl-error" v-if="errors.username != 0 && errors.username != null">
+              {{ errors.username[0] }}
           </div>
           <br>
           <q-input type="password" @keyup.enter="simulateProgress" v-model="credentials.password" float-label="Contraseña" />
-          <div class="lbl-error" v-if="errors.password != 0">
-              {{ errors.password }}
+          <div class="lbl-error" v-if="errors.password != 0 && errors.password != null">
+              {{ errors.password[0] }}
           </div>
-          <div class="lbl-error" v-if="errors.detail != 0">
-              {{ errors.detail }}
+          <div class="lbl-error" v-if="errors.detail != 0 && errors.detail != null">
+              {{ errors.detail[0] }}
           </div>
           </div>
           <br />
@@ -54,36 +54,26 @@ export default {
         'username': this.credentials.username,
         'password': this.credentials.password
       }).then(response => {
-        if (response.data['is_superuser'] === false) {
-          this.$router.push({path: '/login'})
-          this.$root.alertNotify('negative', 'Acceso denegado', 'red', 'thumb_down', 'top')
-          for (var i in this.credentials) {
-            this.credentials[i] = ''
-            this.errors = []
-          }
-          callback()
-        }
-        LocalStorage.set('username', this.credentials.username)
-        LocalStorage.set('full_name', response.data['full_name'])
-        LocalStorage.set('token', response.data['token'])
-        LocalStorage.set('is_superuser', response.data['is_superuser'])
-        this.$axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token') /** estructuradel token */
+        // if (response.data['is_superuser'] === false) {
+        //   this.$router.push({path: '/login'})
+        //   this.$root.alertNotify('negative', 'Acceso denegado', 'red', 'thumb_down', 'top')
+        //   for (var i in this.credentials) {
+        //     this.credentials[i] = ''
+        //     this.errors = []
+        //   }
+        //   callback()
+        // }
+        LocalStorage.setItem('username', this.credentials.username)
+        LocalStorage.setItem('full_name', response.data['full_name'])
+        LocalStorage.setItem('token', response.data['token'])
+        LocalStorage.setItem('is_superuser', response.data['is_superuser'])/** estructuradel token */
         this.credentials.username = ''
         this.credentials.password = ''
-        this.$router.push({path: '/city'})
+        this.$router.push({path: '/'})
         callback()
       }).catch(error => {
         this.errors = []
-        if (error.response.data.username) {
-          this.errors['username'] = error.response.data.username[0]
-        }
-        if (error.response.data.password) {
-          this.errors['password'] = error.response.data.password[0]
-        }
-        if (error.response.data.detail) {
-          this.errors['detail'] = error.response.data.detail[0]
-        }
-        callback()
+        this.errors = error.response.data
       })
     },
     simulateProgress (e, done) {

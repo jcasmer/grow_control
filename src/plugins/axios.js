@@ -16,6 +16,13 @@ axiosInstace.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 
+axiosInstace.interceptors.response.use(response => {
+  // Enviar el token si existe en LocalStorage
+  return response
+}, error => {
+  return Promise.reject(error)
+})
+
 export default ({ Vue }) => {
   Vue.prototype.$axios = axiosInstace
 }
