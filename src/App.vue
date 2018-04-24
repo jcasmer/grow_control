@@ -5,8 +5,42 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
+import axios from 'axios'
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token')
+  },
+  methods: {
+    alertNotify (type, message, color, icon, position, timeout) {
+      if (timeout == null || timeout === 'undefined') {
+        timeout = 2000
+      }
+      this.$q.notify({
+        message: message,
+        timeout: timeout,
+        type: type,
+        color: color,
+        icon: icon,
+        position: position
+      })
+    },
+    validateSesion: function () {
+      if (LocalStorage.get.item('is_superuser') === false || LocalStorage.get.item('is_superuser') === 'undefined' || LocalStorage.get.item('is_superuser') === null) {
+        this.$router.push({path: '/login'})
+        this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+      }
+    },
+    removeStorage () {
+      LocalStorage.remove('username')
+      LocalStorage.remove('full_name')
+      LocalStorage.remove('token')
+      LocalStorage.remove('is_staff')
+      LocalStorage.remove('reportURL')
+      LocalStorage.remove('is_superuser')
+    }
+  }
 }
 </script>
 
