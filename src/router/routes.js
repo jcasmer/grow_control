@@ -9,9 +9,16 @@ export default [
   },
   {
     path: '/login',
+    component: () => import('layouts/Login/Login'),
+    children: [
+      { path: '/login', component: () => import('pages/Login/Login') }
+    ]
+  },
+  {
+    path: '/diagnostic',
     component: () => import('layouts/default'),
     children: [
-      { path: '/login', component: () => import('pages/Login') }
+      { path: '/diagnostic', component: () => import('pages/TypeDiagnostic/Diagnostic') }
     ]
   },
   { // Always leave this as last one

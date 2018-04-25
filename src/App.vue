@@ -6,6 +6,7 @@
 
 <script>
 import { LocalStorage } from 'quasar'
+import axios from 'axios'
 export default {
   name: 'App',
   methods: {
@@ -29,13 +30,12 @@ export default {
       }
     },
     removeStorage () {
-      // LocalStorage.remove('username')
-      // LocalStorage.remove('full_name')
-      // LocalStorage.remove('token')
-      // LocalStorage.remove('is_staff')
-      // LocalStorage.remove('reportURL')
-      // LocalStorage.remove('is_superuser')
+      localStorage.clear()
     }
+  },
+  created () {
+    axios.defaults.baseURL = process.env.API
+    // axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token')
   }
 }
 </script>
