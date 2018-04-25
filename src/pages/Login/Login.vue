@@ -63,17 +63,19 @@ export default {
         //   }
         //   callback()
         // }
-        LocalStorage.setItem('username', this.credentials.username)
-        LocalStorage.setItem('full_name', response.data['full_name'])
-        LocalStorage.setItem('token', response.data['token'])
-        LocalStorage.setItem('is_superuser', response.data['is_superuser'])/** estructuradel token */
+        LocalStorage.set('username', this.credentials.username)
+        LocalStorage.set('full_name', response.data['full_name'])
+        LocalStorage.set('token', response.data['token'])
+        LocalStorage.set('is_superuser', response.data['is_superuser'])/** estructuradel token */
+        this.$axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token')
         this.credentials.username = ''
         this.credentials.password = ''
-        this.$router.push({path: '/'})
-        callback()
+        this.$router.push({path: '/diagnostic'})
       }).catch(error => {
         this.errors = []
-        this.errors = error.response.data
+        if (error.response !== undefined) {
+          this.errors = error.response.data
+        }
       })
     },
     simulateProgress (e, done) {

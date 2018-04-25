@@ -1,5 +1,4 @@
 // Configuration for your app
-
 module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
@@ -11,11 +10,11 @@ module.exports = function (ctx) {
       'app.styl'
     ],
     extras: [
-      ctx.theme.mat ? 'roboto-font' : null,
-      'material-icons'
+      ctx.theme.mat ? 'roboto-font' : true,
+      'material-icons',
+      'fontawesome'
       // 'ionicons',
-      // 'mdi',quas
-      // 'fontawesome'
+      // 'mdi',
     ],
     supportIE: true,
     vendor: {
@@ -52,13 +51,19 @@ module.exports = function (ctx) {
     },
     // framework: 'all' --- includes everything; for dev only!
     framework: {
+      i18n: 'es',
       components: [
+        'Dialog',
+        'QAlert',
+        'QField',
+        'QInput',
         'QLayout',
         'QLayoutHeader',
         'QLayoutDrawer',
-        'QLayoutFooter',
         'QPageContainer',
         'QPage',
+        'QPagination',
+        'QPageContainer',
         'QToolbar',
         'QToolbarTitle',
         'QBtn',
@@ -68,40 +73,25 @@ module.exports = function (ctx) {
         'QItem',
         'QItemMain',
         'QItemSide',
-        'QTooltip',
-        'QField',
-        'QInput',
-        'QItemSeparator',
-        'QCard',
-        'QCardTitle',
-        'QCardMain',
-        'QCardMedia',
-        'QCardSeparator',
-        'QCardActions',
-        'QBreadcrumbs',
-        'QBreadcrumbsEl',
-        'QCheckbox',
-        'QTable',
-        'QTh',
-        'QTr',
-        'QTd',
-        'QTableColumns',
-        'QDialog',
         'QSelect',
         'QDatetime',
-        'QPageSticky',
-        'QFab',
-        'QFabAction',
-        'QModal',
-        'QToggle',
-        'QBtnGroup',
-        'QSpinner'
+        'QTable',
+        'QTableColumns',
+        'QTabs',
+        'QTab',
+        'QTabPane',
+        'QRouteTab',
+        'QRadio',
+        'QOptionGroup'
       ],
       directives: [
-        'Ripple'
+        'Ripple',
+        'GoBack'
       ],
       // Quasar plugins
       plugins: [
+        'LocalStorage',
+        'SessionStorage',
         'Notify',
         'Dialog'
       ]
@@ -166,8 +156,7 @@ module.exports = function (ctx) {
         // win32metadata: { ... }
       }
     },
-
     // leave this here for Quasar CLI
-    starterKit: '1.0.2'
+    starterKit: '1.0.0'
   }
 }
