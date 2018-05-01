@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row xl-gutter" id="form-diagnostic">
         <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Diagnóstico" v-model="fields.name" placeholder="Ingrese el diagnóstico" max-length="100"/>
+          <q-input float-label="Diagnóstico" v-model="fields.name" placeholder="Ingrese el diagnóstico" maxlength="150"/>
           <div class="lbl-error" v-if="errors.name != 0 && errors.name != null">
               {{ errors.name[0] }}
           </div>
@@ -19,7 +19,7 @@
         </div>
       </div>
       <br><br>
-      <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:url="urlTable">
+      <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:url="urlTable" v-bind:editUrl="editUrlTable">
       </grid-table>
     </div>
   </q-page>
@@ -63,10 +63,7 @@ export default {
       ],
       nameTable: 'Tipos Diagnósticos',
       urlTable: '/type-diagnostic-full-data/',
-      serverPagination: {
-        page: 1,
-        rowsNumber: 10
-      }
+      editUrlTable: '/type-diagnostic/'
     }
   },
   methods: {
@@ -80,6 +77,7 @@ export default {
       let self = this
       this.$axios.post('/type-diagnostic/', self.fields).then(response => {
         self.clearValues()
+        this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
         this.$root.alertNotify('positive', 'Se ha registrado el diagnóstico exitosamente', 'green', 'thumb_up', 'top')
       }).catch(error => {
         if (error.response !== undefined) {
@@ -87,9 +85,9 @@ export default {
             this.errors[i] = ''
           }
           this.errors = error.response.data
+          this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
         }
       })
-      this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
     }
   }
 }
