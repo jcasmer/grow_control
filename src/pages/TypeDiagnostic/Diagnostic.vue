@@ -18,13 +18,20 @@
           <q-btn loader @click="registerDiagnostic" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
         </div>
       </div>
+      <br><br>
+      <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:url="urlTable">
+      </grid-table>
     </div>
   </q-page>
 </template>
 
 <script>
+import GridTable from 'components/Grid/table.vue'
 export default {
   name: 'Diagnostic',
+  components: {
+    GridTable
+  },
   data () {
     return {
       fields: {
@@ -48,7 +55,18 @@ export default {
           label: 'Inactivo',
           value: false
         }
-      ]
+      ],
+      columns: [
+        { name: 'id', label: '#', field: 'id', sortable: true },
+        { name: 'name', label: 'Diagnóstico', field: 'name', sortable: true },
+        { name: 'is_active', label: 'Estado', field: 'is_active', sortable: true }
+      ],
+      nameTable: 'Tipos Diagnósticos',
+      urlTable: '/type-diagnostic-full-data/',
+      serverPagination: {
+        page: 1,
+        rowsNumber: 10
+      }
     }
   },
   methods: {
@@ -71,6 +89,7 @@ export default {
           this.errors = error.response.data
         }
       })
+      this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
     }
   }
 }
