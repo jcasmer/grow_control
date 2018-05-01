@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div class="container">
-      <div class="row xl-gutter" id="form-city">
+      <div class="row xl-gutter" id="form-diagnostic">
         <div class="col-lg-4 col-xs-12 padding">
           <q-input float-label="Diagnóstico" v-model="fields.name" placeholder="Ingrese el diagnóstico" max-length="100"/>
           <div class="lbl-error" v-if="errors.name != 0 && errors.name != null">
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'Diagnostic',
   data () {
@@ -61,7 +60,7 @@ export default {
     },
     registerDiagnostic (event, done) {
       let self = this
-      axios.post('/type-diagnostic/', self.fields).then(response => {
+      this.$axios.post('/type-diagnostic/', self.fields).then(response => {
         self.clearValues()
         this.$root.alertNotify('positive', 'Se ha registrado el diagnóstico exitosamente', 'green', 'thumb_up', 'top')
       }).catch(error => {
@@ -77,5 +76,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.container{
+  width: 90%;
+  margin: auto;
+}
 </style>
