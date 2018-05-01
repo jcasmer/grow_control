@@ -74,6 +74,9 @@ export default {
   },
   methods: {
     openURL
+  },
+  created () {
+    this.$root.validateSesion()
   }
 }
 </script>

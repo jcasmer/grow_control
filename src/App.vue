@@ -26,7 +26,7 @@ export default {
     validateSesion: function () {
       if (LocalStorage.get.item('is_superuser') === false || LocalStorage.get.item('is_superuser') === 'undefined' || LocalStorage.get.item('is_superuser') === null) {
         this.$router.push({path: '/login'})
-        this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+        this.$root.alertNotify('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
       }
     },
     removeStorage () {
@@ -35,7 +35,7 @@ export default {
   },
   created () {
     axios.defaults.baseURL = process.env.API
-    // axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token')
+    axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token')
   }
 }
 </script>
