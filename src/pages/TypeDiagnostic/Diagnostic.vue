@@ -19,7 +19,9 @@
         </div>
       </div>
       <br><br>
-      <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:url="urlTable" v-bind:editUrl="editUrlTable">
+      <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:url="urlTable"
+        v-bind:editUrl="editUrlTable" v-bind:visibleColumns="visibleColumns"
+      >
       </grid-table>
     </div>
   </q-page>
@@ -61,9 +63,10 @@ export default {
         { name: 'name', label: 'Diagnóstico', field: 'name', sortable: true },
         { name: 'is_active', label: 'Estado', field: 'is_active', sortable: true }
       ],
+      visibleColumns: ['name', 'is_active'],
       nameTable: 'Tipos Diagnósticos',
       urlTable: '/type-diagnostic-full-data/',
-      editUrlTable: '/type-diagnostic/'
+      editUrlTable: 'diagnostic/'
     }
   },
   methods: {
@@ -97,5 +100,8 @@ export default {
 .container{
   width: 90%;
   margin: auto;
+}
+.lbl-error {
+  color: #ec2f2f !important;
 }
 </style>
