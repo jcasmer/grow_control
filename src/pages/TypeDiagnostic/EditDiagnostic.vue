@@ -54,6 +54,38 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    setValue: function (value) {
+      for (var form in this.fields) {
+        this.$set(this.fields, form, value[form])
+      }
+    },
+    getData: function (url) {
+      url = url + this.$route.params.id + '/'
+      this.$axios.get(url
+      ).then(response => {
+        this.setValue(response.data)
+      }
+      ).catch(error => {
+        error = null
+      })
+    },
+    updateDiagnostic (event, done) {
+      let self = this
+      this.$axios.put('/type-diagnostic/' + this.$route.params.id + '/', this.fields).then(response => {
+        self.$root.alertNotify('positive', 'Se actualizó el diagnostico correctamente', 'green', 'thumb_up', 'top', 2000)
+        self.$router.go(-1)
+      }).catch(error => {
+        for (var i in this.error) {
+          this.errors[i] = ''
+        }
+        this.errors = error.response.data
+      })
+    }
+  },
+  created: function () {
+    this.getData('/type-diagnostic/')
   }
 }
 </script>

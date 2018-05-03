@@ -18,7 +18,7 @@ export default [
     path: '/diagnostic',
     component: () => import('layouts/default'),
     children: [
-      { path: '/diagnostic', component: () => import('pages/TypeDiagnostic/Diagnostic') },
+      { path: '/diagnostic', name: 'diagnostic', component: () => import('pages/TypeDiagnostic/Diagnostic') },
       { path: '/diagnostic/:id', component: () => import('pages/TypeDiagnostic/EditDiagnostic') }
     ]
   },
