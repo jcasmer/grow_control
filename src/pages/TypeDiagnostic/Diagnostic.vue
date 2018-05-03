@@ -61,7 +61,7 @@ export default {
       columns: [
         { name: 'id', label: '#', field: 'id', sortable: true },
         { name: 'name', label: 'Diagnóstico', field: 'name', sortable: true },
-        { name: 'is_active', label: 'Estado', field: 'is_active', sortable: true }
+        { name: 'is_active', label: 'Estado', field: 'is_active_display', sortable: true }
       ],
       visibleColumns: ['name', 'is_active'],
       nameTable: 'Tipos Diagnósticos',
