@@ -1,4 +1,5 @@
 <template>
+<div class="col-12 padding">
   <q-table ref="grwTable"
     :title="nameTable"
     :data="serverData"
@@ -8,7 +9,23 @@
     :loading= loading
     separator = "horizontal"
     @request="request"
-  />
+    :selection="selection"
+    :selected.sync="selected"
+    :visible-columns="visibleColumns"
+  >
+    <template slot="top-selection" slot-scope="props">
+      <div class="col">
+        <q-tooltip>Editar registro seleccionado</q-tooltip>
+        <q-btn color="positive" flat round  icon="far fa-edit" @click="editRow" tooltip="Editar registro seleccionado" />
+      </div>
+      <br>
+      <div class="col" >
+        <q-tooltip>Eliminar registro seleccionado</q-tooltip>
+        <q-btn color="negative" flat round delete icon="delete" @click="deleteRow" tooltip="Eliminar registro seleccionado" />
+      </div>
+    </template>
+  </q-table>
+</div>
 </template>
 
 <script>
@@ -20,12 +37,15 @@ export default {
       serverPagination: {
         page: 1,
         rowsNumber: 10
-      }
+      },
+      selection: 'single',
+      selected: []
     }
   },
   props: {
     columns: Array,
     serverData: Object,
+    visibleColumns: Array,
     filter: '',
     nameTable: null,
     url: '',
@@ -57,6 +77,34 @@ export default {
         // we tell QTable to exit the "loading" state
         this.$root.alertNotify('negative', String(error), 'red', 'thumb_down', 'top', 3000)
         this.loading = false
+        this.selected = []
+      })
+    },
+    editRow () {
+      let urlEdit = this.editUrl + this.selected[0].id
+      this.$router.push({path: urlEdit})
+    },
+    deleteRow () {
+      let deleteUrl = this.url + this.selected[0].id
+      this.$q.dialog({
+        title: '¿Eliminar registro?',
+        message: 'Está seguro que desea eliminar este registro',
+        ok: 'Aceptar',
+        cancel: 'Cancelar'
+      }).then(() => {
+        this.$axios.delete(deleteUrl
+        ).then(response => {
+          this.request({ pagination: this.serverPagination, filter: this.filter })
+          this.selected = []
+          this.$root.alertNotify('positive', 'Se ha eliminado el registro exitosamente.', 'green', 'thumb_up', 'top')
+        }).catch(error => {
+          if (error.response.data.error) {
+            this.$root.alertNotify('negative', error.response.data.error, 'red', 'thumb_down', 'top', 3000)
+          } else {
+            this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', 'thumb_down', 'top')
+          }
+        })
+      }).catch(() => {
       })
     }
   },
@@ -67,14 +115,8 @@ export default {
       filter: this.filter
     })
   }
-  // updated () {
-  //   this.request({
-  //     pagination: this.serverPagination,
-  //     filter: this.filter
-  //   })
-  // }
 }
 </script>
 
-<style>
+<style scoped>
 </style>
