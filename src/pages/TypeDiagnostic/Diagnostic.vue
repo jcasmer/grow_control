@@ -61,9 +61,13 @@ export default {
       columns: [
         { name: 'id', label: '#', field: 'id', sortable: true },
         { name: 'name', label: 'Diagnóstico', field: 'name', sortable: true },
-        { name: 'is_active', label: 'Estado', field: 'is_active_display', sortable: true }
+        { name: 'is_active', label: 'Estado', field: 'is_active_display', sortable: true },
+        { name: 'created_at', label: 'Fecha Creación', field: 'created_at', sortable: true },
+        { name: 'created_by', label: 'Creado Por', field: 'created_by', sortable: true },
+        { name: 'updated_at', label: 'Fecha Modificación', field: 'updated_at', sortable: true },
+        { name: 'updated_by', label: 'Modificado Por', field: 'updated_by', sortable: true }
       ],
-      visibleColumns: ['name', 'is_active'],
+      visibleColumns: ['name', 'is_active', 'created_at', 'created_by', 'updated_at', 'updated_by'],
       nameTable: 'Tipos Diagnósticos',
       urlTable: '/type-diagnostic-full-data/',
       editUrlTable: 'diagnostic/'

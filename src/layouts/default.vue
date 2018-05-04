@@ -26,6 +26,7 @@
     <q-layout-drawer
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+      no-hide-on-route-change="true"
     >
       <q-list
         no-border
