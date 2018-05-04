@@ -12,6 +12,9 @@
     :selection="selection"
     :selected.sync="selected"
     :visible-columns="visibleColumns"
+    :rows-per-page-options="rowPageOptions"
+    :rows-per-page-label="rowPageLabel"
+    no-data-label="No se encontraron registros"
   >
     <template slot="top-selection" slot-scope="props">
       <div class="col">
@@ -36,10 +39,12 @@ export default {
       loading: false,
       serverPagination: {
         page: 1,
-        rowsNumber: 10
+        rowsNumber: 0
       },
       selection: 'single',
-      selected: []
+      selected: [],
+      rowPageOptions: [0],
+      rowPageLabel: ''
     }
   },
   props: {
@@ -60,7 +65,7 @@ export default {
 
       // we do the server data fetch, based on pagination and filter received
       // (using Axios here, but can be anything; parameters vary based on backend implementation)
-
+      this.url = this.url + `?page=${pagination.page}`
       // .get(`/data/${pagination.page}?sortBy=${pagination.sortBy}&ordering=${pagination.descending}&filter=${filter}`)
       this.$axios.get(this.url).then(response => {
         // updating pagination to reflect in the UI
