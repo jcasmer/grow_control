@@ -40,7 +40,6 @@
         </q-item>
       </q-list>
     </q-layout-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>

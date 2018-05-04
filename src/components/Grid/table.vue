@@ -6,17 +6,18 @@
     :columns="columns"
     :filter="filter"
     row-key="id"
-    :loading= loading
+    :loading="loading"
     separator = "horizontal"
     @request="request"
     :selection="selection"
     :selected.sync="selected"
     :visible-columns="visibleColumns"
     no-data-label="No se encontraron registros"
+    :pagination.sync="serverPagination"
   >
     <template slot="top-selection" slot-scope="props">
       <div class="col">
-        <span>Registro selecionado</span>
+        <span>Acciones registro selecionado</span>
         <q-btn color="positive" flat round  icon="far fa-edit" @click="editRow" tooltip="Editar registro seleccionado">
           <q-tooltip>Editar registro seleccionado</q-tooltip>
         </q-btn>
@@ -37,7 +38,7 @@ export default {
       loading: false,
       serverPagination: {
         page: 1,
-        rowsNumber: 0
+        rowsNumber: 10
       },
       selection: 'single',
       selected: [],
@@ -71,7 +72,7 @@ export default {
         // we also set (or update) rowsNumber
         // then we update the rows with the fetched ones
         this.serverData = response.data.results
-        this.serverPagination.rowsNumber = response.data.num_pages
+        this.serverPagination.rowsNumber = response.data.count
         this.serverPagination.page = response.data.current_page
         // finally we tell QTable to exit the "loading" state
         this.loading = false
@@ -79,7 +80,7 @@ export default {
         // there's an error... do SOMETHING
         // we tell QTable to exit the "loading" state
         if (error.response.data.error) {
-          this.$root.alertNotify('negative', String(error.response.data.error), 'red', 'thumb_down', 'top', 3000)
+          this.$root.alertNotify('negative', String(error.response.data.error), 'red', '', 'top', 3000)
         }
         this.loading = false
         this.selected = []
@@ -101,12 +102,12 @@ export default {
         ).then(response => {
           this.request({ pagination: this.serverPagination, filter: this.filter })
           this.selected = []
-          this.$root.alertNotify('positive', 'Se ha eliminado el registro exitosamente.', 'green', 'thumb_up', 'top')
+          this.$root.alertNotify('positive', 'Se ha eliminado el registro exitosamente.', 'green', '', 'top')
         }).catch(error => {
           if (error.response.data.error) {
-            this.$root.alertNotify('negative', error.response.data.error, 'red', 'thumb_down', 'top', 3000)
+            this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 3000)
           } else {
-            this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', 'thumb_down', 'top')
+            this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', '', 'top')
           }
         })
       }).catch(() => {

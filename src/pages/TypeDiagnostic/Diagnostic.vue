@@ -85,7 +85,7 @@ export default {
       this.$axios.post('/type-diagnostic/', self.fields).then(response => {
         self.clearValues()
         this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
-        this.$root.alertNotify('positive', 'Se ha registrado el diagnóstico exitosamente', 'green', 'thumb_up', 'top')
+        this.$root.alertNotify('positive', 'Se ha registrado el diagnóstico exitosamente', 'green', '', 'top')
       }).catch(error => {
         if (error.response !== undefined) {
           for (var i in this.fields) {
