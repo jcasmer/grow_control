@@ -20,7 +20,7 @@
       </div>
       <br><br>
       <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"
-        v-bind:editUrl="editUrlTable" v-bind:visibleColumns="visibleColumns"
+        v-bind:editUrl="editUrlTable" v-bind:visibleColumns="visibleColumns" v-bind:filterFields="filterFields"
       >
       </grid-table>
     </div>
@@ -68,6 +68,13 @@ export default {
         { name: 'updated_by', label: 'Modificado Por', field: 'updated_by', sortable: true }
       ],
       visibleColumns: ['name', 'is_active', 'created_at', 'created_by', 'updated_at', 'updated_by'],
+      filterFields: {
+        'name__icontains': '',
+        'created_by__username__icontains': '',
+        'created_at': '',
+        'updated_at': '',
+        'updated_by__username__icontains': ''
+      },
       nameTable: 'Tipos Diagnósticos',
       urlTable: '/type-diagnostic-full-data/',
       editUrlTable: 'diagnostic/'

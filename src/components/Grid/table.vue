@@ -14,6 +14,7 @@
     :visible-columns="visibleColumns"
     no-data-label="No se encontraron registros"
     :pagination.sync="serverPagination"
+    color="secondary"
   >
     <template slot="top-selection" slot-scope="props">
       <div class="col">
@@ -26,6 +27,21 @@
         </q-btn>
       </div>
     </template>
+    <div slot="pagination" slot-scope="props" class="row flex-center q-py-sm">
+      <q-btn
+        round dense size="sm" icon="undo" color="secondary" class="q-mr-sm"
+        :disable="props.isFirstPage"
+        @click="props.prevPage"
+      />
+      <div class="q-mr-sm" style="font-size: small">
+        Página {{ props.pagination.page }} de {{ props.pagination.pagesNumber }}
+      </div>
+      <q-btn
+        round dense size="sm" icon="redo" color="secondary"
+        :disable="props.isLastPag"
+        @click="props.nextPage"
+      />
+    </div>
   </q-table>
 </div>
 </template>
@@ -35,10 +51,12 @@ export default {
   name: 'GrowTable',
   data () {
     return {
+      filter: '',
       loading: false,
       serverPagination: {
         page: 1,
-        rowsNumber: 10
+        rowsNumber: 10,
+        pagesNumber: 0
       },
       selection: 'single',
       selected: [],
@@ -49,24 +67,27 @@ export default {
   props: {
     columns: Array,
     visibleColumns: Array,
-    filter: String,
+    filterParent: String,
     nameTable: null,
     urlParent: String,
     editUrl: String,
     btnDelete: true,
-    btnEdit: true
+    btnEdit: true,
+    filterFields: Object
   },
   methods: {
     request ({ pagination, filter }) {
       // we set QTable to "loading" state
       this.loading = true
-
-      // we do the server data fetch, based on pagination and filter received
-      // (using Axios here, but can be anything; parameters vary based on backend implementation)
-      let urlData = ''
-      urlData = this.url + `?page=${pagination.page}`
-      // .get(`/data/${pagination.page}?sortBy=${pagination.sortBy}&ordering=${pagination.descending}&filter=${filter}`)
-      this.$axios.get(urlData).then(response => {
+      this.selected = []
+      let ordering = `${pagination.descending}` === 'true' && `${pagination.descending}` !== null ? String(`${pagination.sortBy}`) : '-' + String(`${pagination.sortBy}`)
+      let parameters = {
+        page: `${pagination.page}`,
+        ordering: ordering
+      }
+      this.$axios.get(this.url, {
+        params: parameters
+      }).then(response => {
         // updating pagination to reflect in the UI
         this.serverPagination = pagination
         // we also set (or update) rowsNumber
@@ -74,6 +95,7 @@ export default {
         this.serverData = response.data.results
         this.serverPagination.rowsNumber = response.data.count
         this.serverPagination.page = response.data.current_page
+        this.serverPagination.pagesNumber = response.data.num_pages
         // finally we tell QTable to exit the "loading" state
         this.loading = false
       }).catch(error => {
