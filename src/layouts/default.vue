@@ -26,7 +26,7 @@
     <q-layout-drawer
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
-      no-hide-on-route-change="true"
+      :no-hide-on-route-change="hideRoute"
     >
       <q-list
         no-border
@@ -40,7 +40,6 @@
         </q-item>
       </q-list>
     </q-layout-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -54,7 +53,8 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: false,
+      hideRoute: true
     }
   },
   methods: {

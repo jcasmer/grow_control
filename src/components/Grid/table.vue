@@ -6,27 +6,42 @@
     :columns="columns"
     :filter="filter"
     row-key="id"
-    :loading= loading
+    :loading="loading"
     separator = "horizontal"
     @request="request"
     :selection="selection"
     :selected.sync="selected"
     :visible-columns="visibleColumns"
-    :rows-per-page-options="rowPageOptions"
-    :rows-per-page-label="rowPageLabel"
     no-data-label="No se encontraron registros"
+    :pagination.sync="serverPagination"
+    color="secondary"
   >
     <template slot="top-selection" slot-scope="props">
       <div class="col">
-        <q-tooltip>Editar registro seleccionado</q-tooltip>
-        <q-btn color="positive" flat round  icon="far fa-edit" @click="editRow" tooltip="Editar registro seleccionado" />
-      </div>
-      <br>
-      <div class="col" >
-        <q-tooltip>Eliminar registro seleccionado</q-tooltip>
-        <q-btn color="negative" flat round delete icon="delete" @click="deleteRow" tooltip="Eliminar registro seleccionado" />
+        <span>Acciones registro selecionado</span>
+        <q-btn color="positive" flat round  icon="far fa-edit" @click="editRow" tooltip="Editar registro seleccionado">
+          <q-tooltip>Editar registro seleccionado</q-tooltip>
+        </q-btn>
+        <q-btn color="negative" flat round delete icon="delete" @click="deleteRow" tooltip="Eliminar registro seleccionado" >
+          <q-tooltip>Eliminar registro seleccionado</q-tooltip>
+        </q-btn>
       </div>
     </template>
+    <div slot="bottom" slot-scope="props" class="row flex-center q-py-sm">
+      <q-btn
+        round dense size="sm" icon="undo" color="primary" class="q-mr-sm"
+        :disable="props.isFirstPage"
+        @click="props.prevPage"
+      />
+      <div class="q-mr-sm" style="font-size: small">
+        Página {{ props.pagination.page }} de {{ props.pagination.pagesNumber }}
+      </div>
+      <q-btn
+        round dense size="sm" icon="redo" color="primary"
+        :disable="props.pagination.page === props.pagination.pagesNumber"
+        @click="props.nextPage"
+      />
+    </div>
   </q-table>
 </div>
 </template>
@@ -36,51 +51,59 @@ export default {
   name: 'GrowTable',
   data () {
     return {
+      filter: '',
       loading: false,
       serverPagination: {
         page: 1,
-        rowsNumber: 0
+        rowsNumber: 10,
+        pagesNumber: 0
       },
       selection: 'single',
       selected: [],
-      rowPageOptions: [0],
-      rowPageLabel: ''
+      url: '',
+      serverData: []
     }
   },
   props: {
     columns: Array,
-    serverData: Object,
     visibleColumns: Array,
-    filter: '',
+    filterParent: String,
     nameTable: null,
-    url: '',
-    editUrl: '',
+    urlParent: String,
+    editUrl: String,
     btnDelete: true,
-    btnEdit: true
+    btnEdit: true,
+    filterFields: Object
   },
   methods: {
     request ({ pagination, filter }) {
       // we set QTable to "loading" state
       this.loading = true
-
-      // we do the server data fetch, based on pagination and filter received
-      // (using Axios here, but can be anything; parameters vary based on backend implementation)
-      this.url = this.url + `?page=${pagination.page}`
-      // .get(`/data/${pagination.page}?sortBy=${pagination.sortBy}&ordering=${pagination.descending}&filter=${filter}`)
-      this.$axios.get(this.url).then(response => {
+      this.selected = []
+      let ordering = `${pagination.descending}` === 'true' && `${pagination.descending}` !== null ? String(`${pagination.sortBy}`) : '-' + String(`${pagination.sortBy}`)
+      let parameters = {
+        page: `${pagination.page}`,
+        ordering: ordering
+      }
+      this.$axios.get(this.url, {
+        params: parameters
+      }).then(response => {
         // updating pagination to reflect in the UI
         this.serverPagination = pagination
         // we also set (or update) rowsNumber
         // then we update the rows with the fetched ones
         this.serverData = response.data.results
-        this.serverPagination.rowsNumber = response.data.num_pages
+        this.serverPagination.rowsNumber = response.data.count
         this.serverPagination.page = response.data.current_page
+        this.serverPagination.pagesNumber = response.data.num_pages
         // finally we tell QTable to exit the "loading" state
         this.loading = false
       }).catch(error => {
         // there's an error... do SOMETHING
         // we tell QTable to exit the "loading" state
-        this.$root.alertNotify('negative', String(error), 'red', 'thumb_down', 'top', 3000)
+        if (error.response.data.error) {
+          this.$root.alertNotify('negative', String(error.response.data.error), 'red', '', 'top', 3000)
+        }
         this.loading = false
         this.selected = []
       })
@@ -101,12 +124,12 @@ export default {
         ).then(response => {
           this.request({ pagination: this.serverPagination, filter: this.filter })
           this.selected = []
-          this.$root.alertNotify('positive', 'Se ha eliminado el registro exitosamente.', 'green', 'thumb_up', 'top')
+          this.$root.alertNotify('positive', 'Se ha eliminado el registro exitosamente.', 'green', '', 'top')
         }).catch(error => {
           if (error.response.data.error) {
-            this.$root.alertNotify('negative', error.response.data.error, 'red', 'thumb_down', 'top', 3000)
+            this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 3000)
           } else {
-            this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', 'thumb_down', 'top')
+            this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', '', 'top')
           }
         })
       }).catch(() => {
@@ -115,6 +138,7 @@ export default {
   },
   mounted () {
     // once mounted, we need to trigger the initial server data fetch
+    this.url = this.urlParent
     this.request({
       pagination: this.serverPagination,
       filter: this.filter
