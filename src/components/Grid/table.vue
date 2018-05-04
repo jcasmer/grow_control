@@ -12,19 +12,17 @@
     :selection="selection"
     :selected.sync="selected"
     :visible-columns="visibleColumns"
-    :rows-per-page-options="rowPageOptions"
-    :rows-per-page-label="rowPageLabel"
     no-data-label="No se encontraron registros"
   >
     <template slot="top-selection" slot-scope="props">
       <div class="col">
-        <q-tooltip>Editar registro seleccionado</q-tooltip>
-        <q-btn color="positive" flat round  icon="far fa-edit" @click="editRow" tooltip="Editar registro seleccionado" />
-      </div>
-      <br>
-      <div class="col" >
-        <q-tooltip>Eliminar registro seleccionado</q-tooltip>
-        <q-btn color="negative" flat round delete icon="delete" @click="deleteRow" tooltip="Eliminar registro seleccionado" />
+        <span>Registro selecionado</span>
+        <q-btn color="positive" flat round  icon="far fa-edit" @click="editRow" tooltip="Editar registro seleccionado">
+          <q-tooltip>Editar registro seleccionado</q-tooltip>
+        </q-btn>
+        <q-btn color="negative" flat round delete icon="delete" @click="deleteRow" tooltip="Eliminar registro seleccionado" >
+          <q-tooltip>Eliminar registro seleccionado</q-tooltip>
+        </q-btn>
       </div>
     </template>
   </q-table>
@@ -43,18 +41,17 @@ export default {
       },
       selection: 'single',
       selected: [],
-      rowPageOptions: [0],
-      rowPageLabel: ''
+      url: '',
+      serverData: []
     }
   },
   props: {
     columns: Array,
-    serverData: Object,
     visibleColumns: Array,
-    filter: '',
+    filter: String,
     nameTable: null,
-    url: '',
-    editUrl: '',
+    urlParent: String,
+    editUrl: String,
     btnDelete: true,
     btnEdit: true
   },
@@ -65,9 +62,10 @@ export default {
 
       // we do the server data fetch, based on pagination and filter received
       // (using Axios here, but can be anything; parameters vary based on backend implementation)
-      this.url = this.url + `?page=${pagination.page}`
+      let urlData = ''
+      urlData = this.url + `?page=${pagination.page}`
       // .get(`/data/${pagination.page}?sortBy=${pagination.sortBy}&ordering=${pagination.descending}&filter=${filter}`)
-      this.$axios.get(this.url).then(response => {
+      this.$axios.get(urlData).then(response => {
         // updating pagination to reflect in the UI
         this.serverPagination = pagination
         // we also set (or update) rowsNumber
@@ -80,7 +78,9 @@ export default {
       }).catch(error => {
         // there's an error... do SOMETHING
         // we tell QTable to exit the "loading" state
-        this.$root.alertNotify('negative', String(error), 'red', 'thumb_down', 'top', 3000)
+        if (error.response.data.error) {
+          this.$root.alertNotify('negative', String(error.response.data.error), 'red', 'thumb_down', 'top', 3000)
+        }
         this.loading = false
         this.selected = []
       })
@@ -115,6 +115,7 @@ export default {
   },
   mounted () {
     // once mounted, we need to trigger the initial server data fetch
+    this.url = this.urlParent
     this.request({
       pagination: this.serverPagination,
       filter: this.filter

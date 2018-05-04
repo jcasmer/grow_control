@@ -19,7 +19,7 @@
         </div>
       </div>
       <br><br>
-      <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:url="urlTable"
+      <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"
         v-bind:editUrl="editUrlTable" v-bind:visibleColumns="visibleColumns"
       >
       </grid-table>
