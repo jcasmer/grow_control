@@ -29,7 +29,7 @@
     </template>
     <div slot="pagination" slot-scope="props" class="row flex-center q-py-sm">
       <q-btn
-        round dense size="sm" icon="undo" color="secondary" class="q-mr-sm"
+        round dense size="sm" icon="undo" color="primary" class="q-mr-sm"
         :disable="props.isFirstPage"
         @click="props.prevPage"
       />
@@ -37,8 +37,8 @@
         Página {{ props.pagination.page }} de {{ props.pagination.pagesNumber }}
       </div>
       <q-btn
-        round dense size="sm" icon="redo" color="secondary"
-        :disable="props.isLastPag"
+        round dense size="sm" icon="redo" color="primary"
+        :disable="props.pagination.page === props.pagination.pagesNumber"
         @click="props.nextPage"
       />
     </div>
