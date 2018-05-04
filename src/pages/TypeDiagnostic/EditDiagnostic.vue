@@ -18,10 +18,10 @@
       </div>
     </div>
     <br>
-    <div class="text-center">
-      <q-btn color="primary" v-go-back=" '/diagnostic' " label="Atrás" >
+    <div class="text-left padding">
+      <q-btn color="secondary" v-go-back=" '/diagnostic' " label="Atrás" >
       </q-btn>
-        <q-btn loader @click="updateDiagnostic" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
+      <q-btn loader @click="updateDiagnostic" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
     </div>
   </q-page>
 </template>
@@ -96,7 +96,7 @@ export default {
   background-size: auto 150%;
   background-repeat: no-repeat;
   position: relative;
-  top:-45px;
-  padding: 5% 50px;
+  top:-55px;
+  padding: 5% 10px;
 }
 </style>

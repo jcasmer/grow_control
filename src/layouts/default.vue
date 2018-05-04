@@ -3,8 +3,6 @@
     <q-layout-header>
       <q-toolbar
         color="primary"
-        :glossy="$q.theme === 'mat'"
-        :inverted="$q.theme === 'ios'"
       >
         <q-btn
           flat
@@ -25,7 +23,7 @@
 
     <q-layout-drawer
       v-model="leftDrawerOpen"
-      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+      :content-class="$q.theme === 'mat' ? 'bg-white-3' : null"
       :no-hide-on-route-change="hideRoute"
     >
       <q-list
@@ -33,10 +31,14 @@
         link
         inset-delimiter
       >
-        <q-list-header>Menú de navegación</q-list-header>
-        <q-item  :to="{ name: 'diagnostic' }" exact>
+        <q-list-header class="">Menú de navegación</q-list-header>
+        <q-item  :to="{ name: 'diagnostic' }">
           <q-item-side icon="fas fa-stethoscope" />
           <q-item-main label="Diagnósticos" sublabel="" />
+        </q-item>
+        <q-item  :to="{ name: 'diagnostic' }">
+          <q-item-side icon="fas fa-comment" />
+          <q-item-main label="Recomendaciones" sublabel="por diagnóstico" />
         </q-item>
       </q-list>
     </q-layout-drawer>
