@@ -41,4 +41,14 @@ export default {
 </script>
 
 <style>
+.container{
+  width: 90%;
+  margin: auto;
+}
+.lbl-error {
+  color: #ec2f2f !important;
+}
+.padding{
+  padding: 0 10px
+}
 </style>

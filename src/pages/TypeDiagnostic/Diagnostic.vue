@@ -108,11 +108,4 @@ export default {
 </script>
 
 <style scoped>
-.container{
-  width: 90%;
-  margin: auto;
-}
-.lbl-error {
-  color: #ec2f2f !important;
-}
 </style>

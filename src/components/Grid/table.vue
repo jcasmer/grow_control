@@ -27,7 +27,7 @@
         </q-btn>
       </div>
     </template>
-    <div slot="pagination" slot-scope="props" class="row flex-center q-py-sm">
+    <div slot="bottom" slot-scope="props" class="row flex-center q-py-sm">
       <q-btn
         round dense size="sm" icon="undo" color="primary" class="q-mr-sm"
         :disable="props.isFirstPage"
