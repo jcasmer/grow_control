@@ -27,6 +27,7 @@
       <br><br>
       <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"
         v-bind:editUrl="editUrlTable" v-bind:visibleColumns="visibleColumns" v-bind:filterFields="filterFields"
+        v-bind:urlDelete="urlDelete"
       >
       </grid-table>
     </div>
@@ -86,6 +87,7 @@ export default {
       },
       nameTable: 'Recomendaciones por diagnóstico',
       urlTable: '/advices-full-data/',
+      urlDelete: '/advices/',
       editUrlTable: 'advice/'
     }
   },

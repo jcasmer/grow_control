@@ -74,7 +74,7 @@ export default {
     updateDiagnostic (event, done) {
       let self = this
       this.$axios.put('/type-diagnostic/' + this.$route.params.id + '/', this.fields).then(response => {
-        self.$root.alertNotify('positive', 'Se actualizó el diagnostico correctamente', 'green', 'thumb_up', 'top', 2000)
+        self.$root.alertNotify('positive', 'Se actualizó el diagnostico correctamente', 'green', '', 'top', 2000)
         self.$router.go(-1)
       }).catch(error => {
         for (var i in this.error) {
