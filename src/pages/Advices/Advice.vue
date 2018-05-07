@@ -44,12 +44,13 @@ export default {
   data () {
     return {
       fields: {
-        name: '',
+        description: null,
         type_diagnostic: null,
         is_active: null
       },
       errors: {
-        name: '',
+        description: '',
+        type_diagnostic: null,
         is_active: null
       },
       selectTypeDiagnosticOptions: [],
