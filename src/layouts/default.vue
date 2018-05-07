@@ -38,6 +38,10 @@
           <q-item-side icon="fas fa-stethoscope" />
           <q-item-main label="Diagnósticos" sublabel="" />
         </q-item>
+        <q-item  :to="{ name: 'advice' }" exact>
+          <q-item-side icon="fas fa-book" />
+          <q-item-main label="Recomendaciones" sublabel="" />
+        </q-item>
       </q-list>
     </q-layout-drawer>
     <q-page-container>

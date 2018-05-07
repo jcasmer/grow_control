@@ -80,6 +80,7 @@ module.exports = function (ctx) {
         'QTabs',
         'QTab',
         'QTabPane',
+        'QTooltip',
         'QRouteTab',
         'QRadio',
         'QOptionGroup'
