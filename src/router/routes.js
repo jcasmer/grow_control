@@ -22,6 +22,14 @@ export default [
       { path: '/diagnostic/:id', component: () => import('pages/TypeDiagnostic/EditDiagnostic') }
     ]
   },
+  {
+    path: '/advice',
+    component: () => import('layouts/default'),
+    children: [
+      { path: '/advice', name: 'advice', component: () => import('pages/Advices/Advice') },
+      { path: '/advice/:id', component: () => import('pages/Advices/EditAdvice') }
+    ]
+  },
   { // Always leave this as last one
     path: '*',
     component: () => import('pages/404')

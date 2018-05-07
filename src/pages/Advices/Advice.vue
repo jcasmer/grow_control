@@ -1,11 +1,17 @@
 <template>
   <q-page padding>
     <div class="container">
-      <div class="row xl-gutter" id="form-diagnostic">
+      <div class="row xl-gutter" id="form-advice">
         <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Diagnóstico" v-model="fields.name" placeholder="Ingrese el diagnóstico" maxlength="150"/>
-          <div class="lbl-error" v-if="errors.name != 0 && errors.name != null">
-              {{ errors.name[0] }}
+          <q-input float-label="Recomendación" v-model="fields.description" placeholder="Ingrese la recomendación" maxlength="150"/>
+          <div class="lbl-error" v-if="errors.description != 0 && errors.description != null">
+              {{ errors.description[0] }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-select v-model="fields.type_diagnostic" :options="selectTypeDiagnosticOptions" separator float-label="Diagnóstico"/>
+          <div class="lbl-error" v-if="errors.type_diagnostic != 0 && errors.type_diagnostic != null">
+              {{ errors.type_diagnostic[0] }}
           </div>
         </div>
         <div class="col-lg-4 col-xs-12 padding">
@@ -14,8 +20,8 @@
               {{ errors.is_active[0] }}
           </div>
         </div>
-        <div class="text-center">
-          <q-btn loader @click="registerDiagnostic" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
+        <div class="text-center padding">
+          <q-btn loader @click="registerAdvice" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
         </div>
       </div>
       <br><br>
@@ -31,20 +37,23 @@
 <script>
 import GridTable from 'components/Grid/table.vue'
 export default {
-  name: 'Diagnostic',
+  name: 'Advice',
   components: {
     GridTable
   },
   data () {
     return {
       fields: {
-        name: '',
+        description: null,
+        type_diagnostic: null,
         is_active: null
       },
       errors: {
-        name: '',
+        description: '',
+        type_diagnostic: null,
         is_active: null
       },
+      selectTypeDiagnosticOptions: [],
       selectStatusOptions: [
         {
           label: '',
@@ -61,25 +70,26 @@ export default {
       ],
       columns: [
         { name: 'id', label: '#', field: 'id', sortable: true },
-        { name: 'name', label: 'Diagnóstico', field: 'name', sortable: true },
+        { name: 'description', label: 'Recomendación', field: 'description', sortable: true },
+        { name: 'type_diagnostic', label: 'Diagnóstico', field: 'type_diagnostic', sortable: true },
         { name: 'is_active', label: 'Estado', field: 'is_active_display', sortable: true },
         { name: 'created_at', label: 'Fecha Creación', field: 'created_at', sortable: true },
         { name: 'created_by', label: 'Creado Por', field: 'created_by', sortable: true },
         { name: 'updated_at', label: 'Fecha Modificación', field: 'updated_at', sortable: true },
         { name: 'updated_by', label: 'Modificado Por', field: 'updated_by', sortable: true }
       ],
-      visibleColumns: ['name', 'is_active', 'created_at', 'created_by', 'updated_at', 'updated_by'],
+      visibleColumns: ['description', 'type_diagnostic', 'is_active', 'created_at', 'created_by', 'updated_at', 'updated_by'],
       filterFields: {
-        'name__icontains': '',
+        'description__icontains': '',
         'created_by__username__icontains': '',
         'created_at': '',
         'updated_at': '',
         'updated_by__username__icontains': ''
       },
-      nameTable: 'Tipos Diagnósticos',
-      urlTable: '/type-diagnostic-full-data/',
-      urlDelete: '/type-diagnostic/',
-      editUrlTable: 'diagnostic/'
+      nameTable: 'Recomendaciones por diagnóstico',
+      urlTable: '/advices-full-data/',
+      urlDelete: '/advices/',
+      editUrlTable: 'advice/'
     }
   },
   methods: {
@@ -89,12 +99,30 @@ export default {
         this.errors = []
       }
     },
-    registerDiagnostic (event, done) {
-      let self = this
-      this.$axios.post('/type-diagnostic/', self.fields).then(response => {
-        self.clearValues()
+    getTypeDiagnostic () {
+      let parameters = {
+        nopaginate: 'nopaginate',
+        is_active: 'True',
+        ordering: 'name'
+      }
+      this.$axios.get('/type-diagnostic/', {
+        params: parameters
+      }).then(response => {
+        let values = response.data
+        this.selectTypeDiagnosticOptions.push({value: null, label: ''})
+        for (var data in values) {
+          this.selectTypeDiagnosticOptions.push({value: values[data].id, label: values[data].name})
+        }
+      }
+      ).catch(error => {
+        error = null
+      })
+    },
+    registerAdvice (event, done) {
+      this.$axios.post('/advices/', this.fields).then(response => {
+        this.clearValues()
         this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
-        this.$root.alertNotify('positive', 'Se ha registrado el diagnóstico exitosamente', 'green', '', 'top')
+        this.$root.alertNotify('positive', 'Se ha registrado la recomendación exitosamente', 'green', '', 'top')
       }).catch(error => {
         if (error.response !== undefined) {
           for (var i in this.fields) {
@@ -105,6 +133,9 @@ export default {
         }
       })
     }
+  },
+  created () {
+    this.getTypeDiagnostic()
   }
 }
 </script>

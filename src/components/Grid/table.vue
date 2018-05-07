@@ -34,7 +34,7 @@
         @click="props.prevPage"
       />
       <div class="q-mr-sm" style="font-size: small">
-        Página {{ props.pagination.page }} de {{ props.pagination.pagesNumber }}
+        <b>Página {{ props.pagination.page }} de {{ props.pagination.pagesNumber }}</b>
       </div>
       <q-btn
         round dense size="sm" icon="redo" color="primary"
@@ -71,6 +71,7 @@ export default {
     nameTable: null,
     urlParent: String,
     editUrl: String,
+    urlDelete: String,
     btnDelete: true,
     btnEdit: true,
     filterFields: Object
@@ -113,7 +114,7 @@ export default {
       this.$router.push({path: urlEdit})
     },
     deleteRow () {
-      let deleteUrl = this.url + this.selected[0].id
+      let deleteUrl = this.urlDelete + this.selected[0].id
       this.$q.dialog({
         title: '¿Eliminar registro?',
         message: 'Está seguro que desea eliminar este registro',
