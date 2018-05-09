@@ -1,12 +1,135 @@
 <template>
   <q-page padding>
-    <!-- content -->
+    <div class="container">
+      <div class="row xl-gutter" id="form-user">
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-input float-label="Usuario Red" v-model="fields.username" placeholder="Ingrese el usuario de red" max-length="150"/>
+          <div class="lbl-error" v-if="errors.username != 0 && errors.username != null">
+              {{ errors.username[0] }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-input float-label="Nombre" v-model="fields.first_name" placeholder="Ingrese nombre" max-length="30"/>
+          <div class="lbl-error" v-if="errors.first_name != 0 && errors.first_name != null">
+              {{ errors.first_name[0] }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-input float-label="Apellido" v-model="fields.last_name" placeholder="Ingrese apellido" max-length="30"/>
+          <div class="lbl-error" v-if="errors.last_name != 0 && errors.last_name != null">
+              {{ errors.last_name[0] }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-input float-label="Correo Electrónico" v-model="fields.email" placeholder="Correo Electrónico" max-length="30"/>
+          <div class="lbl-error" v-if="errors.email != 0 && errors.email != null">
+              {{ errors.email[0] }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-select v-model="fields.is_active" :options="selectStatusOptions" separator float-label="Estado"/>
+          <div class="lbl-error" v-if="errors.is_active != 0 && errors.is_active != null">
+              {{ errors.is_active[0] }}
+          </div>
+        </div>
+        <div class="text-center">
+          <q-btn loader @click="registerUser" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
+        </div>
+      </div>
+      <br><br>
+      <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"
+        v-bind:editUrl="editUrlTable" v-bind:visibleColumns="visibleColumns" v-bind:filterFields="filterFields"
+        v-bind:urlDelete="urlDelete"
+      >
+      </grid-table>
+      <div class="bottom"></div>
+    </div>
   </q-page>
 </template>
 
 <script>
+import GridTable from 'components/Grid/table.vue'
 export default {
-  // name: 'PageName',
+  name: 'Users',
+  components: {
+    GridTable
+  },
+  data () {
+    return {
+      fields: {
+        username: null,
+        first_name: null,
+        last_name: null,
+        is_active: null,
+        email: null
+      },
+      errors: {
+        username: [],
+        first_name: [],
+        last_name: [],
+        is_active: [],
+        email: []
+      },
+      selectStatusOptions: [
+        {
+          label: 'Activo',
+          value: true
+        },
+        {
+          label: 'Inactivo',
+          value: false
+        }
+      ],
+      columns: [
+        { name: 'id', label: '#', field: 'id', sortable: true },
+        { name: 'username', label: 'Usuario', field: 'username', sortable: true },
+        { name: 'first_name', label: 'Nombre', field: 'first_name', sortable: true },
+        { name: 'last_name', label: 'Apellidos', field: 'last_name', sortable: true },
+        { name: 'email', label: 'Correo Electrónico', field: 'email', sortable: true },
+        { name: 'is_active', label: 'Estado', field: 'is_active_display', sortable: true },
+        { name: 'created_at', label: 'Fecha Creación', field: 'created_at', sortable: true },
+        { name: 'created_by', label: 'Creado Por', field: 'created_by', sortable: true },
+        { name: 'updated_at', label: 'Fecha Modificación', field: 'updated_at', sortable: true },
+        { name: 'updated_by', label: 'Modificado Por', field: 'updated_by', sortable: true }
+      ],
+      visibleColumns: ['username', 'first_name', 'last_name', 'email', 'is_active', 'created_at', 'created_by', 'updated_at', 'updated_by'],
+      filterFields: {
+        'name__icontains': '',
+        'created_by__username__icontains': '',
+        'created_at': '',
+        'updated_at': '',
+        'updated_by__username__icontains': ''
+      },
+      nameTable: 'Usuarios Aplicación',
+      urlTable: '/user-full-data/',
+      urlDelete: '/user/',
+      editUrlTable: 'user/'
+    }
+  },
+  methods: {
+    clearValues: function () {
+      for (var i in this.fields) {
+        this.fields[i] = null
+        this.errors = []
+      }
+    },
+    registerUser (event, done) {
+      let self = this
+      this.$axios.post('/user/', self.fields).then(response => {
+        self.clearValues()
+        this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
+        this.$root.alertNotify('positive', 'Se ha registrado el usuario exitosamente', 'green', '', 'top')
+      }).catch(error => {
+        if (error.response !== undefined) {
+          for (var i in this.fields) {
+            this.errors[i] = ''
+          }
+          this.errors = error.response.data
+          this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
+        }
+      })
+    }
+  }
 }
 </script>
 

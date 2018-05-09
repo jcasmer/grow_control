@@ -86,4 +86,8 @@ export default {
   background: #027be3;
   color: white;
 }
+.bottom{
+  margin-bottom: 40px;
+  visibility: hidden;
+}
 </style>

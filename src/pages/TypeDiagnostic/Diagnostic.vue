@@ -25,6 +25,7 @@
       >
       </grid-table>
     </div>
+    <div class="bottom"></div>
   </q-page>
 </template>
 
