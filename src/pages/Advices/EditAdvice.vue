@@ -1,33 +1,35 @@
 <template>
   <q-page padding>
-    <div class="title">
-      <h4>Editar Diagnóstico</h4>
-    </div>
-    <div class="row xl-gutter" id="form-diagnostic">
+    <div class="container">
+      <div class="title">
+        <h4>Editar recomendación</h4>
+      </div>
+      <div class="row xl-gutter" id="form-diagnostic">
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-input float-label="Recomendación" v-model="fields.description" placeholder="Ingrese la recomendación" maxlength="150"/>
+          <div class="lbl-error" v-if="errors.description != 0 && errors.description != null">
+              {{ errors.description[0] }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-select v-model="fields.type_diagnostic" :options="selectTypeDiagnosticOptions" separator float-label="Diagnóstico"/>
+          <div class="lbl-error" v-if="errors.type_diagnostic != 0 && errors.type_diagnostic != null">
+              {{ errors.type_diagnostic[0] }}
+          </div>
+        </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input float-label="Recomendación" v-model="fields.description" placeholder="Ingrese la recomendación" maxlength="150"/>
-        <div class="lbl-error" v-if="errors.description != 0 && errors.description != null">
-            {{ errors.description[0] }}
+          <q-select v-model="fields.is_active" :options="selectStatusOptions" separator float-label="Estado"/>
+          <div class="lbl-error" v-if="errors.is_active != 0 && errors.is_active != null">
+              {{ errors.is_active[0] }}
+          </div>
         </div>
       </div>
-      <div class="col-lg-4 col-xs-12 padding">
-        <q-select v-model="fields.type_diagnostic" :options="selectTypeDiagnosticOptions" separator float-label="Diagnóstico"/>
-        <div class="lbl-error" v-if="errors.type_diagnostic != 0 && errors.type_diagnostic != null">
-            {{ errors.type_diagnostic[0] }}
-        </div>
+      <br>
+      <div class="text-left padding">
+        <q-btn color="secondary" v-go-back=" '/advice' " label="Atrás" >
+        </q-btn>
+        <q-btn loader @click="updateAdvice" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
       </div>
-    <div class="col-lg-4 col-xs-12 padding">
-        <q-select v-model="fields.is_active" :options="selectStatusOptions" separator float-label="Estado"/>
-        <div class="lbl-error" v-if="errors.is_active != 0 && errors.is_active != null">
-            {{ errors.is_active[0] }}
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="text-left padding">
-      <q-btn color="secondary" v-go-back=" '/advice' " label="Atrás" >
-      </q-btn>
-      <q-btn loader @click="updateAdvice" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
     </div>
   </q-page>
 </template>

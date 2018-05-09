@@ -90,4 +90,10 @@ export default {
   margin-bottom: 40px;
   visibility: hidden;
 }
+h4{
+  color: black;
+  font-weight: 400;
+  line-height: 0;
+  position: relative;
+}
 </style>

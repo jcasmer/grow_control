@@ -1,6 +1,9 @@
 <template>
   <q-page padding>
     <div class="container">
+      <div class="title">
+        <h4>Administrador de recomendaciones</h4>
+      </div>
       <div class="row xl-gutter" id="form-advice">
         <div class="col-lg-4 col-xs-12 padding">
           <q-input float-label="Recomendación" v-model="fields.description" placeholder="Ingrese la recomendación" maxlength="150"/>
@@ -20,9 +23,10 @@
               {{ errors.is_active[0] }}
           </div>
         </div>
-        <div class="text-center padding">
-          <q-btn loader @click="registerAdvice" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
-        </div>
+      </div>
+      <br>
+      <div class="text-center padding">
+        <q-btn loader @click="registerAdvice" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
       </div>
       <br><br>
       <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"

@@ -1,27 +1,29 @@
 <template>
   <q-page padding>
-    <div class="title">
-      <h4>Editar Parentesco</h4>
-    </div>
-    <div class="row xl-gutter" id="form-diagnostic">
-      <div class="col-lg-4 col-xs-12 padding">
-        <q-input float-label="Parentesco" v-model="fields.name" placeholder="Ingrese el parentesco" maxlength="150"/>
-        <div class="lbl-error" v-if="errors.name != 0 && errors.name != null">
-            {{ errors.name[0] }}
+    <div class="container">
+      <div class="title">
+        <h4>Editar parentesco</h4>
+      </div>
+      <div class="row xl-gutter" id="form-diagnostic">
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-input float-label="Parentesco" v-model="fields.name" placeholder="Ingrese el parentesco" maxlength="150"/>
+          <div class="lbl-error" v-if="errors.name != 0 && errors.name != null">
+              {{ errors.name[0] }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-select v-model="fields.is_active" :options="selectStatusOptions" separator float-label="Estado"/>
+          <div class="lbl-error" v-if="errors.is_active != 0 && errors.is_active != null">
+              {{ errors.is_active[0] }}
+          </div>
         </div>
       </div>
-      <div class="col-lg-4 col-xs-12 padding">
-        <q-select v-model="fields.is_active" :options="selectStatusOptions" separator float-label="Estado"/>
-        <div class="lbl-error" v-if="errors.is_active != 0 && errors.is_active != null">
-            {{ errors.is_active[0] }}
-        </div>
+      <br>
+      <div class="text-left padding">
+        <q-btn color="secondary" v-go-back=" '/relationship' " label="Atrás" >
+        </q-btn>
+        <q-btn loader @click="updateDiagnostic" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
       </div>
-    </div>
-    <br>
-    <div class="text-left padding">
-      <q-btn color="secondary" v-go-back=" '/relationship' " label="Atrás" >
-      </q-btn>
-      <q-btn loader @click="updateDiagnostic" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
     </div>
   </q-page>
 </template>

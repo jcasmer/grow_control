@@ -1,6 +1,9 @@
 <template>
   <q-page padding>
     <div class="container">
+      <div class="title">
+        <h4>Administrador de usuarios</h4>
+      </div>
       <div class="row xl-gutter" id="form-user">
         <div class="col-lg-4 col-xs-12 padding">
           <q-input float-label="Usuario Red" v-model="fields.username" placeholder="Ingrese el usuario de red" max-length="150"/>
@@ -32,9 +35,10 @@
               {{ errors.is_active[0] }}
           </div>
         </div>
-        <div class="text-center">
-          <q-btn loader @click="registerUser" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
-        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <q-btn loader @click="registerUser" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
       </div>
       <br><br>
       <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"
