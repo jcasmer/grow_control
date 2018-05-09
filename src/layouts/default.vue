@@ -27,27 +27,8 @@
       :no-hide-on-route-change="hideRoute"
     >
       <q-list-header class="menu-header">Menú de navegación</q-list-header>
-      <q-list
-        no-border
-        link
-        inset-delimiter
-      >
-      <div>
-        <q-list-header class="submenu-header">Maestros</q-list-header>
-        <q-item  :to="{ name: 'diagnostic' }">
-          <q-item-side icon="fas fa-stethoscope" />
-          <q-item-main label="Diagnósticos" sublabel="" />
-        </q-item>
-        <q-item  :to="{ name: 'advice' }" exact>
-          <q-item-side icon="fas fa-book" />
-          <q-item-main label="Recomendaciones" sublabel="por diagnóstico" />
-        </q-item>
-        <q-item  :to="{ name: 'relationship' }" exact>
-          <q-item-side icon="fas fa-handshake" />
-          <q-item-main label="Parentescos" sublabel="" />
-        </q-item>
-      </div>
-      </q-list>
+      <list-masters></list-masters>
+      <hr>
     </q-layout-drawer>
     <q-page-container>
       <router-view />
@@ -63,6 +44,7 @@
 
 <script>
 import { openURL } from 'quasar'
+import ListMasters from 'components/Menu/Masters.vue'
 
 export default {
   name: 'LayoutDefault',
@@ -71,6 +53,9 @@ export default {
       leftDrawerOpen: false,
       hideRoute: true
     }
+  },
+  components: {
+    ListMasters
   },
   methods: {
     openURL

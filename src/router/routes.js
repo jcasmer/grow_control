@@ -38,6 +38,14 @@ export default [
       { path: '/relationship/:id', component: () => import('pages/Relationships/EditRelationship') }
     ]
   },
+  {
+    path: '/user',
+    component: () => import('layouts/default'),
+    children: [
+      { path: '/user', name: 'user', component: () => import('pages/Users/User') },
+      { path: '/user/:id', component: () => import('pages/Users/EditUser') }
+    ]
+  },
   { // Always leave this as last one
     path: '*',
     component: () => import('pages/404')
