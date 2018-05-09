@@ -27,7 +27,7 @@ module.exports = function (ctx) {
           API: JSON.stringify('http://192.168.1.59:8005/api/')
         }
         : { // and on build (production):
-          API: JSON.stringify('http://growcontrolbackend.emtelco.co/api/')
+          API: JSON.stringify('http://growcontrolbackend.juanesteban.co/api/')
         },
       scopeHoisting: true,
       vueRouterMode: 'history',
