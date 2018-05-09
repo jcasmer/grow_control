@@ -2,19 +2,13 @@
   <q-page padding>
     <div class="container">
       <div class="title">
-        <h4>Administrador de recomendaciones</h4>
+        <h4>Administrador de parentescos</h4>
       </div>
-      <div class="row xl-gutter" id="form-advice">
+      <div class="row xl-gutter" id="form-diagnostic">
         <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Recomendación" v-model="fields.description" placeholder="Ingrese la recomendación" maxlength="150"/>
-          <div class="lbl-error" v-if="errors.description != 0 && errors.description != null">
-              {{ errors.description[0] }}
-          </div>
-        </div>
-        <div class="col-lg-4 col-xs-12 padding">
-          <q-select v-model="fields.type_diagnostic" :options="selectTypeDiagnosticOptions" separator float-label="Diagnóstico"/>
-          <div class="lbl-error" v-if="errors.type_diagnostic != 0 && errors.type_diagnostic != null">
-              {{ errors.type_diagnostic[0] }}
+          <q-input float-label="Parentesco" v-model="fields.name" placeholder="Ingrese el parentesco" maxlength="150"/>
+          <div class="lbl-error" v-if="errors.name != 0 && errors.name != null">
+              {{ errors.name[0] }}
           </div>
         </div>
         <div class="col-lg-4 col-xs-12 padding">
@@ -25,8 +19,8 @@
         </div>
       </div>
       <br>
-      <div class="text-center padding">
-        <q-btn loader @click="registerAdvice" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
+      <div class="text-center">
+        <q-btn loader @click="registerDiagnostic" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
       </div>
       <br><br>
       <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"
@@ -42,23 +36,20 @@
 <script>
 import GridTable from 'components/Grid/table.vue'
 export default {
-  name: 'Advice',
+  name: 'Relationship',
   components: {
     GridTable
   },
   data () {
     return {
       fields: {
-        description: null,
-        type_diagnostic: null,
+        name: null,
         is_active: null
       },
       errors: {
-        description: '',
-        type_diagnostic: null,
+        name: '',
         is_active: null
       },
-      selectTypeDiagnosticOptions: [],
       selectStatusOptions: [
         {
           label: '',
@@ -75,26 +66,25 @@ export default {
       ],
       columns: [
         { name: 'id', label: '#', field: 'id', sortable: true },
-        { name: 'description', label: 'Recomendación', field: 'description', sortable: true },
-        { name: 'type_diagnostic', label: 'Diagnóstico', field: 'type_diagnostic', sortable: true },
+        { name: 'name', label: 'Parentesco', field: 'name', sortable: true },
         { name: 'is_active', label: 'Estado', field: 'is_active_display', sortable: true },
         { name: 'created_at', label: 'Fecha Creación', field: 'created_at', sortable: true },
         { name: 'created_by', label: 'Creado Por', field: 'created_by', sortable: true },
         { name: 'updated_at', label: 'Fecha Modificación', field: 'updated_at', sortable: true },
         { name: 'updated_by', label: 'Modificado Por', field: 'updated_by', sortable: true }
       ],
-      visibleColumns: ['description', 'type_diagnostic', 'is_active', 'created_at', 'created_by', 'updated_at', 'updated_by'],
+      visibleColumns: ['name', 'is_active', 'created_at', 'created_by', 'updated_at', 'updated_by'],
       filterFields: {
-        'description__icontains': '',
+        'name__icontains': '',
         'created_by__username__icontains': '',
         'created_at': '',
         'updated_at': '',
         'updated_by__username__icontains': ''
       },
-      nameTable: 'Recomendaciones por diagnóstico',
-      urlTable: '/advices-full-data/',
-      urlDelete: '/advices/',
-      editUrlTable: 'advice/'
+      nameTable: 'Parentescos',
+      urlTable: '/relationship-full-data/',
+      urlDelete: '/relationship/',
+      editUrlTable: 'relationship/'
     }
   },
   methods: {
@@ -104,30 +94,12 @@ export default {
         this.errors = []
       }
     },
-    getTypeDiagnostic () {
-      let parameters = {
-        nopaginate: 'nopaginate',
-        is_active: 'True',
-        ordering: 'name'
-      }
-      this.$axios.get('/type-diagnostic/', {
-        params: parameters
-      }).then(response => {
-        let values = response.data
-        this.selectTypeDiagnosticOptions.push({value: null, label: ''})
-        for (var data in values) {
-          this.selectTypeDiagnosticOptions.push({value: values[data].id, label: values[data].name})
-        }
-      }
-      ).catch(error => {
-        error = null
-      })
-    },
-    registerAdvice (event, done) {
-      this.$axios.post('/advices/', this.fields).then(response => {
-        this.clearValues()
+    registerDiagnostic (event, done) {
+      let self = this
+      this.$axios.post('/relationship/', self.fields).then(response => {
+        self.clearValues()
         this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
-        this.$root.alertNotify('positive', 'Se ha registrado la recomendación exitosamente', 'green', '', 'top')
+        this.$root.alertNotify('positive', 'Se ha registrado el parentesco exitosamente', 'green', '', 'top')
       }).catch(error => {
         if (error.response !== undefined) {
           for (var i in this.fields) {
@@ -138,9 +110,6 @@ export default {
         }
       })
     }
-  },
-  created () {
-    this.getTypeDiagnostic()
   }
 }
 </script>

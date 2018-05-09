@@ -2,11 +2,11 @@
   <q-page padding>
     <div class="container">
       <div class="title">
-        <h4>Editar diagnóstico</h4>
+        <h4>Editar parentesco</h4>
       </div>
       <div class="row xl-gutter" id="form-diagnostic">
         <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Diagnóstico" v-model="fields.name" placeholder="Ingrese el diagnóstico" maxlength="150"/>
+          <q-input float-label="Parentesco" v-model="fields.name" placeholder="Ingrese el parentesco" maxlength="150"/>
           <div class="lbl-error" v-if="errors.name != 0 && errors.name != null">
               {{ errors.name[0] }}
           </div>
@@ -20,7 +20,7 @@
       </div>
       <br>
       <div class="text-left padding">
-        <q-btn color="secondary" v-go-back=" '/diagnostic' " label="Atrás" >
+        <q-btn color="secondary" v-go-back=" '/relationship' " label="Atrás" >
         </q-btn>
         <q-btn loader @click="updateDiagnostic" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
       </div>
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: 'EditDiagnostic',
+  name: 'EditRelationship',
   data () {
     return {
       fields: {
@@ -75,8 +75,8 @@ export default {
     },
     updateDiagnostic (event, done) {
       let self = this
-      this.$axios.put('/type-diagnostic/' + this.$route.params.id + '/', this.fields).then(response => {
-        self.$root.alertNotify('positive', 'Se actualizó el diagnostico correctamente', 'green', '', 'top', 2000)
+      this.$axios.put('/relationship/' + this.$route.params.id + '/', this.fields).then(response => {
+        self.$root.alertNotify('positive', 'Se actualizó el parentesco correctamente', 'green', '', 'top', 2000)
         self.$router.go(-1)
       }).catch(error => {
         for (var i in this.error) {
@@ -87,7 +87,7 @@ export default {
     }
   },
   created: function () {
-    this.getData('/type-diagnostic/')
+    this.getData('/relationship/')
   }
 }
 </script>
