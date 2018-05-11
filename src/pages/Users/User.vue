@@ -94,9 +94,9 @@ export default {
         last_name: [],
         is_active: [],
         email: [],
-        password: null,
-        confirm_password: null,
-        groups: null
+        password: [],
+        confirm_password: [],
+        groups: []
       },
       selectStatusOptions: [
         {
@@ -153,7 +153,6 @@ export default {
         let values = response.data.results
         this.selectGroupsOptions.push({value: null, label: ''})
         for (var data in values) {
-          print(values[data].id, values[data].name)
           this.selectGroupsOptions.push({value: values[data].id, label: values[data].name})
         }
       }
