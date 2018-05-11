@@ -67,6 +67,7 @@ export default {
         LocalStorage.set('full_name', response.data['full_name'])
         LocalStorage.set('token', response.data['token'])
         LocalStorage.set('is_superuser', response.data['is_superuser'])/** estructuradel token */
+        LocalStorage.set('permissions', response.data['permissions'])
         this.$axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token')
         this.credentials.username = ''
         this.credentials.password = ''

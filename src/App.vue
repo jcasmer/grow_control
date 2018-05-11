@@ -24,7 +24,12 @@ export default {
       })
     },
     validateSesion: function () {
-      if (LocalStorage.get.item('is_superuser') === false || LocalStorage.get.item('is_superuser') === 'undefined' || LocalStorage.get.item('is_superuser') === null) {
+      // if (LocalStorage.get.item('is_superuser') === false || LocalStorage.get.item('is_superuser') === 'undefined' || LocalStorage.get.item('is_superuser') === null) {
+      //   this.$router.push({path: '/login'})
+      //   this.$root.alertNotify('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+      // }
+      console.log(LocalStorage.get.item('permissions'))
+      if (LocalStorage.get.item('permissions') === undefined) {
         this.$router.push({path: '/login'})
         this.$root.alertNotify('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
       }
