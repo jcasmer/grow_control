@@ -168,7 +168,6 @@ export default {
         updatedFields = this.fields
         updatedFields['changePassword'] = this.changePassword
       }
-      console.log(this.fields, updatedFields)
       this.$axios.put('/user/' + this.$route.params.id + '/', updatedFields).then(response => {
         this.$root.alertNotify('positive', 'Se actualizó el usuario correctamente', 'green', '', 'top', 2000)
         this.$router.go(-1)
