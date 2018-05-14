@@ -23,6 +23,7 @@
               {{ errors.last_name[0] }}
           </div>
         </div>
+        <br><br><br>
         <div class="col-lg-4 col-xs-12 padding">
           <q-input float-label="Correo Electrónico" v-model="fields.email" placeholder="Correo Electrónico" max-length="30"/>
           <div class="lbl-error" v-if="errors.email != 0 && errors.email != null">
@@ -39,6 +40,22 @@
           <q-select v-model="fields.groups" :options="selectGroupsOptions" separator float-label="Perfil"/>
           <div class="lbl-error" v-if="errors.groups != 0 && errors.groups != null">
               {{ errors.groups[0] }}
+          </div>
+        </div>
+        <br><br><br>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-checkbox v-model="changePassword" label="Cambiar contraseña" />
+        </div>
+         <div class="col-lg-4 col-xs-12 padding" v-if="changePassword">
+          <q-input v-if="changePassword" type="password" float-label="Contraseña" v-model="password" placeholder="Contraseña" max-length="350"/>
+          <div class="lbl-error" v-if="errors.password != 0 && errors.password != null && changePassword">
+              {{ errors.password[0] }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-input v-if="changePassword" type="password" float-label="Confirme Contraseña" v-model="confirm_password" placeholder="Conrfime Contraseña" max-length="350"/>
+          <div class="lbl-error" v-if="errors.confirm_password != 0 && errors.confirm_password != null && changePassword">
+              {{ errors.confirm_password[0] }}
           </div>
         </div>
       </div>
@@ -65,8 +82,6 @@ export default {
         last_name: null,
         is_active: null,
         email: null,
-        password: null,
-        confirm_password: null,
         groups: null
       },
       errors: {
@@ -90,13 +105,14 @@ export default {
         }
       ],
       selectGroupsOptions: [],
-      changePassword: false
+      changePassword: false,
+      password: null,
+      confirm_password: null
     }
   },
   methods: {
     setValue: function (value) {
       for (var form in this.fields) {
-        console.log(form, value[form])
         if (form === 'groups') {
           this.$set(this.fields, form, value[form][0])
         } else if (form === 'password' || form === 'confirm_password') {
@@ -140,10 +156,22 @@ export default {
       })
     },
     updateUser (event, done) {
-      let self = this
-      this.$axios.put('/user/' + this.$route.params.id + '/', this.fields).then(response => {
-        self.$root.alertNotify('positive', 'Se actualizó el usuario correctamente', 'green', '', 'top', 2000)
-        self.$router.go(-1)
+      let updatedFields = {}
+      if (this.changePassword) {
+        updatedFields = this.fields
+        updatedFields['changePassword'] = this.changePassword
+        updatedFields['password'] = this.password
+        updatedFields['confirm_password'] = this.confirm_password
+        // this.fields.push({ key: "password", value: this.password})
+        // this.fields.push({ key: "confirm_password", value: })
+      } else {
+        updatedFields = this.fields
+        updatedFields['changePassword'] = this.changePassword
+      }
+      console.log(this.fields, updatedFields)
+      this.$axios.put('/user/' + this.$route.params.id + '/', updatedFields).then(response => {
+        this.$root.alertNotify('positive', 'Se actualizó el usuario correctamente', 'green', '', 'top', 2000)
+        this.$router.go(-1)
       }).catch(error => {
         for (var i in this.error) {
           this.errors[i] = ''
