@@ -29,6 +29,8 @@
       <q-list-header class="menu-header">Menú de navegación</q-list-header>
       <list-masters></list-masters>
       <hr>
+      <list-application></list-application>
+      <hr>
       <q-item  :to="{ name: 'login' }" exact>
         <q-item-side icon="fas fa-sign-out-alt" />
         <q-item-main label="Cerrar Sesión" />
@@ -46,6 +48,7 @@
 <script>
 import { openURL } from 'quasar'
 import ListMasters from 'components/Menu/Masters.vue'
+import ListApplication from 'components/Menu/Application.vue'
 
 export default {
   name: 'LayoutDefault',
@@ -56,7 +59,8 @@ export default {
     }
   },
   components: {
-    ListMasters
+    ListMasters,
+    ListApplication
   },
   methods: {
     openURL
