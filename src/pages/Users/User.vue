@@ -166,6 +166,7 @@ export default {
         self.clearValues()
         this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
         this.$root.alertNotify('positive', 'Se ha registrado el usuario exitosamente', 'green', '', 'top')
+        done()
       }).catch(error => {
         if (error.response !== undefined) {
           for (var i in this.fields) {
@@ -174,6 +175,7 @@ export default {
           this.errors = error.response.data
           this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
         }
+        done()
       })
     }
   },
