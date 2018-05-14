@@ -28,8 +28,7 @@ export default {
       //   this.$router.push({path: '/login'})
       //   this.$root.alertNotify('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
       // }
-      console.log(LocalStorage.get.item('permissions'))
-      if (LocalStorage.get.item('permissions') === undefined) {
+      if (LocalStorage.get.item('groups') === undefined || LocalStorage.get.item('groups') === null) {
         this.$router.push({path: '/login'})
         this.$root.alertNotify('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
       }
