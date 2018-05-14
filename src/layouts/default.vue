@@ -29,16 +29,17 @@
       <q-list-header class="menu-header">Menú de navegación</q-list-header>
       <list-masters></list-masters>
       <hr>
+      <q-item  :to="{ name: 'login' }" exact>
+        <q-item-side icon="fas fa-sign-out-alt" />
+        <q-item-main label="Cerrar Sesión" />
+      </q-item>
     </q-layout-drawer>
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-layout-footer reveal v-if="$q.theme === 'ios'">
-      <nav-tabs />
-    </q-layout-footer>
-      <div class="footer">
-        Copyright © 2018 Medellín-Colombia
-      </div>
+    <div class="footer">
+      Copyright © 2018 Medellín-Colombia
+    </div>
   </q-layout>
 </template>
 
