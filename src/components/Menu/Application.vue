@@ -4,10 +4,10 @@
     link
     inset-delimiter
   >
-    <q-list-header class="submenu-header"></q-list-header>
+    <q-list-header class="submenu-header">Contenido</q-list-header>
     <q-item  :to="{ name: 'diagnostic' }">
-      <q-item-side icon="fas fa-stethoscope" />
-      <q-item-main label="Diagnósticos" sublabel="" />
+      <q-item-side icon="fas fa-id-badge" />
+      <q-item-main label="Registro Responsable" sublabel="Familiar del menor" />
     </q-item>
   </q-list>
 </template>
