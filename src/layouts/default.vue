@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-layout-header>
+    <q-layout-header >
       <q-toolbar
         color="primary"
       >
@@ -26,7 +26,7 @@
       :content-class="$q.theme === 'mat' ? 'bg-white-3' : null"
       :no-hide-on-route-change="hideRoute"
     >
-      <q-list-header class="menu-header">Menú de navegación</q-list-header>
+      <q-list-header class="menu-header" >Menú de navegación</q-list-header>
       <list-masters></list-masters>
       <hr>
       <list-application></list-application>
