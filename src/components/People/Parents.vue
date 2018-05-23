@@ -3,41 +3,181 @@
     <div class="row xl-gutter" id="form-advice">
       <div class="col-lg-4 col-xs-12 padding">
         <q-select v-model="parentsfields.document_type" :options="selectDocumentTypeOptions" separator float-label="Tipo documento"/>
-        <div class="lbl-error" v-if="errors.type_diagnostic != 0 && errors.type_diagnostic != null">
-            {{ errors.type_diagnostic[0] }}
+        <div class="lbl-error" v-if="errors.document_type != 0 && errors.document_type != null">
+            {{ errors.document_type[0] }}
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input float-label="Documento" v-model="parentsfields.document" placeholder="Ingrese el documento" maxlength="150"/>
+        <q-input float-label="Documento" v-model="parentsfields.document" placeholder="Ingrese el documento" maxlength="20"/>
         <div class="lbl-error" v-if="errors.document != 0 && errors.document != null">
             {{ errors.document[0] }}
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-select v-model="parentsfields.is_active" :options="selectStatusOptions" separator float-label="Estado"/>
-        <div class="lbl-error" v-if="errors.is_active != 0 && errors.is_active != null">
-            {{ errors.is_active[0] }}
+        <q-input float-label="Nombre" v-model="parentsfields.name" placeholder="Ingrese el nombre" maxlength="150"/>
+        <div class="lbl-error" v-if="errors.name != 0 && errors.name != null">
+            {{ errors.name[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-input type="number" float-label="Edad" v-model="parentsfields.age" placeholder="Ingrese la edad" maxlength="3"/>
+        <div class="lbl-error" v-if="errors.age != 0 && errors.age != null">
+            {{ errors.age[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-select v-model="parentsfields.gender" :options="selectGenderOptions" separator float-label="Género"/>
+        <div class="lbl-error" v-if="errors.gender != 0 && errors.gender != null">
+            {{ errors.gender[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-select v-model="parentsfields.relationship" :options="selectRelationshipOptions" separator float-label="Parentesco"/>
+        <div class="lbl-error" v-if="errors.relationship != 0 && errors.relationship != null">
+            {{ errors.relationship[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-select v-model="parentsfields.gender" :options="selectGenderOptions" separator float-label="Género"/>
+        <div class="lbl-error" v-if="errors.gender != 0 && errors.gender != null">
+            {{ errors.gender[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-input float-label="Correo electrónico" v-model="parentsfields.email" placeholder="Ingrese el correo"/>
+        <div class="lbl-error" v-if="errors.email != 0 && errors.email != null">
+            {{ errors.email[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-select v-model="parentsfields.social_stratum" :options="selectSolcialStratumOptions" separator float-label="Estrato social"/>
+        <div class="lbl-error" v-if="errors.social_stratum != 0 && errors.social_stratum != null">
+            {{ errors.social_stratum[0] }}
         </div>
       </div>
     </div>
     <br>
-    <div class="text-center padding">
-      <q-btn loader @click="registerAdvice" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'ParentsComponent',
-  props: {
-    parentsfields: Object,
-    errors: Object,
-    selectDocumentTypeOptions: Array,
-    selectStatusOptions: Array
-  },
+  // props: {
+  //   parentsfields: Object,
+  //   errors: Object,
+  //   selectDocumentTypeOptions: Array,
+  //   selectStatusOptions: Array,
+  //   selectGenderOptions: Array
+  // },
   data () {
     return {
+      parentsfields: {
+        document_type: null,
+        document: null,
+        name: null,
+        age: null,
+        gender: null,
+        relationship: null,
+        phone_number: null,
+        email: null,
+        social_stratum: null,
+        height: null,
+        weight: null,
+        is_active: null
+      },
+      errors: {
+        ocument_type: null,
+        document: null,
+        name: null,
+        age: null,
+        gender: null,
+        relationship: null,
+        phone_number: null,
+        email: null,
+        social_stratum: null,
+        height: null,
+        weight: null,
+        is_active: null
+      },
+      selectDocumentTypeOptions: [
+        {
+          label: '',
+          value: null
+        },
+        {
+          label: 'Cédula',
+          value: 'Cédula'
+        },
+        {
+          label: 'Cédula Extranjería',
+          value: 'Cédula Extranjería'
+        }
+      ],
+      selectStatusOptions: [
+        {
+          label: '',
+          value: null
+        },
+        {
+          label: 'Activo',
+          value: true
+        },
+        {
+          label: 'Inactivo',
+          value: false
+        }
+      ],
+      selectGenderOptions: [
+        {
+          label: '',
+          value: null
+        },
+        {
+          label: 'Masculino',
+          value: 'Masculino'
+        },
+        {
+          label: 'Femenino',
+          value: 'Femenino'
+        }
+
+      ],
+      selectRelationshipOptions: [],
+      selectSolcialStratumOptions: [
+        {
+          label: '',
+          value: null
+        },
+        {
+          label: 'Estrato 0',
+          value: '0'
+        },
+        {
+          label: 'Estrato 1',
+          value: '1'
+        },
+        {
+          label: 'Estrato 2',
+          value: '2'
+        },
+        {
+          label: 'Estrato 3',
+          value: '3'
+        },
+        {
+          label: 'Estrato 4',
+          value: '4'
+        },
+        {
+          label: 'Estrato 5',
+          value: '5'
+        },
+        {
+          label: 'Otro',
+          value: '6'
+        }
+      ]
     }
   }
 }
