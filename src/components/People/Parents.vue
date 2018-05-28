@@ -50,13 +50,13 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input type=number float-label="Altura" :decimals="2" v-model="parentsfields.height" placeholder="Ingrese el altura" maxlength="4"/>
+        <q-input type=number float-label="Altura (cm)" :decimals="2" v-model="parentsfields.height" placeholder="Ingrese el altura (cm)" maxlength="4"/>
         <div class="lbl-error" v-if="errors.height != 0 && errors.height != null">
             {{ errors.height[0] }}
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input type=number float-label="Peso" :decimals="2" v-model="parentsfields.weight" placeholder="Ingrese el peso" maxlength="4"/>
+        <q-input type=number float-label="Peso (kg)" :decimals="2" v-model="parentsfields.weight" placeholder="Ingrese el peso (kg)" maxlength="4"/>
         <div class="lbl-error" v-if="errors.weight != 0 && errors.weight != null">
             {{ errors.weight[0] }}
         </div>
