@@ -17,10 +17,6 @@ module.exports = function (ctx) {
       // 'mdi',
     ],
     supportIE: true,
-    vendor: {
-      add: [],
-      remove: []
-    },
     build: {
       env: ctx.dev
         ? { // so on dev we'll have
@@ -53,7 +49,6 @@ module.exports = function (ctx) {
     framework: {
       i18n: 'es',
       components: [
-        'Dialog',
         'QAlert',
         'QField',
         'QInput',
@@ -61,7 +56,6 @@ module.exports = function (ctx) {
         'QLayoutHeader',
         'QLayoutDrawer',
         'QLayoutFooter',
-        'QPageContainer',
         'QPage',
         'QPagination',
         'QPageContainer',

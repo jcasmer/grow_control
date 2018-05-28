@@ -14,6 +14,7 @@ export default [
       { path: '/login', name: 'login', component: () => import('pages/Login/Login') }
     ]
   },
+  // Administrator
   {
     path: '/diagnostic',
     component: () => import('layouts/default'),
@@ -44,6 +45,14 @@ export default [
     children: [
       { path: '/user', name: 'user', component: () => import('pages/Users/User') },
       { path: '/user/:id', component: () => import('pages/Users/EditUser') }
+    ]
+  },
+  // Content
+  {
+    path: '/parents',
+    component: () => import('layouts/default'),
+    children: [
+      { path: '/parents', name: 'parents', component: () => import('pages/Registers/Parents') }
     ]
   },
   { // Always leave this as last one
