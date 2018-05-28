@@ -3,7 +3,7 @@
     <div class="container">
       <q-tabs color="secondary" inverted align="justify">
         <q-tab default name="parent" slot="title" icon="far fa-id-card" label="Registro familiar" />
-        <q-tab default name="edit-parent" slot="title" icon="fas fa-address-card" label="Editar persona" />
+        <q-tab  name="edit-parent" slot="title" icon="fas fa-address-card" label="Editar persona" />
         <q-tab-pane name="parent">
           <div class="title">
             <h4></h4>
