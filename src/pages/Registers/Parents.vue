@@ -16,7 +16,7 @@
         </q-tab-pane>
       </q-tabs>
       <div class="bottom"></div>
-      <q-btn round icon="fas fa-child" to="child" color="deep-orange" label="Registrar menor">
+      <q-btn icon="fas fa-child" to="child" color="deep-orange" label="Registrar menor">
         <q-tooltip>Registrar menor</q-tooltip>
       </q-btn>
       <div class="bottom"></div>
@@ -37,13 +37,13 @@ export default {
   },
   methods: {
     clearValues: function () {
-      for (var i in this.fields) {
-        this.fields[i] = null
-        this.errors = []
+      for (var i in this.$refs['parentsComponent'].parentsfields) {
+        this.$refs['parentsComponent'].parentsfields[i] = null
+        this.$refs['parentsComponent'].parentsfields.errors = []
       }
     },
     registerParent () {
-      console.log(this.$refs['parentsComponent'].parentsfields)
+      this.$refs['parentsComponent'].parentsfields['is_active'] = true
       this.$axios.post('/parents/', this.$refs['parentsComponent'].parentsfields).then(response => {
         this.clearValues()
         this.$root.alertNotify('positive', 'Registro ingresado correctamente', 'green', '', 'top')

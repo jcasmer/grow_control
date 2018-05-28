@@ -44,6 +44,12 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
+        <q-input float-label="Teléfono" v-model="parentsfields.phone_number" placeholder="Ingrese el teléfono"/>
+        <div class="lbl-error" v-if="errors.phone_number != 0 && errors.phone_number != null">
+            {{ errors.phone_number[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
         <q-select v-model="parentsfields.social_stratum" :options="selectSolcialStratumOptions" separator float-label="Estrato social"/>
         <div class="lbl-error" v-if="errors.social_stratum != 0 && errors.social_stratum != null">
             {{ errors.social_stratum[0] }}
@@ -69,13 +75,6 @@
 <script>
 export default {
   name: 'ParentsComponent',
-  // props: {
-  //   parentsfields: Object,
-  //   errors: Object,
-  //   selectDocumentTypeOptions: Array,
-  //   selectStatusOptions: Array,
-  //   selectGenderOptions: Array
-  // },
   data () {
     return {
       parentsfields: {
@@ -178,11 +177,11 @@ export default {
         {
           label: 'Estrato 5',
           value: '5'
-        },
-        {
-          label: 'Otro',
-          value: '6'
         }
+        // {
+        //   label: 'Otro',
+        //   value: '6'
+        // }
       ]
     }
   },
