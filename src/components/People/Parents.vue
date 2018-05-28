@@ -38,12 +38,6 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-select v-model="parentsfields.gender" :options="selectGenderOptions" separator float-label="Género"/>
-        <div class="lbl-error" v-if="errors.gender != 0 && errors.gender != null">
-            {{ errors.gender[0] }}
-        </div>
-      </div>
-      <div class="col-lg-4 col-xs-12 padding">
         <q-input float-label="Correo electrónico" v-model="parentsfields.email" placeholder="Ingrese el correo"/>
         <div class="lbl-error" v-if="errors.email != 0 && errors.email != null">
             {{ errors.email[0] }}
@@ -53,6 +47,18 @@
         <q-select v-model="parentsfields.social_stratum" :options="selectSolcialStratumOptions" separator float-label="Estrato social"/>
         <div class="lbl-error" v-if="errors.social_stratum != 0 && errors.social_stratum != null">
             {{ errors.social_stratum[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-input type=number float-label="Altura" :decimals="2" v-model="parentsfields.height" placeholder="Ingrese el altura" maxlength="4"/>
+        <div class="lbl-error" v-if="errors.height != 0 && errors.height != null">
+            {{ errors.height[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-input type=number float-label="Peso" :decimals="2" v-model="parentsfields.weight" placeholder="Ingrese el peso" maxlength="4"/>
+        <div class="lbl-error" v-if="errors.weight != 0 && errors.weight != null">
+            {{ errors.weight[0] }}
         </div>
       </div>
     </div>
@@ -179,9 +185,32 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    getRelationship () {
+      let parameters = {
+        nopaginate: 'nopaginate',
+        is_active: 'True',
+        ordering: 'name'
+      }
+      this.$axios.get('/relationship/', {
+        params: parameters
+      }).then(response => {
+        let values = response.data
+        this.selectRelationshipOptions.push({value: null, label: ''})
+        for (var data in values) {
+          this.selectRelationshipOptions.push({value: values[data].id, label: values[data].name})
+        }
+      }
+      ).catch(error => {
+        error = null
+      })
+    }
+  },
+  created () {
+    this.getRelationship()
   }
 }
 </script>
-
 <style>
 </style>
