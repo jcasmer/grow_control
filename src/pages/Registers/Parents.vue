@@ -10,7 +10,7 @@
           </div>
           <parents-component ref="parentsComponent">
           </parents-component>
-          <div class="text-center padding">
+          <div class="text-left padding">
             <q-btn loader @click="registerParent" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
           </div>
         </q-tab-pane>
@@ -31,10 +31,13 @@
             </q-btn>
           </div>
           <br><br>
-          <div v-show="idParent !== null">
+          <div class="row xl-gutter form-group" v-show="idParent !== null">
             <parents-component ref="editParentsComponent">
             </parents-component>
-            <div class="text-center padding">
+            <div class="padding text-right">
+              <q-btn loader @click="deleteParent" color="negative">Eliminar<span slot="loading">Procesando...</span></q-btn>
+            </div>
+            <div class="padding text-left">
               <q-btn loader @click="editParent" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
             </div>
           </div>
@@ -78,7 +81,6 @@ export default {
       }
     },
     searchParent () {
-      console.log()
       if (this.document === null || this.document.trim() === '') {
         this.errors.document = ['Este campo no puede ser nulo.']
         this.idParent = null
@@ -139,6 +141,29 @@ export default {
           }
           this.$refs['editParentsComponent'].errors = error.response.data
         }
+      })
+    },
+    deleteParent () {
+      let deleteUrl = '/parents/' + this.idParent + '/'
+      this.$q.dialog({
+        title: '¿Eliminar registro?',
+        message: 'Está seguro que desea eliminar este registro',
+        ok: 'Aceptar',
+        cancel: 'Cancelar'
+      }).then(() => {
+        this.$axios.delete(deleteUrl
+        ).then(response => {
+          this.request({ pagination: this.serverPagination, filter: this.filter })
+          this.selected = []
+          this.$root.alertNotify('positive', 'Se ha eliminado el registro exitosamente.', 'green', '', 'top')
+        }).catch(error => {
+          if (error.response.data.error) {
+            this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 3000)
+          } else {
+            this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', '', 'top')
+          }
+        })
+      }).catch(() => {
       })
     }
   }
