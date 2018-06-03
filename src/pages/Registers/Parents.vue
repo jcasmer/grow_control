@@ -79,7 +79,7 @@ export default {
     },
     searchParent () {
       console.log()
-      if (this.document.trim() === null || this.document.trim() === '') {
+      if (this.document === null || this.document.trim() === '') {
         this.errors.document = ['Este campo no puede ser nulo.']
         this.idParent = null
         return
