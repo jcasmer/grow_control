@@ -30,7 +30,7 @@
               <q-tooltip>Buscar</q-tooltip>
             </q-btn>
           </div>
-          <br>
+          <br><br>
           <div v-show="idParent !== null">
             <parents-component ref="editParentsComponent">
             </parents-component>
@@ -86,13 +86,19 @@ export default {
       this.$axios.get('/parents/', {
         params: parameters
       }).then(response => {
-        this.idParent = response.data.id
-        this.$refs['editParentsComponent'].setValue(response.data)
+        if (response.data.length > 0) {
+          this.$refs['editParentsComponent'].setValue(response.data)
+          this.idParent = response.data[0].id
+        } else {
+          this.errors.document = null
+          this.document = null
+          this.idParent = null
+          this.$root.alertNotify('negative', 'No se encontró registro para el documento ingresado', 'red', '', 'top', 3000)
+        }
       }).catch(error => {
         this.errors.document = null
         this.document = null
         this.idParent = null
-        console.log(error)
         error = null
         this.$root.alertNotify('negative', 'No se encontró registro para el documento ingresado', 'red', '', 'top', 3000)
       })
@@ -112,16 +118,19 @@ export default {
       })
     },
     editParent () {
-      this.$refs['parentsComponent'].parentsfields['is_active'] = true
-      this.$axios.put('/parents/', this.$refs['parentsComponent'].parentsfields).then(response => {
-        this.clearValues()
+      let url = '/parents/' + this.idParent + '/'
+      console.log(url, this.idParent)
+      this.$axios.put(url, this.$refs['editParentsComponent'].parentsfields).then(response => {
+        this.errors.document = null
+        this.document = null
+        this.idParent = null
         this.$root.alertNotify('positive', 'Registro actualizado correctamente', 'green', '', 'top')
       }).catch(error => {
         if (error.response !== undefined) {
-          for (var i in this.$refs['parentsComponent'].parentsfields) {
-            this.$refs['parentsComponent'].errors[i] = ''
+          for (var i in this.$refs['editParentsComponent'].parentsfields) {
+            this.$refs['editParentsComponent'].errors[i] = ''
           }
-          this.$refs['parentsComponent'].errors = error.response.data
+          this.$refs['editParentsComponent'].errors = error.response.data
         }
       })
     }
