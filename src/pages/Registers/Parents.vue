@@ -25,16 +25,17 @@
                   {{ errors.document[0] }}
               </div>
             </div>
-            <q-btn round color="secondary" size="md">
+            <q-btn round color="secondary" size="md" @click="searchParent">
               <q-icon name="fas fa-search" />
               <q-tooltip>Buscar</q-tooltip>
             </q-btn>
           </div>
-          <div v-if="idParent">
-            <parents-component ref="parentsComponent">
+          <br>
+          <div v-show="idParent !== null">
+            <parents-component ref="editParentsComponent">
             </parents-component>
             <div class="text-center padding">
-              <q-btn loader @click="editParent" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
+              <q-btn loader @click="editParent" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
             </div>
           </div>
         </q-tab-pane>
@@ -76,23 +77,22 @@ export default {
         this.$refs['parentsComponent'].parentsfields.errors = []
       }
     },
-    setValue: function (value) {
-      for (var form in this.$refs['parentsComponent'].parentsfields) {
-        this.$set(this.$refs['parentsComponent'].parentsfields, form, value[form])
-      }
-    },
     searchParent () {
       let parameters = {
-        document: this.document
+        document: this.document,
+        nopaginate: 'nopaginate',
+        is_active: 1
       }
       this.$axios.get('/parents/', {
         params: parameters
       }).then(response => {
-        console.log(response)
+        this.idParent = response.data.id
+        this.$refs['editParentsComponent'].setValue(response.data)
       }).catch(error => {
         this.errors.document = null
         this.document = null
         this.idParent = null
+        console.log(error)
         error = null
         this.$root.alertNotify('negative', 'No se encontró registro para el documento ingresado', 'red', '', 'top', 3000)
       })

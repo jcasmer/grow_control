@@ -204,6 +204,9 @@ export default {
       ).catch(error => {
         error = null
       })
+    },
+    setValue: function (value) {
+      this.parentsfields = value[0]
     }
   },
   created () {
