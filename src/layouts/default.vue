@@ -3,6 +3,7 @@
     <q-layout-header >
       <q-toolbar
         color="primary"
+        :inverted="$q.theme === 'ios'"
       >
         <q-btn
           flat
@@ -23,10 +24,12 @@
 
     <q-layout-drawer
       v-model="leftDrawerOpen"
-      :content-class="$q.theme === 'mat' ? 'bg-grey-1' : 'null'"
-      behavior='desktop'
+      behavior = "desktop"
+      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+      overlay = "true"
+      @mouseover="leftDrawerOpen = true"
+      @mouseout="leftDrawerOpen = false"
     >
-      <q-list-header class="menu-header" >Menú de navegación</q-list-header>
       <list-masters></list-masters>
       <hr>
       <list-application></list-application>
@@ -54,9 +57,7 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      leftDrawerOpen: false,
-      hideRoute: true,
-      desktop: ''
+      leftDrawerOpen: false
     }
   },
   components: {

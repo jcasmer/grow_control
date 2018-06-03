@@ -55,7 +55,7 @@
         </div>
       </div>
       <br>
-      <div class="text-center">
+      <div class="text-left padding">
         <q-btn loader @click="registerUser" color="primary">Guardar<span slot="loading">Procesando...</span></q-btn>
       </div>
       <br><br>

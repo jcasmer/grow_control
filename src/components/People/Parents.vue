@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input type="number" float-label="Edad" v-model="parentsfields.age" placeholder="Ingrese la edad" maxlength="3"/>
+        <q-input float-label="Edad" v-model="parentsfields.age" placeholder="Ingrese la edad" maxlength="3"/>
         <div class="lbl-error" v-if="errors.age != 0 && errors.age != null">
             {{ errors.age[0] }}
         </div>
@@ -204,6 +204,10 @@ export default {
       ).catch(error => {
         error = null
       })
+    },
+    setValue: function (value) {
+      this.errors = []
+      this.parentsfields = value[0]
     }
   },
   created () {
