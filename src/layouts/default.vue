@@ -23,8 +23,7 @@
 
     <q-layout-drawer
       v-model="leftDrawerOpen"
-      :content-class="$q.theme === 'mat' ? 'bg-grey-1' : 'null'"
-      behavior='desktop'
+      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
     >
       <q-list-header class="menu-header" >Menú de navegación</q-list-header>
       <list-masters></list-masters>
@@ -54,9 +53,7 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      leftDrawerOpen: false,
-      hideRoute: true,
-      desktop: ''
+      leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
   components: {
