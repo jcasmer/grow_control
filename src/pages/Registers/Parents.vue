@@ -41,7 +41,7 @@
         </q-tab-pane>
       </q-tabs>
       <div class="bottom"></div>
-      <q-btn icon="fas fa-child" to="child" color="deep-orange" label="Registrar menor">
+      <q-btn round icon="fas fa-child" to="child" color="deep-orange" label="Registrar menor">
         <q-tooltip>Registrar menor</q-tooltip>
       </q-btn>
       <div class="bottom"></div>
@@ -78,6 +78,12 @@ export default {
       }
     },
     searchParent () {
+      console.log()
+      if (this.document === null || this.document === '') {
+        this.errors.document = ['Este campo no puede ser nulo.']
+        this.idParent = null
+        return
+      }
       let parameters = {
         document: this.document,
         nopaginate: 'nopaginate',
@@ -86,6 +92,7 @@ export default {
       this.$axios.get('/parents/', {
         params: parameters
       }).then(response => {
+        this.errors.document = null
         if (response.data.length > 0) {
           this.$refs['editParentsComponent'].setValue(response.data)
           this.idParent = response.data[0].id

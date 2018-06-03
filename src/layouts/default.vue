@@ -3,6 +3,7 @@
     <q-layout-header >
       <q-toolbar
         color="primary"
+        :inverted="$q.theme === 'ios'"
       >
         <q-btn
           flat
@@ -24,8 +25,8 @@
     <q-layout-drawer
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+      behavior = "desktop"
     >
-      <q-list-header class="menu-header" >Menú de navegación</q-list-header>
       <list-masters></list-masters>
       <hr>
       <list-application></list-application>
