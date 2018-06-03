@@ -24,8 +24,11 @@
 
     <q-layout-drawer
       v-model="leftDrawerOpen"
-      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
       behavior = "desktop"
+      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+      overlay = "true"
+      @mouseover="leftDrawerOpen = true"
+      @mouseout="leftDrawerOpen = false"
     >
       <list-masters></list-masters>
       <hr>

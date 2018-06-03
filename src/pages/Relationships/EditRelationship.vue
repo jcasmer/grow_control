@@ -19,9 +19,11 @@
         </div>
       </div>
       <br>
-      <div class="text-left padding">
-        <q-btn color="secondary" v-go-back=" '/relationship' " label="Atrás" >
-        </q-btn>
+      <div class="row xl-gutter form-group" >
+        <div class="text-left padding">
+          <q-btn color="secondary" v-go-back=" '/relationship' " label="Atrás" >
+          </q-btn>
+        </div>
         <q-btn loader @click="updateDiagnostic" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
       </div>
     </div>
