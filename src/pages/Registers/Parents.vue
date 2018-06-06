@@ -20,7 +20,7 @@
           </div>
           <div class="row xl-gutter form-group">
             <div class="col-lg-4 col-xs-6 padding">
-              <q-input float-label="Documento" v-model="document" placeholder="Ingrese el documento" maxlength="20"/>
+              <q-input type="number" float-label="Documento" v-model="document" placeholder="Ingrese el documento" maxlength="20"/>
               <div class="lbl-error" v-if="errors.document != 0 && errors.document != null">
                   {{ errors.document[0] }}
               </div>
@@ -81,7 +81,7 @@ export default {
       }
     },
     searchParent () {
-      if (this.document === null || this.document.trim() === '') {
+      if (this.document === null || this.document === '') {
         this.errors.document = ['Este campo no puede ser nulo.']
         this.idParent = null
         return
@@ -128,7 +128,6 @@ export default {
     },
     editParent () {
       let url = '/parents/' + this.idParent + '/'
-      console.log(url, this.idParent)
       this.$axios.put(url, this.$refs['editParentsComponent'].parentsfields).then(response => {
         this.errors.document = null
         this.document = null
@@ -153,8 +152,9 @@ export default {
       }).then(() => {
         this.$axios.delete(deleteUrl
         ).then(response => {
-          this.request({ pagination: this.serverPagination, filter: this.filter })
-          this.selected = []
+          this.errors.document = null
+          this.document = null
+          this.idParent = null
           this.$root.alertNotify('positive', 'Se ha eliminado el registro exitosamente.', 'green', '', 'top')
         }).catch(error => {
           if (error.response.data.error) {
