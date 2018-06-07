@@ -20,7 +20,7 @@
           </div>
           <div class="row xl-gutter form-group">
             <div class="col-lg-4 col-xs-6 padding">
-              <q-input type="number" float-label="Documento" v-model="document" placeholder="Ingrese el documento" maxlength="20"/>
+              <q-input float-label="Documento" v-model="document" placeholder="Ingrese el documento" maxlength="20"/>
               <div class="lbl-error" v-if="errors.document != 0 && errors.document != null">
                   {{ errors.document[0] }}
               </div>
@@ -44,7 +44,7 @@
         </q-tab-pane>
       </q-tabs>
       <div class="bottom"></div>
-      <q-btn round icon="fas fa-child" to="child" color="deep-orange" label="Registrar menor">
+      <q-btn round icon="fas fa-child" to="childs" color="deep-orange" label="Registrar menor">
         <q-tooltip>Registrar menor</q-tooltip>
       </q-btn>
       <div class="bottom"></div>
