@@ -49,6 +49,12 @@ module.exports = function (ctx) {
     framework: {
       i18n: 'es',
       components: [
+        'QCard',
+        'QCardTitle',
+        'QCardMain',
+        'QCardMedia',
+        'QCardSeparator',
+        'QCardActions',
         'QAlert',
         'QField',
         'QInput',
