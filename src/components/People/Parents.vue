@@ -32,12 +32,6 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-select v-model="parentsfields.relationship" :options="selectRelationshipOptions" separator float-label="Parentesco"/>
-        <div class="lbl-error" v-if="errors.relationship != 0 && errors.relationship != null">
-            {{ errors.relationship[0] }}
-        </div>
-      </div>
-      <div class="col-lg-4 col-xs-12 padding">
         <q-input float-label="Correo electrónico" v-model="parentsfields.email" placeholder="Ingrese el correo"/>
         <div class="lbl-error" v-if="errors.email != 0 && errors.email != null">
             {{ errors.email[0] }}
@@ -83,7 +77,6 @@ export default {
         name: null,
         age: null,
         gender: null,
-        relationship: null,
         phone_number: null,
         email: null,
         social_stratum: null,
@@ -97,7 +90,6 @@ export default {
         name: null,
         age: null,
         gender: null,
-        relationship: null,
         phone_number: null,
         email: null,
         social_stratum: null,
@@ -186,32 +178,10 @@ export default {
     }
   },
   methods: {
-    getRelationship () {
-      let parameters = {
-        nopaginate: 'nopaginate',
-        is_active: 'True',
-        ordering: 'name'
-      }
-      this.$axios.get('/relationship/', {
-        params: parameters
-      }).then(response => {
-        let values = response.data
-        this.selectRelationshipOptions.push({value: null, label: ''})
-        for (var data in values) {
-          this.selectRelationshipOptions.push({value: values[data].id, label: values[data].name})
-        }
-      }
-      ).catch(error => {
-        error = null
-      })
-    },
     setValue: function (value) {
       this.errors = []
       this.parentsfields = value[0]
     }
-  },
-  created () {
-    this.getRelationship()
   }
 }
 </script>

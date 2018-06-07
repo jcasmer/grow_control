@@ -26,7 +26,7 @@
       v-model="leftDrawerOpen"
       behavior = "desktop"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
-      overlay = "true"
+      :overlay="overlay"
       @mouseover="leftDrawerOpen = true"
       @mouseout="leftDrawerOpen = false"
     >
@@ -57,7 +57,8 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
+      overlay: true
     }
   },
   components: {

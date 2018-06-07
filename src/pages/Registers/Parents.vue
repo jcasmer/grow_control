@@ -44,7 +44,7 @@
         </q-tab-pane>
       </q-tabs>
       <div class="bottom"></div>
-      <q-btn round icon="fas fa-child" to="child" color="deep-orange" label="Registrar menor">
+      <q-btn round icon="fas fa-child" to="childs" color="deep-orange" label="Registrar menor">
         <q-tooltip>Registrar menor</q-tooltip>
       </q-btn>
       <div class="bottom"></div>
@@ -81,7 +81,7 @@ export default {
       }
     },
     searchParent () {
-      if (this.document === null || this.document.trim() === '') {
+      if (this.document === null || this.document === '') {
         this.errors.document = ['Este campo no puede ser nulo.']
         this.idParent = null
         return
@@ -128,7 +128,6 @@ export default {
     },
     editParent () {
       let url = '/parents/' + this.idParent + '/'
-      console.log(url, this.idParent)
       this.$axios.put(url, this.$refs['editParentsComponent'].parentsfields).then(response => {
         this.errors.document = null
         this.document = null
@@ -153,8 +152,9 @@ export default {
       }).then(() => {
         this.$axios.delete(deleteUrl
         ).then(response => {
-          this.request({ pagination: this.serverPagination, filter: this.filter })
-          this.selected = []
+          this.errors.document = null
+          this.document = null
+          this.idParent = null
           this.$root.alertNotify('positive', 'Se ha eliminado el registro exitosamente.', 'green', '', 'top')
         }).catch(error => {
           if (error.response.data.error) {
