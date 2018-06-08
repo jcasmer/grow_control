@@ -9,6 +9,10 @@
       <q-item-side icon="fas fa-id-badge" />
       <q-item-main label="Registro Responsable" sublabel="Familiar del menor" />
     </q-item>
+    <q-item  :to="{ name: 'childs' }">
+      <q-item-side icon="fas fa-child" />
+      <q-item-main label="Registro Menor" sublabel="" />
+    </q-item>
   </q-list>
 </template>
 
