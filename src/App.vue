@@ -55,4 +55,8 @@ export default {
 .padding{
   padding: 0 10px
 }
+.bottom{
+  margin-bottom: 50px;
+  visibility: hidden;
+}
 </style>
