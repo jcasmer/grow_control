@@ -1,29 +1,22 @@
 <template>
   <q-page padding>
     <div class="container">
-      <q-card >
-        <q-card-title>
-          Registro menor
-        </q-card-title>
-        <q-card-separator />
-        <q-card-main>
-          <childs-component ref="childsComponent">
-          </childs-component>
-        </q-card-main>
-        <q-card-separator />
-        <q-card-title>
-          Asociar familiar
-        </q-card-title>
-        <q-card-separator color="black"/>
-        <q-card-main>
-        </q-card-main>
-        <childs-parents-component ref="childsParentsComponent">
-        </childs-parents-component>
-        <q-card-separator />
-        <q-card-actions>
-          <q-btn square color="primary">Guardar todo  <span slot="loading">Procesando...</span></q-btn>
-        </q-card-actions>
-      </q-card>
+       <q-alert color="tertiary">
+        Registro menor
+      </q-alert>
+      <br>
+      <childs-component ref="childsComponent">
+      </childs-component>
+      <q-alert color="tertiary">
+         Asociar familiar
+      </q-alert>
+      <br>
+      <childs-parents-component ref="childsParentsComponent">
+      </childs-parents-component>
+      <br>
+      <div class="text-left padding">
+        <q-btn square color="primary">Guardar todo  <span slot="loading">Procesando...</span></q-btn>
+      </div>
     </div>
   </q-page>
 </template>

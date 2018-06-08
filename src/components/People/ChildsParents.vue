@@ -16,7 +16,8 @@
       <div class="padding text-left">
         <q-btn loader @click="addParent" color="secondary">Añadir familiar<span slot="loading">Procesando...</span></q-btn>
       </div>
-      <div class="col-lg-12 padding">
+      <div class="bottom"></div>
+      <div class="col-12 padding">
         <q-table ref="tableParents"
           title="Familiar"
           :data="serverData"
@@ -140,5 +141,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.bottom{
+  margin-bottom: 50px;
+  visibility: hidden;
+}
 </style>
