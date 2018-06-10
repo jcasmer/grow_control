@@ -2,8 +2,8 @@
   <q-page padding>
     <div class="container">
       <q-tabs color="secondary" inverted align="justify">
-        <q-tab default name="parent" slot="title" icon="far fa-id-card" label="Registrar familiar" />
-        <q-tab  name="edit-parent" slot="title" icon="fas fa-address-card" label="Editar persona" @click="cleanField" />
+        <q-tab default name="parent" slot="title" icon="far fa-id-card" label="Registrar responsable" />
+        <q-tab  name="edit-parent" slot="title" icon="fas fa-address-card" label="Editar información del responsable" @click="cleanField" />
         <q-tab-pane name="parent">
           <div class="title">
             <h4></h4>
@@ -44,10 +44,10 @@
         </q-tab-pane>
       </q-tabs>
       <div class="bottom"></div>
-      <q-btn round icon="fas fa-child" to="childs" color="deep-orange" label="Registrar menor">
-        <q-tooltip>Registrar menor</q-tooltip>
-      </q-btn>
       <div class="bottom"></div>
+      <q-btn round icon="fas fa-child" to="childs" color="deep-orange" label="Registrar menor">
+        <q-tooltip>Ir a registro menor</q-tooltip>
+      </q-btn>
     </div>
   </q-page>
 </template>

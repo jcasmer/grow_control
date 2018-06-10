@@ -72,6 +72,11 @@ export default {
     }
   },
   methods: {
+    cleanField () {
+      this.errors.document = null
+      this.document = null
+      this.idChild = null
+    },
     getRelationship () {
       let parameters = {
         nopaginate: 'nopaginate',
