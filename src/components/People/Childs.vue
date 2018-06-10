@@ -90,6 +90,16 @@ export default {
       ).catch(error => {
         error = null
       })
+    },
+    clearValues: function () {
+      for (var i in this.childsfields) {
+        this.childsfields[i] = null
+      }
+    },
+    clearErrorValues: function () {
+      for (var j in this.childsfields) {
+        this.errorsChildsFields[j] = null
+      }
     }
   },
   created () {

@@ -8,7 +8,7 @@
       <childs-component ref="childsComponent">
       </childs-component>
       <q-alert color="tertiary">
-         Asociar familiar
+        Asociar familiar
       </q-alert>
       <br>
       <childs-parents-component ref="childsParentsComponent">
@@ -36,8 +36,10 @@ export default {
   },
   methods: {
     registerChild () {
-      if (this.$refs['childsParentsComponent'].serverData.length === 0) {
-        this.$root.alertNotify('warning', 'Debe ingresar al menos un familiar', 'red', 'fas fa-info-circle', 'top', 3000)
+      let obj = this.$refs['childsComponent'].childsfields
+      if (Object.keys(obj).every((k) => obj[k]) && this.$refs['childsParentsComponent'].serverData.length === 0) {
+        this.$refs['childsComponent'].clearErrorValues()
+        this.$root.alertNotify('negative', 'Debe ingresar al menos un familiar', 'red', 'fas fa-info-circle', 'top', 3000)
         return
       }
       let childArray = {}
@@ -48,16 +50,14 @@ export default {
       let registrationForm = []
       registrationForm.push(childArray)
       this.$axios.post('/register-child/', registrationForm).then(response => {
-        this.$q.loading.show()
+        this.$refs['childsComponent'].clearValues()
+        this.$refs['childsComponent'].clearErrorValues()
+        this.$refs['childsComponent'].serverData = []
         this.$root.alertNotify('positive', 'Registro ingresado correctamente', 'green', '', 'top')
       }).catch(error => {
-        this.$q.loading.hide()
         if (error.response !== undefined) {
           if (error.response.data.error) {
-            this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 7000)
-          }
-          for (var i in this.$refs['childsComponent'].childsfields) {
-            this.$refs['childsComponent'].childsfields[i] = null
+            this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 6000)
           }
           this.$refs['childsComponent'].errorsChildsFields = error.response.data
         }
