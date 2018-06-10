@@ -96,7 +96,8 @@ module.exports = function (ctx) {
         'LocalStorage',
         'SessionStorage',
         'Notify',
-        'Dialog'
+        'Dialog',
+        'Loading'
       ]
     },
     animations: 'all', //--- includes all animations
