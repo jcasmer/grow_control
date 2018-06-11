@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="row xl-gutter form-group">
+  <div>
+    <div class="row xl-gutter">
       <div class="col-lg-4 col-xs-6 padding">
         <q-input float-label="Documento" v-model="document" placeholder="Ingrese el documento" maxlength="20"/>
         <div class="lbl-error" v-if="errors.document != 0 && errors.document != null">
@@ -11,15 +11,18 @@
         <q-icon name="fas fa-search" />
         <q-tooltip>Buscar</q-tooltip>
       </q-btn>
-      <div class="row xl-gutter form-group" v-show="idChild !== null">
+    </div>
+    <br>
+    <div v-show="idChild !== null">
         <childs-component ref="childComponent">
         </childs-component>
-        <div class="padding text-right">
-          <q-btn loader @click="deleteChild" color="negative">Eliminar<span slot="loading">Procesando...</span></q-btn>
-        </div>
-        <div class="padding text-left">
-          <q-btn loader @click="editChild" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
-        </div>
+    </div>
+    <div class="row xl-gutter form-group" v-show="idChild !== null">
+      <div class="padding text-left">
+        <q-btn loader @click="deleteChild" color="negative">Eliminar<span slot="loading">Procesando...</span></q-btn>
+      </div>
+      <div class="padding text-left">
+        <q-btn loader @click="editChild" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
       </div>
     </div>
   </div>
@@ -43,8 +46,8 @@ export default {
   },
   methods: {
     setValue: function (value) {
-      // this.$refs['childComponent']errors = []
       this.$refs['childComponent'].childsfields = value[0]
+      this.$refs['childComponent'].age = value[0].age
     },
     searchChild () {
       if (this.document === null || this.document === '') {

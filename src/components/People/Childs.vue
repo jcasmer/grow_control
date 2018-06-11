@@ -19,6 +19,7 @@
             {{ errorsChildsFields.gender[0] }}
         </div>
       </div>
+      <br><br><br>
       <div class="col-lg-4 col-xs-12 padding">
         <q-datetime
           type="date" float-label="Fecha Nacimiento"
@@ -28,6 +29,9 @@
         <div class="lbl-error" v-if="errorsChildsFields.date_born != 0 && errorsChildsFields.date_born != null">
             {{ errorsChildsFields.date_born[0] }}
         </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding" v-show="age !== null">
+        <q-input float-label="Edad" v-model="age" placeholder="Edad" readonly/>
       </div>
     </div>
     <br>
@@ -41,6 +45,7 @@ export default {
   data () {
     return {
       max: today,
+      age: null,
       childsfields: {
         document: null,
         name: null,
