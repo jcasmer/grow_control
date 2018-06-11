@@ -14,7 +14,12 @@
         </div>
       </div>
       <div class="padding text-left">
-        <q-btn loader @click="addParent" color="secondary">Añadir familiar<span slot="loading">Procesando...</span></q-btn>
+        <q-btn loader @click="addParent" color="secondary">Añadir Responsable<span slot="loading">Procesando...</span></q-btn>
+      </div>
+      <div class="padding text-right">
+        <q-btn round icon="fas fa-child" to="parents" color="deep-orange" label="Registrar menor">
+          <q-tooltip>Ir a registro responsable</q-tooltip>
+        </q-btn>
       </div>
       <div class="bottom"></div>
       <div class="col-12 padding">
