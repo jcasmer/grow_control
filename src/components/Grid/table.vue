@@ -19,7 +19,7 @@
     <template slot="top-selection" slot-scope="props">
       <div class="col">
         <span>Acciones registro selecionado</span>
-        <q-btn color="positive" flat round  icon="far fa-edit" @click="editRow" tooltip="Editar registro seleccionado">
+        <q-btn v-show="showBtnEdit" color="positive" flat round  icon="far fa-edit" @click="editRow" tooltip="Editar registro seleccionado">
           <q-tooltip>Editar registro seleccionado</q-tooltip>
         </q-btn>
         <q-btn color="negative" flat round delete icon="delete" @click="deleteRow" tooltip="Eliminar registro seleccionado" >
@@ -61,7 +61,8 @@ export default {
       selection: 'single',
       selected: [],
       url: '',
-      serverData: []
+      serverData: [],
+      showBtnEdit: this.btnEdit
     }
   },
   props: {
@@ -81,10 +82,15 @@ export default {
       // we set QTable to "loading" state
       this.loading = true
       this.selected = []
+      let parameters = {}
       let ordering = `${pagination.descending}` === 'true' && `${pagination.descending}` !== null ? String(`${pagination.sortBy}`) : '-' + String(`${pagination.sortBy}`)
-      let parameters = {
-        page: `${pagination.page}`,
-        ordering: ordering
+      if (filter === null || filter === '') {
+        parameters = {
+          page: `${pagination.page}`,
+          ordering: ordering
+        }
+      } else {
+        parameters = filter
       }
       this.$axios.get(this.url, {
         params: parameters
@@ -144,6 +150,11 @@ export default {
       pagination: this.serverPagination,
       filter: this.filter
     })
+    if (typeof this.btnEdit !== 'undefined') {
+      this.showBtnEdit = false
+    } else {
+      this.showBtnEdit = true
+    }
   }
 }
 </script>

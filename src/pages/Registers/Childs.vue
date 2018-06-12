@@ -3,7 +3,7 @@
     <div class="container">
       <q-tabs color="secondary" inverted align="justify">
         <q-tab default name="child" slot="title" icon="far fa-id-card" label="Registrar Menor" />
-        <q-tab  name="edit-child" slot="title" icon="fas fa-address-card" label="Editar Información del menor" @click="cleanField" />
+        <q-tab  name="edit-child" slot="title" icon="fas fa-address-card" label="Editar Información del menor" />
         <q-tab-pane name="child">
           <q-alert color="tertiary">
             Registro menor
