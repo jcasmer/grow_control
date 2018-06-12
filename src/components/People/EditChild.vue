@@ -23,12 +23,15 @@
         v-bind:urlDelete="urlDelete" v-bind:btnEdit="btnEdit"
       >
       </grid-table>
-      <br><br><br>
-      <div class="padding text-left">
-        <q-btn loader @click="deleteChild" color="negative">Eliminar<span slot="loading">Procesando...</span></q-btn>
-      </div>
-      <div class="padding text-left">
-        <q-btn loader @click="editChild" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
+      <div class="bottom"></div>
+      <div class="bottom"></div>
+      <div class="row xl-gutter buttons">
+        <div class="padding text-left">
+          <q-btn loader @click="deleteChild" color="negative">Eliminar<span slot="loading">Procesando...</span></q-btn>
+        </div>
+        <div class="padding text-left">
+          <q-btn loader @click="editChild" color="primary">Actualizar<span slot="loading">Procesando...</span></q-btn>
+        </div>
       </div>
     </div>
   </div>
@@ -114,7 +117,6 @@ export default {
           this.$root.alertNotify('negative', 'No se encontró registro para el documento ingresado', 'red', '', 'top', 3000)
         }
       }).catch(error => {
-        console.log(error)
         this.errors.document = null
         this.document = null
         this.idChild = null
@@ -148,5 +150,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.buttons {
+  margin-top: 15px;
+}
 </style>
