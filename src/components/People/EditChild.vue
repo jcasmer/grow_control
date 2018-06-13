@@ -83,14 +83,15 @@ export default {
       },
       columns: [
         { name: 'id', label: '#', field: 'id', sortable: true },
-        { name: 'parent', label: 'Responsable', field: 'parent.document', sortable: true },
+        { name: 'parent_document', label: 'Documento Responsable', field: 'parent_document', sortable: true },
+        { name: 'parent', label: 'Responsable', field: 'parent', sortable: true },
         { name: 'relationship', label: 'Parentesco', field: 'relationship', sortable: true },
         { name: 'created_at', label: 'Fecha Creación', field: 'created_at', sortable: true },
         { name: 'created_by', label: 'Creado Por', field: 'created_by', sortable: true },
         { name: 'updated_at', label: 'Fecha Modificación', field: 'updated_at', sortable: true },
         { name: 'updated_by', label: 'Modificado Por', field: 'updated_by', sortable: true }
       ],
-      visibleColumns: ['parent', 'relationship', 'created_at', 'created_by', 'updated_at', 'updated_by'],
+      visibleColumns: ['parent_document', 'parent', 'relationship', 'created_at'],
       filterFields: {
         'created_by__username__icontains': '',
         'created_at': '',
@@ -206,37 +207,39 @@ export default {
         params: this.parentsfields
       }).then(response => {
         this.loading = true
+        console.log(response.data.id, 'sss')
         this.parentId = response.data.id
+        if (this.parentId === null) {
+          return
+        }
+        this.loading = false
+        let parentChildParameters = {
+          child: this.idChild,
+          parent: this.parentId,
+          relationship: this.parentsfields.relationship
+        }
+        let filter = {
+          child: this.idChild
+        }
+        this.$axios.post('/parents-childs/', parentChildParameters).then(response => {
+          this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: filter })
+          this.$root.alertNotify('positive', 'Se ha registrado responsable exitosamente', 'green', '', 'top')
+        }).catch(error => {
+          if (error.response !== undefined) {
+            for (var i in this.fields) {
+              this.errorsParents[i] = ''
+            }
+            this.errorsParents = error.response.data
+            this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: filter })
+          }
+        })
+        this.parentsfields.document = null
+        this.parentsfields.relationship = null
       }).catch(error => {
         for (var i in this.parentsfields) {
           this.errorsParents[i] = null
         }
         this.errorsParents = error.response.data
-      })
-      if (this.parentId === null) {
-        return
-      }
-      this.loading = false
-      let parentChildParameters = {
-        child: this.idChild,
-        parent: this.parentId,
-        relationship: this.parentsfields.relationship
-      }
-      let filter = {
-        child: this.idChild
-      }
-      this.$axios.post('/parents-childs/', parentChildParameters).then(response => {
-        this.clearValues()
-        this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: filter })
-        this.$root.alertNotify('positive', 'Se ha registrado responsable exitosamente', 'green', '', 'top')
-      }).catch(error => {
-        if (error.response !== undefined) {
-          for (var i in this.parentsfields) {
-            this.errorsParents[i] = ''
-          }
-          this.errorsParents = error.response.data
-          this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: filter })
-        }
       })
     },
     editChild () {
