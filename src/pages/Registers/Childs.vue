@@ -12,7 +12,7 @@
           <childs-component ref="childsComponent">
           </childs-component>
           <q-alert color="tertiary">
-            Asociar familiar
+            Asociar responsable
           </q-alert>
           <br>
           <childs-parents-component ref="childsParentsComponent">

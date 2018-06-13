@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding" v-show="age !== null">
-        <q-input float-label="Edad" v-model="age" placeholder="Edad" readonly/>
+        <q-input float-label="Edad (años)" v-model="age" placeholder="Edad" readonly/>
       </div>
     </div>
     <br>
