@@ -2,7 +2,7 @@
   <div>
     <div class="row xl-gutter">
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input float-label="Documento familiar" v-model="parentsfields.document" placeholder="Ingrese el documento" maxlength="20"/>
+        <q-input float-label="Documento responsable" v-model="parentsfields.document" placeholder="Ingrese el documento" maxlength="20"/>
         <div class="lbl-error" v-if="errorsParents.document != 0 && errorsParents.document != null">
             {{ errorsParents.document[0] }}
         </div>
