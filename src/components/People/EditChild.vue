@@ -151,6 +151,9 @@ export default {
       this.$refs['childComponent'].age = value[0].age
     },
     searchChild () {
+      for (var i in this.$refs['childComponent'].childsfields) {
+        this.$refs['childComponent'].errorsChildsFields[i] = ''
+      }
       if (this.document === null || this.document === '') {
         this.errors.document = ['Este campo no puede ser nulo.']
         this.idChild = null
@@ -191,8 +194,8 @@ export default {
       })
     },
     validateParents () {
-      for (var i in this.serverData) {
-        if (this.serverData[i].document === this.parentsfields.document) {
+      for (var i in this.$refs.table.serverData) {
+        if (this.$refs.table.serverData[i].parent_document === this.parentsfields.document) {
           this.$root.alertNotify('negative', 'El documento: ' + this.parentsfields.document + ' ya se ingresó', 'red', '', 'top', 3000)
           return false
         }
@@ -207,7 +210,6 @@ export default {
         params: this.parentsfields
       }).then(response => {
         this.loading = true
-        console.log(response.data.id, 'sss')
         this.parentId = response.data.id
         if (this.parentId === null) {
           return
@@ -244,17 +246,16 @@ export default {
     },
     editChild () {
       let url = '/childs/' + this.idChild + '/'
-      this.$axios.put(url, this.$refs['editParentsComponent'].parentsfields).then(response => {
-        this.errors.document = null
-        this.document = null
-        this.idParent = null
+      this.$axios.put(url, this.$refs['childComponent'].childsfields).then(response => {
+        this.cleanField()
         this.$root.alertNotify('positive', 'Registro actualizado correctamente', 'green', '', 'top')
       }).catch(error => {
         if (error.response !== undefined) {
-          for (var i in this.$refs['editParentsComponent'].parentsfields) {
-            this.$refs['editParentsComponent'].errors[i] = ''
+          for (var i in this.$refs['childComponent'].childsfields) {
+            this.$refs['childComponent'].errorsChildsFields[i] = ''
           }
-          this.$refs['editParentsComponent'].errors = error.response.data
+          this.$refs['childComponent'].errorsChildsFields = error.response.data
+          this.$root.alertNotify('negative', 'Se presentaron errores. Verifique campos', 'red', '', 'top')
         }
       })
     },
