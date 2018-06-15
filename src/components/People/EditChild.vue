@@ -245,6 +245,8 @@ export default {
       })
     },
     editChild () {
+      let dateBorn = this.$refs['childComponent'].childsfields.date_born
+      this.$refs['childComponent'].childsfields.date_born = dateBorn != null && dateBorn !== '' ? String(dateBorn).substring(0, 10) : null
       let url = '/childs/' + this.idChild + '/'
       this.$axios.put(url, this.$refs['childComponent'].childsfields).then(response => {
         this.cleanField()
@@ -260,7 +262,26 @@ export default {
       })
     },
     deleteChild () {
-      //  delete
+      let deleteUrl = '/childs/' + this.idChild + '/'
+      this.$q.dialog({
+        title: '¿Eliminar registro?',
+        message: 'Está seguro que desea eliminar este registro',
+        ok: 'Aceptar',
+        cancel: 'Cancelar'
+      }).then(() => {
+        this.$axios.delete(deleteUrl
+        ).then(response => {
+          this.cleanField()
+          this.$root.alertNotify('positive', 'Se ha eliminado el registro exitosamente.', 'green', '', 'top')
+        }).catch(error => {
+          if (error.response.data.error) {
+            this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 3000)
+          } else {
+            this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', '', 'top')
+          }
+        })
+      }).catch(() => {
+      })
     }
   },
   created () {
