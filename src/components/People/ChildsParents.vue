@@ -24,7 +24,7 @@
       <div class="bottom"></div>
       <div class="col-12 padding">
         <q-table ref="tableParents"
-          title="Familiar"
+          title="Responsable(s) menor"
           :data="serverData"
           :columns="columns"
           row-key= "document"
