@@ -2,7 +2,7 @@
   <div>
     <div class="row xl-gutter" id="form-advice">
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input float-label="Documento" v-model="childsfields.document" placeholder="Ingrese el documento" maxlength="20"/>
+        <q-input float-label="Identificación o Registro de identidad" v-model="childsfields.document" placeholder="Ingrese el documento" maxlength="20"/>
         <div class="lbl-error" v-if="errorsChildsFields.document != 0 && errorsChildsFields.document != null">
             {{ errorsChildsFields.document[0] }}
         </div>
@@ -33,6 +33,30 @@
       <div class="col-lg-4 col-xs-12 padding" v-show="age !== null">
         <q-input float-label="Edad (años)" v-model="age" placeholder="Edad" readonly/>
       </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-input float-label="Altura al nacer" v-model="childsfields.height_born" placeholder="Ingrese la altura al nacer" maxlength="5"/>
+        <div class="lbl-error" v-if="errorsChildsFields.height_born != 0 && errorsChildsFields.height_born != null">
+            {{ errorsChildsFields.height_born[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-input float-label="Peso al nacer" v-model="childsfields.weight_born" placeholder="Ingrese el peso al nacer" maxlength="5"/>
+        <div class="lbl-error" v-if="errorsChildsFields.weight_born != 0 && errorsChildsFields.weight_born != null">
+            {{ errorsChildsFields.weight_born[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-input float-label="¿Con quién vive el menor?" v-model="childsfields.child_live" placeholder="Ingrese con quién vive el menor" maxlength="150"/>
+        <div class="lbl-error" v-if="errorsChildsFields.child_live != 0 && errorsChildsFields.child_live != null">
+            {{ errorsChildsFields.child_live[0] }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-xs-12 padding">
+        <q-input float-label="Edad en que se abandona la lactancia materna" v-model="childsfields.age_breastfeeding" placeholder="Ingrese edad en que se abandona la lactancia materna" maxlength="20"/>
+        <div class="lbl-error" v-if="errorsChildsFields.age_breastfeeding != 0 && errorsChildsFields.age_breastfeeding != null">
+            {{ errorsChildsFields.age_breastfeeding[0] }}
+        </div>
+      </div>
     </div>
     <br>
   </div>
@@ -50,13 +74,21 @@ export default {
         document: null,
         name: null,
         gender: null,
-        date_born: null
+        date_born: null,
+        height_born: null,
+        weight_born: null,
+        child_live: null,
+        age_breastfeeding: null
       },
       errorsChildsFields: {
         document: null,
         name: null,
         gender: null,
-        date_born: null
+        date_born: null,
+        height_born: null,
+        weight_born: null,
+        child_live: null,
+        age_breastfeeding: null
       },
       selectGenderOptions: [
         {
