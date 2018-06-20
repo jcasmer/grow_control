@@ -56,7 +56,7 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input type=number float-label="Peso (kg)" :decimals="2" v-model="parentsfields.weight" placeholder="Ingrese el peso (kg)" maxlength="4"/>
+        <q-input type=number float-label="Peso (kg)" v-model="parentsfields.weight" placeholder="Ingrese el peso (kg)" maxlength="4"/>
         <div class="lbl-error" v-if="errors.weight != 0 && errors.weight != null">
             {{ errors.weight[0] }}
         </div>
