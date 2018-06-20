@@ -62,6 +62,13 @@ export default [
       { path: '/childs', name: 'childs', component: () => import('pages/Registers/Childs') }
     ]
   },
+  {
+    path: '/controlchilds',
+    component: () => import('layouts/default'),
+    children: [
+      { path: '/controlchilds', name: 'controlchilds', component: () => import('pages/Control/Childs') }
+    ]
+  },
   { // Always leave this as last one
     path: '*',
     component: () => import('pages/404')
