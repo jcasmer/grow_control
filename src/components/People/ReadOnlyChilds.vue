@@ -78,6 +78,16 @@ export default {
         child_live: null,
         age_breastfeeding: null
       },
+      errorsChildsFields: {
+        document: null,
+        name: null,
+        gender: null,
+        date_born: null,
+        height_born: null,
+        weight_born: null,
+        child_live: null,
+        age_breastfeeding: null
+      },
       selectRelationshipOptions: []
     }
   },

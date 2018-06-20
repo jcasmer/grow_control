@@ -74,6 +74,7 @@ export default {
       }).then(response => {
         this.errors.document = null
         if (response.data.length > 0) {
+          console.log(response.data)
           this.$refs['readonlyChildComponent'].setValue(response.data)
           this.idChild = response.data[0].id
         } else {
