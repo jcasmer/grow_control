@@ -14,7 +14,7 @@
       <q-item-main label="Registro Menor" sublabel="" />
     </q-item>
     <q-item  :to="{ name: 'controlchilds' }">
-      <q-item-side icon="fas fa-child" />
+      <q-item-side icon="fas fa-calendar-check" />
       <q-item-main label="Control del Menor" sublabel="" />
     </q-item>
   </q-list>
