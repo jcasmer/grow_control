@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input float-label="Edad en que se abandona la lactancia materna" v-model="childsfields.age_breastfeeding" placeholder="Ingrese edad en que se abandona la lactancia materna" maxlength="20"/>
+        <q-input readonly float-label="Edad en que se abandona la lactancia materna" v-model="childsfields.age_breastfeeding" placeholder="Ingrese edad en que se abandona la lactancia materna" maxlength="20"/>
         <div class="lbl-error" v-if="errorsChildsFields.age_breastfeeding != 0 && errorsChildsFields.age_breastfeeding != null">
             {{ errorsChildsFields.age_breastfeeding[0] }}
         </div>

@@ -12,9 +12,34 @@
         <q-tooltip>Buscar</q-tooltip>
       </q-btn>
     </div>
+    <div class="bottom"></div>
     <div v-show="idChild != null">
-       <read-only-child-component ref="readonlyChildComponent">
-        </read-only-child-component>
+      <q-alert color="tertiary">
+        Información del menor
+      </q-alert>
+      <div class="bottom"></div>
+      <read-only-child-component ref="readonlyChildComponent">
+      </read-only-child-component>
+      <div class="bottom"></div>
+      <q-alert color="tertiary">
+        Registro control
+      </q-alert>
+      <br>
+      <div class="row xl-gutter">
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-input float-label="Altura (cm)" v-model="controlFields.height" placeholder="Ingrese la altura (cm)" maxlength="5"/>
+          <div class="lbl-error" v-if="errorsControlFields.height != 0 && errorsControlFields.height != null">
+              {{ errorsControlFields.height[0] }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12 padding">
+          <q-input float-label="Peso (kg)" v-model="controlFields.weight" placeholder="Ingrese el peso (kg)" maxlength="5"/>
+          <div class="lbl-error" v-if="errorsControlFields.weight != 0 && errorsControlFields.weight != null">
+              {{ errorsControlFields.weight[0] }}
+          </div>
+        </div>
+        <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
+      </div>
     </div>
   </q-page>
 </template>
@@ -32,6 +57,14 @@ export default {
       idChild: null,
       errors: {
         document: null
+      },
+      controlFields: {
+        height: null,
+        weight: null
+      },
+      errorsControlFields: {
+        height: null,
+        weight: null
       }
     }
   },
@@ -89,6 +122,20 @@ export default {
         this.idChild = null
         error = null
         this.$root.alertNotify('negative', 'No se encontró registro para el documento ingresado', 'red', '', 'top', 3000)
+      })
+    },
+    registerControl () {
+      this.$axios.post('/childs-detail/', this.controlFields).then(response => {
+        this.controlFields.height = null
+        this.controlFields.weight = null
+        this.$root.alertNotify('positive', 'Registro ingresado correctamente', 'green', '', 'top')
+      }).catch(error => {
+        if (error.response !== undefined) {
+          if (error.response.data.error) {
+            this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 6000)
+          }
+          this.errorsControlFields = error.response.data
+        }
       })
     }
   },
