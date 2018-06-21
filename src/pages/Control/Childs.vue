@@ -13,7 +13,7 @@
       </q-btn>
     </div>
     <div class="bottom"></div>
-    <div v-show="idChild != null">
+    <div v-show="controlFields.child != null">
       <q-alert color="tertiary">
         Información del menor
       </q-alert>
@@ -54,11 +54,11 @@ export default {
   data () {
     return {
       document: null,
-      idChild: null,
       errors: {
         document: null
       },
       controlFields: {
+        child: null,
         height: null,
         weight: null
       },
@@ -94,7 +94,7 @@ export default {
       }
       if (this.document === null || this.document === '') {
         this.errors.document = ['Este campo no puede ser nulo.']
-        this.idChild = null
+        this.controlFields.child = null
         return
       }
       let parameters = {
@@ -107,19 +107,18 @@ export default {
       }).then(response => {
         this.errors.document = null
         if (response.data.length > 0) {
-          console.log(response.data)
           this.$refs['readonlyChildComponent'].setValue(response.data)
-          this.idChild = response.data[0].id
+          this.controlFields.child = response.data[0].id
         } else {
           this.errors.document = null
           this.document = null
-          this.idChild = null
+          this.controlFieldsidChild.child = null
           this.$root.alertNotify('negative', 'No se encontró registro para el documento ingresado', 'red', '', 'top', 3000)
         }
       }).catch(error => {
         this.errors.document = null
         this.document = null
-        this.idChild = null
+        this.controlFields.child = null
         error = null
         this.$root.alertNotify('negative', 'No se encontró registro para el documento ingresado', 'red', '', 'top', 3000)
       })
