@@ -39,6 +39,7 @@
             {{ errorsChildsFields.height_born[0] }}
         </div>
       </div>
+      <br><br><br>
       <div class="col-lg-4 col-xs-12 padding">
         <q-input readonly float-label="Peso al nacer (kg)" v-model="childsfields.weight_born" placeholder="Ingrese el peso al nacer (kg)" maxlength="5"/>
         <div class="lbl-error" v-if="errorsChildsFields.weight_born != 0 && errorsChildsFields.weight_born != null">
@@ -56,6 +57,10 @@
         <div class="lbl-error" v-if="errorsChildsFields.age_breastfeeding != 0 && errorsChildsFields.age_breastfeeding != null">
             {{ errorsChildsFields.age_breastfeeding[0] }}
         </div>
+      </div>
+      <div class="padding text-left">
+        <q-btn icon="fas fa-chart-line" color="deep-orange" label="Ver gráfica">
+        </q-btn>
       </div>
     </div>
     <br>

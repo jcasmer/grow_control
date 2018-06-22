@@ -20,9 +20,8 @@
       <div class="bottom"></div>
       <read-only-child-component ref="readonlyChildComponent">
       </read-only-child-component>
-      <div class="bottom"></div>
       <q-alert color="tertiary">
-        Registro control
+        Registrar control
       </q-alert>
       <br>
       <div class="row xl-gutter">
@@ -38,7 +37,9 @@
               {{ errorsControlFields.weight[0] }}
           </div>
         </div>
-        <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
+        <div class="padding text-left">
+          <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
+        </div>
       </div>
     </div>
   </q-page>
