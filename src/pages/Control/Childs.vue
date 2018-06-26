@@ -26,13 +26,13 @@
       <br>
       <div class="row xl-gutter">
         <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Altura (cm)" v-model="controlFields.height" placeholder="Ingrese la altura (cm)" maxlength="5"/>
+          <q-input float-label="Altura (cm)" v-model="controlFields.height" placeholder="Ingrese la altura (cm)" maxlength="10"/>
           <div class="lbl-error" v-if="errorsControlFields.height != 0 && errorsControlFields.height != null">
               {{ errorsControlFields.height[0] }}
           </div>
         </div>
         <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Peso (kg)" v-model="controlFields.weight" placeholder="Ingrese el peso (kg)" maxlength="5"/>
+          <q-input float-label="Peso (kg)" v-model="controlFields.weight" placeholder="Ingrese el peso (kg)" maxlength="10"/>
           <div class="lbl-error" v-if="errorsControlFields.weight != 0 && errorsControlFields.weight != null">
               {{ errorsControlFields.weight[0] }}
           </div>
@@ -42,15 +42,20 @@
         </div>
       </div>
     </div>
+    <div class="chart-container">
+      <canvas id="chart"></canvas>
+    </div>
   </q-page>
 </template>
 
 <script>
 import ReadOnlyChildComponent from 'components/People/ReadOnlyChilds.vue'
+import Chart from 'chart.js'
 export default {
   name: 'ControlChild',
   components: {
-    ReadOnlyChildComponent
+    ReadOnlyChildComponent,
+    Chart
   },
   data () {
     return {
@@ -66,7 +71,8 @@ export default {
       errorsControlFields: {
         height: null,
         weight: null
-      }
+      },
+      myChart: null
     }
   },
   methods: {
@@ -128,6 +134,8 @@ export default {
       this.$axios.post('/childs-detail/', this.controlFields).then(response => {
         this.controlFields.height = null
         this.controlFields.weight = null
+        this.errorsControlFields.weight = null
+        this.errorsControlFields.height = null
         this.$root.alertNotify('positive', 'Registro ingresado correctamente', 'green', '', 'top')
       }).catch(error => {
         if (error.response !== undefined) {
@@ -137,10 +145,52 @@ export default {
           this.errorsControlFields = error.response.data
         }
       })
+    },
+    drawChart () {
+      var ctx = document.getElementById('chart')
+      this.myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      })
     }
   },
   created () {
     this.getRelationship()
+  },
+  mounted () {
+    this.drawChart()
   }
 }
 </script>

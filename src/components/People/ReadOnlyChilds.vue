@@ -21,10 +21,9 @@
       </div>
       <br><br><br>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-datetime
+        <q-input
           type="date" float-label="Fecha Nacimiento" readonly
-          v-model="childsfields.date_born" :max="max" placeholder="Ingrese fecha nacimiento"
-          :format24h="false"
+          v-model="childsfields.date_born" placeholder="Ingrese fecha nacimiento"
         />
         <div class="lbl-error" v-if="errorsChildsFields.date_born != 0 && errorsChildsFields.date_born != null">
             {{ errorsChildsFields.date_born[0] }}
