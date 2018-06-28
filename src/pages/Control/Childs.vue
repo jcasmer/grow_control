@@ -24,8 +24,8 @@
         <q-btn icon="fas fa-chart-line" color="deep-orange" label="Ver gráfica" @click="drawGraph">
         </q-btn>
       </div>
-      <br>
       <div v-show="!showGraph">
+        <br>
         <q-alert color="tertiary">
           Registrar control
         </q-alert>
@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-    <div v-show="showGraph">
+    <div v-if="showGraph">
       <div class="padding text-left">
         <q-btn color="secondary" label="Ir a registrar control" @click="addControl">
         </q-btn>
@@ -58,16 +58,20 @@
       <q-alert color="tertiary">
           Gráficas
       </q-alert>
+      <child-chart-component ref="chartChild" v-bind:idChild="this.controlFields.child">
+      </child-chart-component>
     </div>
   </q-page>
 </template>
 
 <script>
 import ReadOnlyChildComponent from 'components/People/ReadOnlyChilds.vue'
+import ChildChartComponent from 'components/Chart/Child.vue'
 export default {
   name: 'ControlChild',
   components: {
-    ReadOnlyChildComponent
+    ReadOnlyChildComponent,
+    ChildChartComponent
   },
   data () {
     return {
