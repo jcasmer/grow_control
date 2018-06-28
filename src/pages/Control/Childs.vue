@@ -20,36 +20,58 @@
       <div class="bottom"></div>
       <read-only-child-component ref="readonlyChildComponent">
       </read-only-child-component>
-      <div class="bottom"></div>
-      <q-alert color="tertiary">
-        Registro control
-      </q-alert>
-      <br>
-      <div class="row xl-gutter">
-        <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Altura (cm)" v-model="controlFields.height" placeholder="Ingrese la altura (cm)" maxlength="5"/>
-          <div class="lbl-error" v-if="errorsControlFields.height != 0 && errorsControlFields.height != null">
-              {{ errorsControlFields.height[0] }}
-          </div>
-        </div>
-        <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Peso (kg)" v-model="controlFields.weight" placeholder="Ingrese el peso (kg)" maxlength="5"/>
-          <div class="lbl-error" v-if="errorsControlFields.weight != 0 && errorsControlFields.weight != null">
-              {{ errorsControlFields.weight[0] }}
-          </div>
-        </div>
-        <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
+      <div v-show="!showGraph" class="padding text-left">
+        <q-btn icon="fas fa-chart-line" color="deep-orange" label="Ver gráfica" @click="drawGraph">
+        </q-btn>
       </div>
+      <div v-show="!showGraph">
+        <br>
+        <q-alert color="tertiary">
+          Registrar control
+        </q-alert>
+        <br>
+        <div class="row xl-gutter">
+          <div class="col-lg-4 col-xs-12 padding">
+            <q-input float-label="Altura (cm)" v-model="controlFields.height" placeholder="Ingrese la altura (cm)" maxlength="10"/>
+            <div class="lbl-error" v-if="errorsControlFields.height != 0 && errorsControlFields.height != null">
+                {{ errorsControlFields.height[0] }}
+            </div>
+          </div>
+          <div class="col-lg-4 col-xs-12 padding">
+            <q-input float-label="Peso (kg)" v-model="controlFields.weight" placeholder="Ingrese el peso (kg)" maxlength="10"/>
+            <div class="lbl-error" v-if="errorsControlFields.weight != 0 && errorsControlFields.weight != null">
+                {{ errorsControlFields.weight[0] }}
+            </div>
+          </div>
+          <div class="padding text-left">
+            <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="showGraph">
+      <div class="padding text-left">
+        <q-btn color="secondary" label="Ir a registrar control" @click="addControl">
+        </q-btn>
+      </div>
+      <br>
+      <q-alert color="tertiary">
+          Gráficas
+      </q-alert>
+      <child-chart-component ref="chartChild" v-bind:idChild="this.controlFields.child">
+      </child-chart-component>
     </div>
   </q-page>
 </template>
 
 <script>
 import ReadOnlyChildComponent from 'components/People/ReadOnlyChilds.vue'
+import ChildChartComponent from 'components/Chart/Child.vue'
 export default {
   name: 'ControlChild',
   components: {
-    ReadOnlyChildComponent
+    ReadOnlyChildComponent,
+    ChildChartComponent
   },
   data () {
     return {
@@ -65,7 +87,8 @@ export default {
       errorsControlFields: {
         height: null,
         weight: null
-      }
+      },
+      showGraph: false
     }
   },
   methods: {
@@ -127,6 +150,8 @@ export default {
       this.$axios.post('/childs-detail/', this.controlFields).then(response => {
         this.controlFields.height = null
         this.controlFields.weight = null
+        this.errorsControlFields.weight = null
+        this.errorsControlFields.height = null
         this.$root.alertNotify('positive', 'Registro ingresado correctamente', 'green', '', 'top')
       }).catch(error => {
         if (error.response !== undefined) {
@@ -136,6 +161,12 @@ export default {
           this.errorsControlFields = error.response.data
         }
       })
+    },
+    drawGraph () {
+      this.showGraph = true
+    },
+    addControl () {
+      this.showGraph = false
     }
   },
   created () {

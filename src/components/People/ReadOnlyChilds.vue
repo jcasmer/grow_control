@@ -14,17 +14,15 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-select readonly v-model="childsfields.gender" :options="selectGenderOptions" separator float-label="Género"/>
+        <q-input readonly v-model="childsfields.gender" separator float-label="Género"/>
         <div class="lbl-error" v-if="errorsChildsFields.gender != 0 && errorsChildsFields.gender != null">
             {{ errorsChildsFields.gender[0] }}
         </div>
       </div>
       <br><br><br>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-datetime
-          type="date" float-label="Fecha Nacimiento" readonly
-          v-model="childsfields.date_born" :max="max" placeholder="Ingrese fecha nacimiento"
-          :format24h="false"
+        <q-input float-label="Fecha Nacimiento" readonly
+          v-model="childsfields.date_born" placeholder="Ingrese fecha nacimiento"
         />
         <div class="lbl-error" v-if="errorsChildsFields.date_born != 0 && errorsChildsFields.date_born != null">
             {{ errorsChildsFields.date_born[0] }}
@@ -39,6 +37,7 @@
             {{ errorsChildsFields.height_born[0] }}
         </div>
       </div>
+      <br><br><br>
       <div class="col-lg-4 col-xs-12 padding">
         <q-input readonly float-label="Peso al nacer (kg)" v-model="childsfields.weight_born" placeholder="Ingrese el peso al nacer (kg)" maxlength="5"/>
         <div class="lbl-error" v-if="errorsChildsFields.weight_born != 0 && errorsChildsFields.weight_born != null">
@@ -87,8 +86,7 @@ export default {
         weight_born: null,
         child_live: null,
         age_breastfeeding: null
-      },
-      selectRelationshipOptions: []
+      }
     }
   },
   methods: {
