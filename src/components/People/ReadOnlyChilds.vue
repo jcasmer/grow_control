@@ -57,10 +57,6 @@
             {{ errorsChildsFields.age_breastfeeding[0] }}
         </div>
       </div>
-      <div class="padding text-left">
-        <q-btn icon="fas fa-chart-line" color="deep-orange" label="Ver gráfica">
-        </q-btn>
-      </div>
     </div>
     <br>
   </div>

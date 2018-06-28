@@ -20,42 +20,54 @@
       <div class="bottom"></div>
       <read-only-child-component ref="readonlyChildComponent">
       </read-only-child-component>
-      <q-alert color="tertiary">
-        Registrar control
-      </q-alert>
+      <div v-show="!showGraph" class="padding text-left">
+        <q-btn icon="fas fa-chart-line" color="deep-orange" label="Ver gráfica" @click="drawGraph">
+        </q-btn>
+      </div>
       <br>
-      <div class="row xl-gutter">
-        <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Altura (cm)" v-model="controlFields.height" placeholder="Ingrese la altura (cm)" maxlength="10"/>
-          <div class="lbl-error" v-if="errorsControlFields.height != 0 && errorsControlFields.height != null">
-              {{ errorsControlFields.height[0] }}
+      <div v-show="!showGraph">
+        <q-alert color="tertiary">
+          Registrar control
+        </q-alert>
+        <br>
+        <div class="row xl-gutter">
+          <div class="col-lg-4 col-xs-12 padding">
+            <q-input float-label="Altura (cm)" v-model="controlFields.height" placeholder="Ingrese la altura (cm)" maxlength="10"/>
+            <div class="lbl-error" v-if="errorsControlFields.height != 0 && errorsControlFields.height != null">
+                {{ errorsControlFields.height[0] }}
+            </div>
           </div>
-        </div>
-        <div class="col-lg-4 col-xs-12 padding">
-          <q-input float-label="Peso (kg)" v-model="controlFields.weight" placeholder="Ingrese el peso (kg)" maxlength="10"/>
-          <div class="lbl-error" v-if="errorsControlFields.weight != 0 && errorsControlFields.weight != null">
-              {{ errorsControlFields.weight[0] }}
+          <div class="col-lg-4 col-xs-12 padding">
+            <q-input float-label="Peso (kg)" v-model="controlFields.weight" placeholder="Ingrese el peso (kg)" maxlength="10"/>
+            <div class="lbl-error" v-if="errorsControlFields.weight != 0 && errorsControlFields.weight != null">
+                {{ errorsControlFields.weight[0] }}
+            </div>
           </div>
-        </div>
-        <div class="padding text-left">
-          <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
+          <div class="padding text-left">
+            <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
+          </div>
         </div>
       </div>
     </div>
-    <div class="chart-container">
-      <canvas id="chart"></canvas>
+    <div v-show="showGraph">
+      <div class="padding text-left">
+        <q-btn color="secondary" label="Ir a registrar control" @click="addControl">
+        </q-btn>
+      </div>
+      <br>
+      <q-alert color="tertiary">
+          Gráficas
+      </q-alert>
     </div>
   </q-page>
 </template>
 
 <script>
 import ReadOnlyChildComponent from 'components/People/ReadOnlyChilds.vue'
-import Chart from 'chart.js'
 export default {
   name: 'ControlChild',
   components: {
-    ReadOnlyChildComponent,
-    Chart
+    ReadOnlyChildComponent
   },
   data () {
     return {
@@ -72,7 +84,7 @@ export default {
         height: null,
         weight: null
       },
-      myChart: null
+      showGraph: false
     }
   },
   methods: {
@@ -146,51 +158,15 @@ export default {
         }
       })
     },
-    drawChart () {
-      var ctx = document.getElementById('chart')
-      this.myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }]
-          }
-        }
-      })
+    drawGraph () {
+      this.showGraph = true
+    },
+    addControl () {
+      this.showGraph = false
     }
   },
   created () {
     this.getRelationship()
-  },
-  mounted () {
-    this.drawChart()
   }
 }
 </script>
