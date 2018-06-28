@@ -9,7 +9,7 @@
         </div>
       </div>
       <q-btn round color="secondary" size="md" @click="searchChart">
-        <q-icon name="fas fa-chart-area" />
+        <q-icon name="fas fa-search" />
         <q-tooltip>Consultar</q-tooltip>
       </q-btn>
     </div>
@@ -65,8 +65,15 @@ export default {
     },
     searchChart () {
       if (this.chartType === null) {
-        this.errors.chartType = ''
+        this.errors.chartType = ['Este campo no puede ser nulo.']
+        return
       }
+      let parameters = {
+        document: this.document,
+        nopaginate: 'nopaginate',
+        is_active: 1
+      }
+      console.log(parameters)
     }
   },
   mounted () {
