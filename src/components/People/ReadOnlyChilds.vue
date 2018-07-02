@@ -64,9 +64,12 @@
 <script>
 export default {
   name: 'ReadOnlyChildComponent',
+  props:
+  {
+    age: null
+  },
   data () {
     return {
-      age: null,
       childsfields: {
         document: null,
         name: null,
