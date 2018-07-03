@@ -13,9 +13,10 @@
         <q-tooltip>Consultar</q-tooltip>
       </q-btn>
     </div>
-    <div class="chart-container">
-      <canvas id="chart"></canvas>
+    <div class="chart-container chart" style="position: relative; height:40vh; width:80vw">
+      <canvas id="chart" ></canvas>
     </div>
+    <br><br>
   </div>
 </template>
 
@@ -58,9 +59,48 @@ export default {
     }
   },
   methods: {
-    drawChart () {
+    drawChart (label, datas) {
       var ctx = document.getElementById('chart')
       this.myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: label,
+          datasets: [{
+            label: 'Peso',
+            data: datas,
+            color: ['red'],
+            borderColor: 'blue',
+            fill: false
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              },
+              stacked: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Peso en kg',
+                fontSize: 16,
+                fontFamily: 'Arial',
+                fontStyle: 'normal',
+                fontColor: 'black'
+              }
+            }],
+            xAxes: [{
+              stacked: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'No. Semanas',
+                fontSize: 16,
+                fontFamily: 'Arial',
+                fontColor: 'black'
+              }
+            }]
+          }
+        }
       })
     },
     searchChart () {
@@ -69,18 +109,29 @@ export default {
         return
       }
       let parameters = {
-        document: this.document,
-        nopaginate: 'nopaginate',
+        idChild: this.idChild,
+        chartType: this.chartType,
         is_active: 1
       }
-      console.log(parameters)
+      this.$axios.get('/chart-child/', {
+        params: parameters
+      }).then(response => {
+        this.drawChart(response.data.label, response.data.data)
+      }).catch(error => {
+        if (error.response.data.error) {
+          this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 3000)
+        } else {
+          this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', '', 'top')
+        }
+      })
     }
-  },
-  mounted () {
-    this.drawChart()
   }
+  // mounted () {
+  //   this.drawChart()
+  // }
 }
 </script>
 
-<style>
+<style scoped>
+/* .chart  */
 </style>

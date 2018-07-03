@@ -18,7 +18,7 @@
         Información del menor
       </q-alert>
       <div class="bottom"></div>
-      <read-only-child-component ref="readonlyChildComponent">
+      <read-only-child-component ref="readonlyChildComponent" v-bind:age="age">
       </read-only-child-component>
       <div v-show="!showGraph" class="padding text-left">
         <q-btn icon="fas fa-chart-line" color="deep-orange" label="Ver gráfica" @click="drawGraph">
@@ -76,6 +76,7 @@ export default {
   data () {
     return {
       document: null,
+      age: null,
       errors: {
         document: null
       },
@@ -131,6 +132,7 @@ export default {
         this.errors.document = null
         if (response.data.length > 0) {
           this.$refs['readonlyChildComponent'].setValue(response.data)
+          this.age = response.data[0].age
           this.controlFields.child = response.data[0].id
         } else {
           this.errors.document = null
