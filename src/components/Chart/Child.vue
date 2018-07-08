@@ -13,10 +13,15 @@
         <q-tooltip>Consultar</q-tooltip>
       </q-btn>
     </div>
+    <div class="row xl-gutter">
+      <q-btn  color="secondary" size="md">
+        Ver Recomendaciones
+      </q-btn>
+    </div>
     <div class="chart-container chart" style="position: relative; height:40vh; width:80vw">
       <canvas id="chart" ></canvas>
-    </div>
     <br><br>
+    </div>
   </div>
 </template>
 
@@ -60,13 +65,21 @@ export default {
   },
   methods: {
     drawChart (label, datas) {
+      let typeLabelChart = ''
+      if (this.chartType === 1) {
+        typeLabelChart = 'Peso en kg'
+      } else if (this.chartType === 2) {
+        typeLabelChart = 'Altura en cms'
+      } else if (this.chartType === 3) {
+        typeLabelChart = 'Peso en kg'
+      }
       var ctx = document.getElementById('chart')
       this.myChart = new Chart(ctx, {
         type: 'line',
         data: {
           labels: label,
           datasets: [{
-            label: 'Peso',
+            label: '',
             data: datas,
             color: ['red'],
             borderColor: 'blue',
@@ -82,7 +95,7 @@ export default {
               stacked: true,
               scaleLabel: {
                 display: true,
-                labelString: 'Peso en kg',
+                labelString: typeLabelChart,
                 fontSize: 16,
                 fontFamily: 'Arial',
                 fontStyle: 'normal',
@@ -93,7 +106,7 @@ export default {
               stacked: true,
               scaleLabel: {
                 display: true,
-                labelString: 'No. Semanas',
+                labelString: 'No. semanas apartir del nacimiento',
                 fontSize: 16,
                 fontFamily: 'Arial',
                 fontColor: 'black'

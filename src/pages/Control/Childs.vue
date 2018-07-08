@@ -47,6 +47,12 @@
             <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
           </div>
         </div>
+        <br>
+        <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"
+          v-bind:editUrl="editUrlTable" v-bind:visibleColumns="visibleColumns" v-bind:filterFields="filterFields"
+          v-bind:urlDelete="urlDelete"
+        >
+        </grid-table>
       </div>
     </div>
     <div v-if="showGraph">
@@ -66,12 +72,14 @@
 
 <script>
 import ReadOnlyChildComponent from 'components/People/ReadOnlyChilds.vue'
+import GridTable from 'components/Grid/table.vue'
 import ChildChartComponent from 'components/Chart/Child.vue'
 export default {
   name: 'ControlChild',
   components: {
     ReadOnlyChildComponent,
-    ChildChartComponent
+    ChildChartComponent,
+    GridTable
   },
   data () {
     return {
@@ -89,7 +97,28 @@ export default {
         height: null,
         weight: null
       },
-      showGraph: false
+      showGraph: false,
+      columns: [
+        { name: 'id', label: '#', field: 'id', sortable: true },
+        { name: 'weight', label: 'Peso', field: 'weight', sortable: true },
+        { name: 'height', label: 'Altura', field: 'height', sortable: true },
+        { name: 'created_at', label: 'Fecha del control', field: 'created_at', sortable: true },
+        { name: 'created_by', label: 'Creado Por', field: 'created_by', sortable: true },
+        { name: 'updated_at', label: 'Fecha Modificación', field: 'updated_at', sortable: true },
+        { name: 'updated_by', label: 'Modificado Por', field: 'updated_by', sortable: true }
+      ],
+      visibleColumns: ['weight', 'height', 'created_at', 'created_by', 'updated_at', 'updated_by'],
+      filterFields: {
+        'name__icontains': '',
+        'created_by__username__icontains': '',
+        'created_at': '',
+        'updated_at': '',
+        'updated_by__username__icontains': ''
+      },
+      nameTable: 'Controles Realizados',
+      urlTable: '/childs-detail-full-data/',
+      urlDelete: '/childs-detail/',
+      editUrlTable: 'diagnostic/'
     }
   },
   methods: {
@@ -154,7 +183,8 @@ export default {
         this.controlFields.weight = null
         this.errorsControlFields.weight = null
         this.errorsControlFields.height = null
-        this.$root.alertNotify('positive', 'Registro ingresado correctamente', 'green', '', 'top')
+        this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
+        this.$root.alertNotify('positive', 'Control ingresado correctamente', 'green', '', 'top')
       }).catch(error => {
         if (error.response !== undefined) {
           if (error.response.data.error) {
