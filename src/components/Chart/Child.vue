@@ -3,7 +3,7 @@
     <br>
     <div class="row xl-gutter">
       <div class="col-lg-4 col-xs-12 padding">
-        <q-select v-model="chartType" :options="selectChartTypeOptions" separator float-label="Tipo de gráfica"/>
+        <q-select v-model="chartType" :options="selectChartTypeOptions" separator float-label="Tipo de gráfica" @input="showChart"/>
         <div class="lbl-error" v-if="errors.chartType != 0 && errors.chartType != null">
             {{ errors.chartType[0] }}
         </div>
@@ -13,12 +13,13 @@
         <q-tooltip>Consultar</q-tooltip>
       </q-btn>
     </div>
-    <div class="row xl-gutter">
+    <br>
+    <div class="row xl-gutter" v-show="suggestions">
       <q-btn  color="secondary" size="md">
         Ver Recomendaciones
       </q-btn>
     </div>
-    <div class="chart-container chart" style="position: relative; height:40vh; width:80vw">
+    <div class="chart-container chart" style="position: relative; height:40vh; width:80vw" v-show="suggestions">
       <canvas id="chart" ></canvas>
     <br><br>
     </div>
@@ -40,6 +41,7 @@ export default {
     return {
       myChart: null,
       chartType: null,
+      suggestions: false,
       errors: {
         chartType: null
       },
@@ -66,12 +68,16 @@ export default {
   methods: {
     drawChart (label, datas) {
       let typeLabelChart = ''
+      let labelChart = ''
       if (this.chartType === 1) {
         typeLabelChart = 'Peso en kg'
+        labelChart = 'Peso'
       } else if (this.chartType === 2) {
         typeLabelChart = 'Altura en cms'
+        labelChart = 'Altura'
       } else if (this.chartType === 3) {
-        typeLabelChart = 'Peso en kg'
+        labelChart = 'IMC'
+        typeLabelChart = 'IMC en kg'
       }
       var ctx = document.getElementById('chart')
       this.myChart = new Chart(ctx, {
@@ -79,7 +85,7 @@ export default {
         data: {
           labels: label,
           datasets: [{
-            label: '',
+            label: labelChart,
             data: datas,
             color: ['red'],
             borderColor: 'blue',
@@ -130,6 +136,7 @@ export default {
         params: parameters
       }).then(response => {
         this.drawChart(response.data.label, response.data.data)
+        this.suggestions = true
       }).catch(error => {
         if (error.response.data.error) {
           this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 3000)
@@ -137,6 +144,11 @@ export default {
           this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', '', 'top')
         }
       })
+    },
+    showChart () {
+      if (this.chartType === null) {
+        this.suggestions = false
+      }
     }
   }
   // mounted () {

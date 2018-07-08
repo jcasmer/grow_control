@@ -203,6 +203,14 @@ export default {
   },
   created () {
     this.getRelationship()
+  },
+  mounted () {
+    if (this.$route.params.document !== null && typeof this.$route.params.document !== 'undefined') {
+      this.document = this.$route.params.document
+      this.searchChild()
+    } else {
+      this.document = null
+    }
   }
 }
 </script>

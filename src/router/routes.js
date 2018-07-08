@@ -66,7 +66,8 @@ export default [
     path: '/controlchilds',
     component: () => import('layouts/default'),
     children: [
-      { path: '/controlchilds', name: 'controlchilds', component: () => import('pages/Control/Childs') }
+      { path: '/controlchilds', name: 'controlchilds', component: () => import('pages/Control/Childs') },
+      { path: '/controlchilds/:document', name: 'controlchilds', component: () => import('pages/Control/Childs') }
     ]
   },
   { // Always leave this as last one
