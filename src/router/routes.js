@@ -66,7 +66,9 @@ export default [
     path: '/controlchilds',
     component: () => import('layouts/default'),
     children: [
-      { path: '/controlchilds', name: 'controlchilds', component: () => import('pages/Control/Childs') }
+      { path: '/controlchilds', name: 'controlchilds', component: () => import('pages/Control/Childs') },
+      { path: '/controlchilds/:document', name: 'controlchilds', component: () => import('pages/Control/Childs') },
+      { path: '/controlchilds/editcontrol/:id', name: 'editcontrol', component: () => import('pages/Control/EditControl') }
     ]
   },
   { // Always leave this as last one
