@@ -15,7 +15,7 @@
     </q-item>
     <q-item  :to="{ name: 'controlchilds' }">
       <q-item-side icon="fas fa-calendar-check" />
-      <q-item-main label="Control del Menor" sublabel="" />
+      <q-item-main label="Control Menor" sublabel="" />
     </q-item>
   </q-list>
 </template>

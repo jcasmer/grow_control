@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
 import ReadOnlyChildComponent from 'components/People/ReadOnlyChilds.vue'
 import GridTable from 'components/Grid/table.vue'
 import ChildChartComponent from 'components/Chart/Child.vue'
@@ -118,7 +119,7 @@ export default {
       nameTable: 'Controles Realizados',
       urlTable: '/childs-detail-full-data/',
       urlDelete: '/childs-detail/',
-      editUrlTable: 'diagnostic/'
+      editUrlTable: 'editcontrol/'
     }
   },
   methods: {
@@ -148,6 +149,7 @@ export default {
       if (this.document === null || this.document === '') {
         this.errors.document = ['Este campo no puede ser nulo.']
         this.controlFields.child = null
+        LocalStorage.remove('document')
         return
       }
       let parameters = {
@@ -163,6 +165,7 @@ export default {
           this.$refs['readonlyChildComponent'].setValue(response.data)
           this.age = response.data[0].age
           this.controlFields.child = response.data[0].id
+          LocalStorage.set('document', this.document)
         } else {
           this.errors.document = null
           this.document = null
