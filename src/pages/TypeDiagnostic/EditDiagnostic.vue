@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
 export default {
   name: 'EditDiagnostic',
   data () {
@@ -89,6 +90,10 @@ export default {
     }
   },
   created: function () {
+    if (String(LocalStorage.get.item('groups')).toLowerCase() !== 'administrador') {
+      this.$router.push({path: '/controlchilds'})
+      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+    }
     this.getData('/type-diagnostic/')
   }
 }

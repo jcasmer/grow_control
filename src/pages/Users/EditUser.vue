@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
 export default {
   name: 'EditUsers',
   data () {
@@ -182,6 +183,10 @@ export default {
     }
   },
   created () {
+    if (String(LocalStorage.get.item('groups')).toLowerCase() !== 'administrador') {
+      this.$router.push({path: '/controlchilds'})
+      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+    }
     this.getGroups()
     this.getData('/user-full-data/')
   }

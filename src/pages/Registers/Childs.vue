@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
 import ChildsComponent from 'components/People/Childs.vue'
 import ChildsParentsComponent from 'components/People/ChildsParents.vue'
 import EditChildComponent from 'components/People/EditChild.vue'
@@ -74,6 +75,13 @@ export default {
           this.$refs['childsComponent'].errorsChildsFields = error.response.data
         }
       })
+    }
+  },
+  created () {
+    let group = String(LocalStorage.get.item('groups')).toLowerCase()
+    if (group !== 'administrador' && group !== 'registro información') {
+      this.$router.push({path: '/controlchilds'})
+      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
     }
   }
 }

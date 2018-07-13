@@ -75,6 +75,11 @@ export default {
     }
   },
   created: function () {
+    let group = String(LocalStorage.get.item('groups')).toLowerCase()
+    if (group !== 'administrador' && group !== 'registro información') {
+      this.$router.push({path: '/controlchilds'})
+      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+    }
     this.getData('/childs-detail/')
     this.goBack = '/controlchilds/' + LocalStorage.get.item('document')
   }

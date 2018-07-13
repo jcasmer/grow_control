@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
 export default {
   name: 'EditAdvice',
   data () {
@@ -117,6 +118,10 @@ export default {
     }
   },
   created: function () {
+    if (String(LocalStorage.get.item('groups')).toLowerCase() !== 'administrador') {
+      this.$router.push({path: '/controlchilds'})
+      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+    }
     this.getTypeDiagnostic()
     this.getData('/advices/')
   }

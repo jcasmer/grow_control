@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
 import GridTable from 'components/Grid/table.vue'
 export default {
   name: 'Users',
@@ -178,6 +179,10 @@ export default {
     }
   },
   created () {
+    if (String(LocalStorage.get.item('groups')).toLowerCase() !== 'administrador') {
+      this.$router.push({path: '/controlchilds'})
+      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+    }
     this.getGroups()
   }
 }
