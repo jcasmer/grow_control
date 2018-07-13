@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
 import GridTable from 'components/Grid/table.vue'
 export default {
   name: 'Diagnostic',
@@ -109,6 +110,12 @@ export default {
           this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: this.$refs.table.filter })
         }
       })
+    }
+  },
+  created () {
+    if (String(LocalStorage.get.item('groups')).toLowerCase() !== 'administrador') {
+      this.$router.push({path: '/controlchilds'})
+      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
     }
   }
 }

@@ -54,15 +54,6 @@ export default {
         'username': this.credentials.username,
         'password': this.credentials.password
       }).then(response => {
-        // if (response.data['is_superuser'] === false) {
-        //   this.$router.push({path: '/login'})
-        //   this.$root.alertNotify('negative', 'Acceso denegado', 'red', 'thumb_down', 'top')
-        //   for (var i in this.credentials) {
-        //     this.credentials[i] = ''
-        //     this.errors = []
-        //   }
-        //   callback()
-        // }
         LocalStorage.set('username', this.credentials.username)
         LocalStorage.set('full_name', response.data['full_name'])
         LocalStorage.set('token', response.data['token'])

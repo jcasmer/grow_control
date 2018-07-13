@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { LocalStorage } from 'quasar'
 import ParentsComponent from 'components/People/Parents.vue'
 export default {
   name: 'Parents',
@@ -165,6 +166,13 @@ export default {
         })
       }).catch(() => {
       })
+    }
+  },
+  created () {
+    let group = String(LocalStorage.get.item('groups')).toLowerCase()
+    if (group !== 'administrador' && group !== 'registro información') {
+      this.$router.push({path: '/controlchilds'})
+      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
     }
   }
 }

@@ -117,7 +117,7 @@ export default {
         'updated_by__username__icontains': ''
       },
       nameTable: 'Controles Realizados',
-      urlTable: '/childs-detail-full-data/',
+      urlTable: '',
       urlDelete: '/childs-detail/',
       editUrlTable: 'editcontrol/'
     }
@@ -166,6 +166,12 @@ export default {
           this.age = response.data[0].age
           this.controlFields.child = response.data[0].id
           LocalStorage.set('document', this.document)
+          this.urlTable = '/childs-detail-full-data/'
+          let filter = {
+            child__document: this.document
+          }
+          this.$refs.table.url = this.urlTable
+          this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: filter })
         } else {
           this.errors.document = null
           this.document = null
@@ -199,12 +205,18 @@ export default {
     },
     drawGraph () {
       this.showGraph = true
+      this.errorsControlFields = []
     },
     addControl () {
       this.showGraph = false
     }
   },
   created () {
+    let group = String(LocalStorage.get.item('groups')).toLowerCase()
+    if (group !== 'administrador' && group !== 'registro información') {
+      this.$router.push({path: '/controlchilds'})
+      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+    }
     this.getRelationship()
   },
   mounted () {
