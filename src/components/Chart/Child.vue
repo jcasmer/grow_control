@@ -22,6 +22,9 @@
     <div class="chart-container chart" style="position: relative; height:40vh; width:80vw" v-show="suggestions">
       <canvas id="chart" ></canvas>
     </div>
+    <div class="chart-container chart" style="position: relative; height:40vh; width:80vw" v-show="suggestions">
+      <canvas id="omsChart" ></canvas>
+    </div>
     <br><br>
   </div>
 </template>
@@ -69,7 +72,7 @@ export default {
     drawOmsChart (omsData) {
       // ss
     },
-    drawChart (label, datas, idChart, oms) {
+    drawChart (label, datas, idChart) {
       let typeLabelChart = ''
       let labelChart = ''
       if (this.chartType === 1) {
@@ -84,31 +87,18 @@ export default {
       }
       var ctx = document.getElementById(idChart)
       this.myChart = new Chart(ctx, {
-        type: 'scatter',
+        type: 'line',
         data: {
-          datasets: [
-            {
-              label: labelChart + ' del menor',
-              data: datas,
-              color: ['blue'],
-              borderColor: 'blue',
-              showLine: true,
-              fill: false,
-              labels: label
-            },
-            {
-              label: labelChart + ' según la OMS',
-              data: oms.data,
-              color: ['red'],
-              borderColor: 'red',
-              showLine: true,
-              fill: false,
-              labels: oms.label
-            }
-          ]
+          labels: label,
+          datasets: [{
+            label: labelChart,
+            data: datas,
+            color: ['red'],
+            borderColor: 'blue',
+            fill: false
+          }]
         },
         options: {
-          responsive: true,
           scales: {
             yAxes: [{
               ticks: {
@@ -151,8 +141,8 @@ export default {
       this.$axios.get('/chart-child/', {
         params: parameters
       }).then(response => {
-        this.drawChart(response.data.label, response.data.data, 'chart', response.data.oms)
-        // this.drawChart(response.data.oms.label, response.data.oms.data, 'omsChart')
+        this.drawChart(response.data.label, response.data.data, 'chart')
+        this.drawChart(response.data.oms.label, response.data.oms.data, 'omsChart')
         this.suggestions = true
       }).catch(error => {
         if (error.response.data.error) {
