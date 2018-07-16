@@ -21,8 +21,11 @@
     </div>
     <div class="chart-container chart" style="position: relative; height:40vh; width:80vw" v-show="suggestions">
       <canvas id="chart" ></canvas>
-    <br><br>
     </div>
+    <div class="chart-container chart" style="position: relative; height:40vh; width:80vw" v-show="suggestions">
+      <canvas id="omsChart" ></canvas>
+    </div>
+    <br><br>
   </div>
 </template>
 
@@ -66,7 +69,10 @@ export default {
     }
   },
   methods: {
-    drawChart (label, datas) {
+    drawOmsChart (omsData) {
+      // ss
+    },
+    drawChart (label, datas, idChart) {
       let typeLabelChart = ''
       let labelChart = ''
       if (this.chartType === 1) {
@@ -79,7 +85,7 @@ export default {
         labelChart = 'IMC'
         typeLabelChart = 'IMC en kg'
       }
-      var ctx = document.getElementById('chart')
+      var ctx = document.getElementById(idChart)
       this.myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -135,7 +141,8 @@ export default {
       this.$axios.get('/chart-child/', {
         params: parameters
       }).then(response => {
-        this.drawChart(response.data.label, response.data.data)
+        this.drawChart(response.data.label, response.data.data, 'chart')
+        this.drawChart(response.data.oms.label, response.data.oms.data, 'omsChart')
         this.suggestions = true
       }).catch(error => {
         if (error.response.data.error) {
