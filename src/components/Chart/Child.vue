@@ -15,15 +15,28 @@
     </div>
     <br>
     <div class="row xl-gutter" v-show="suggestions">
-      <q-btn  color="secondary" size="md">
+      <div class="col-lg-3 col-xs-6 padding">
+        <q-input readonly v-model="status" float-label="Estado del menor">
+        </q-input>
+      </div>
+      <q-btn  color="secondary">
         Ver Recomendaciones
       </q-btn>
     </div>
-    <div class="chart-container chart" style="position: relative; height:40vh; width:80vw" v-show="suggestions">
-      <canvas id="chart" ></canvas>
-    </div>
-    <div class="chart-container chart" style="position: relative; height:40vh; width:80vw" v-show="suggestions">
-      <canvas id="omsChart" ></canvas>
+    <br>
+    <div class="row xl-gutter">
+      <div class="col-lg-6 col-xs-12 padding">
+        <h5 v-show="suggestions">Gráfica del menor:</h5>
+        <div class="chart-container chart" style="position: relative; height:40vh; width:40vw" v-show="suggestions">
+          <canvas id="chart" ></canvas>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xs-12 padding">
+        <h5 v-show="suggestions">Gráfica OMS:</h5>
+        <div class="chart-container chart" style="position: relative; height:40vh; width:40vw" v-show="suggestions">
+          <canvas id="omsChart" ></canvas>
+        </div>
+      </div>
     </div>
     <br><br>
   </div>
@@ -65,7 +78,8 @@ export default {
           label: 'Masa Corporal',
           value: 3
         }
-      ]
+      ],
+      status: ''
     }
   },
   methods: {
@@ -144,6 +158,7 @@ export default {
         this.drawChart(response.data.label, response.data.data, 'chart')
         this.drawChart(response.data.oms.label, response.data.oms.data, 'omsChart')
         this.suggestions = true
+        this.status = response.data.status
       }).catch(error => {
         if (error.response.data.error) {
           this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 3000)

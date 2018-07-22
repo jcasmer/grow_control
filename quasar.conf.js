@@ -23,7 +23,7 @@ module.exports = function (ctx) {
           API: JSON.stringify('http://192.168.1.62:8005/api/')
         }
         : { // and on build (production):
-          API: JSON.stringify('http://growcontrolbackend.jcasmer.co/api/')
+          API: JSON.stringify('http://jcasmer.pythonanywhere.com/api/')
         },
       scopeHoisting: true,
       vueRouterMode: 'history',
