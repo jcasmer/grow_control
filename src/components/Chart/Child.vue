@@ -24,39 +24,47 @@
         <q-tooltip>Ver Recomendaciones</q-tooltip>
       </q-btn>
     </div>
-    <br>
+    <hr>
     <div class="row xl-gutter">
-      <div class="col-lg-6 col-xs-12 padding">
+      <div class="col-lg-6 col-xs-12">
         <h5 v-show="suggestions">Gráfica del menor:</h5>
-        <div class="chart-container chart" style="position: relative; height:40vh; width:40vw" v-show="suggestions">
+        <div class="chart-container chart" style="position: relative; height:50vh; width:42vw" v-show="suggestions">
           <canvas id="chart" ></canvas>
         </div>
       </div>
-      <div class="col-lg-6 col-xs-12 padding">
+      <div class="col-lg-6 col-xs-12">
         <h5 v-show="suggestions">Gráfica OMS:</h5>
-        <div class="chart-container chart" style="position: relative; height:40vh; width:40vw" v-show="suggestions">
+        <div class="chart-container chart" style="position: relative; height:50vh; width:42vw" v-show="suggestions">
           <canvas id="omsChart" ></canvas>
         </div>
       </div>
     </div>
     <br>
-    <q-modal v-model="opened" :content-css="{padding: '50px', minWidth: '50vw'}" position="top" no-backdrop-dismiss
+    <q-modal v-model="opened" :content-css="{padding: '0px', minWidth: '50vw'}" no-backdrop-dismiss
       no-esc-dismiss
     >
-      <q-list highlight>
-        <q-list-header>Recomendaciones</q-list-header>
-        <q-item v-for="item in advices" :key="item.id">
-          {{item.description}}
-        </q-item>
-      </q-list>
-      <br>
-      <div class="padding text-left">
-        <q-btn
-          color="primary"
-          @click="opened = false"
-          label="Cerrar"
-        />
-      </div>
+      <q-modal-layout>
+        <q-toolbar slot="header">
+          <q-toolbar-title>
+            Recomendaciones para el estado: {{status}}
+          </q-toolbar-title>
+        </q-toolbar>
+        <q-list highlight>
+          <q-list-header><hr></q-list-header>
+          <q-item v-for="item in advices" :key="item.id">
+            {{item.description}}
+          </q-item>
+        </q-list>
+        <br>
+        <div class="padding text-left">
+          <q-btn
+            color="primary"
+            @click="opened = false"
+            label="Cerrar"
+          />
+        </div>
+        <br>
+      </q-modal-layout>
     </q-modal>
   </div>
 </template>
