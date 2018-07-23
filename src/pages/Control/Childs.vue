@@ -57,7 +57,7 @@
     </div>
     <div v-if="showGraph">
       <div class="padding text-left">
-        <q-btn color="secondary" label="Ir a registrar control" @click="addControl">
+        <q-btn color="secondary" label="Ir a registrar control" @click="addControl" v-show="showRegisterControl">
         </q-btn>
       </div>
       <br>
@@ -84,6 +84,7 @@ export default {
   },
   data () {
     return {
+      showRegisterControl: true,
       document: null,
       age: null,
       errors: {
@@ -213,9 +214,12 @@ export default {
   },
   created () {
     let group = String(LocalStorage.get.item('groups')).toLowerCase()
-    if (group !== 'administrador' && group !== 'registro información') {
-      this.$router.push({path: '/controlchilds'})
-      // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+    if (group !== 'administrador' && group !== 'registro información' && group !== 'consulta') {
+      this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+      this.$router.push({path: '/login'})
+    } else if (group === 'consulta') {
+      this.showGraph = true
+      this.showRegisterControl = false
     }
     this.getRelationship()
   },
