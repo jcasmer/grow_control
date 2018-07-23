@@ -24,7 +24,7 @@
         <q-tooltip>Ver Recomendaciones</q-tooltip>
       </q-btn>
     </div>
-    <hr>
+    <hr v-show="suggestions">
     <div class="row xl-gutter">
       <div class="col-lg-6 col-xs-12">
         <h5 v-show="suggestions">Gráfica del menor:</h5>
