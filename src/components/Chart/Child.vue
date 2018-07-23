@@ -16,11 +16,12 @@
     <br>
     <div class="row xl-gutter" v-show="suggestions">
       <div class="col-lg-3 col-xs-6 padding">
-        <q-input readonly v-model="status" float-label="Estado del menor">
+        <q-input inverted color="deep-orange" readonly v-model="status" float-label="Estado del menor">
         </q-input>
       </div>
-      <q-btn  color="secondary">
-        Ver Recomendaciones
+      <q-btn round color="primary" size="md" @click="searchSuggestions">
+        <q-icon name="fas fa-medkit" />
+        <q-tooltip>Ver Recomendaciones</q-tooltip>
       </q-btn>
     </div>
     <br>
@@ -38,7 +39,25 @@
         </div>
       </div>
     </div>
-    <br><br>
+    <br>
+    <q-modal v-model="opened" :content-css="{padding: '50px', minWidth: '50vw'}" position="top" no-backdrop-dismiss
+      no-esc-dismiss
+    >
+      <q-list highlight>
+        <q-list-header>Recomendaciones</q-list-header>
+        <q-item v-for="item in advices" :key="item.id">
+          {{item.description}}
+        </q-item>
+      </q-list>
+      <br>
+      <div class="padding text-left">
+        <q-btn
+          color="primary"
+          @click="opened = false"
+          label="Cerrar"
+        />
+      </div>
+    </q-modal>
   </div>
 </template>
 
@@ -79,13 +98,12 @@ export default {
           value: 3
         }
       ],
-      status: ''
+      status: '',
+      opened: false,
+      advices: []
     }
   },
   methods: {
-    drawOmsChart (omsData) {
-      // ss
-    },
     drawChart (label, datas, idChart) {
       let typeLabelChart = ''
       let labelChart = ''
@@ -171,14 +189,29 @@ export default {
       if (this.chartType === null) {
         this.suggestions = false
       }
+    },
+    searchSuggestions () {
+      let parameters = {
+        status: this.status
+      }
+      this.$axios.get('/suggestions/', {
+        params: parameters
+      }).then(response => {
+        this.suggestions = true
+        this.advices = response.data.advices
+        this.opened = true
+      }).catch(error => {
+        this.opened = false
+        if (error.response.data.error) {
+          this.$root.alertNotify('negative', error.response.data.error, 'red', '', 'top', 3000)
+        } else {
+          this.$root.alertNotify('negative', 'Se han presentado errores.', 'red', '', 'top')
+        }
+      })
     }
   }
-  // mounted () {
-  //   this.drawChart()
-  // }
 }
 </script>
 
 <style scoped>
-/* .chart  */
 </style>

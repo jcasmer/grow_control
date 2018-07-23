@@ -85,11 +85,13 @@ module.exports = function (ctx) {
         'QTooltip',
         'QRouteTab',
         'QRadio',
-        'QOptionGroup'
+        'QOptionGroup',
+        'QModal'
       ],
       directives: [
         'Ripple',
-        'GoBack'
+        'GoBack',
+        'CloseOverlay'
       ],
       // Quasar plugins
       plugins: [
