@@ -25,17 +25,21 @@
       </q-btn>
     </div>
     <hr v-show="suggestions">
-    <div class="row xl-gutter">
-      <div class="col-lg-6 col-xs-12">
+    <div class="row">
+      <div class="col-lg-6 col-xs-6 chartWrapper padding">
         <h5 v-show="suggestions">Gráfica del menor:</h5>
-        <div class="chart-container chart" style="position: relative; height:50vh; width:42vw" v-show="suggestions">
-          <canvas id="chart" ></canvas>
+        <div class="chartAreaWrapper">
+          <div class="chart-container chart" style="position: relative; height:100%; width:40vw" v-show="suggestions">
+            <canvas id="chart" ></canvas>
+          </div>
         </div>
       </div>
-      <div class="col-lg-6 col-xs-12">
+      <div class="col-lg-6 col-xs-6 chartWrapper padding">
         <h5 v-show="suggestions">Gráfica OMS:</h5>
-        <div class="chart-container chart" style="position: relative; height:50vh; width:42vw" v-show="suggestions">
-          <canvas id="omsChart" ></canvas>
+        <div class="chartAreaWrapper">
+          <div class="chart-container chart" style="position: relative; height:100%; width:40vw" v-show="suggestions">
+            <canvas id="omsChart" ></canvas>
+          </div>
         </div>
       </div>
     </div>
@@ -115,15 +119,18 @@ export default {
     drawChart (label, datas, idChart) {
       let typeLabelChart = ''
       let labelChart = ''
+      let textString = 'No. semanas apartir del nacimiento'
       if (this.chartType === 1) {
         typeLabelChart = 'Peso en kg'
         labelChart = 'Peso'
       } else if (this.chartType === 2) {
         typeLabelChart = 'Altura en cms'
         labelChart = 'Altura'
+        textString = 'No. meses apartir del nacimiento'
       } else if (this.chartType === 3) {
         labelChart = 'IMC'
-        typeLabelChart = 'IMC en kg'
+        typeLabelChart = 'IMC'
+        textString = 'No. meses apartir del nacimiento'
       }
       var ctx = document.getElementById(idChart)
       this.myChart = new Chart(ctx, {
@@ -158,7 +165,7 @@ export default {
               stacked: true,
               scaleLabel: {
                 display: true,
-                labelString: 'No. semanas apartir del nacimiento',
+                labelString: textString,
                 fontSize: 16,
                 fontFamily: 'Arial',
                 fontColor: 'black'
@@ -222,4 +229,19 @@ export default {
 </script>
 
 <style scoped>
+.chartWrapper {
+    position: relative;
+}
+
+.chartWrapper > canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events:none;
+}
+
+.chartAreaWrapper {
+    width: 800px;
+    overflow-x: scroll;
+}
 </style>
