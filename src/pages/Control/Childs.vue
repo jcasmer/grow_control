@@ -2,7 +2,7 @@
   <q-page padding>
     <div class="row xl-gutter">
       <div class="col-lg-4 col-xs-6 padding">
-        <q-input float-label="Documento" v-model="document" placeholder="Ingrese el documento" maxlength="20"/>
+        <q-input float-label="Documento del menor" v-model="document" placeholder="Ingrese el documento del menor" maxlength="20"/>
         <div class="lbl-error" v-if="errors.document != 0 && errors.document != null">
             {{ errors.document[0] }}
         </div>

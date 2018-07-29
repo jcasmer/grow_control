@@ -26,20 +26,18 @@
     </div>
     <hr v-show="suggestions">
     <div class="row">
-      <div class="row chartWrapper">
+      <div class="col-lg-6 col-xs-6 chartWrapper padding">
         <h5 v-show="suggestions">Gráfica del menor:</h5>
-        <br><br>
         <div class="chartAreaWrapper">
-          <div class="chart-container chart" style="position: relative; height:100%; width:60vw" v-show="suggestions">
+          <div class="chart-container chart" style="position: relative; height:100%; width:40vw" v-show="suggestions">
             <canvas id="chart" ></canvas>
           </div>
         </div>
       </div>
-      <div class="row chartWrapper">
+      <div class="col-lg-6 col-xs-6 chartWrapper padding">
         <h5 v-show="suggestions">Gráfica OMS:</h5>
-        <br><br>
         <div class="chartAreaWrapper">
-          <div class="chart-container chart" style="position: relative; height:100%; width:60vw" v-show="suggestions">
+          <div class="chart-container chart" style="position: relative; height:100%; width:40vw" v-show="suggestions">
             <canvas id="omsChart" ></canvas>
           </div>
         </div>
@@ -128,6 +126,7 @@ export default {
       } else if (this.chartType === 2) {
         typeLabelChart = 'Altura en cms'
         labelChart = 'Altura'
+        textString = 'No. meses apartir del nacimiento'
       } else if (this.chartType === 3) {
         labelChart = 'IMC'
         typeLabelChart = 'IMC'
