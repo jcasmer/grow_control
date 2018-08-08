@@ -24,13 +24,8 @@ export default {
       })
     },
     validateSesion: function () {
-      // if (LocalStorage.get.item('is_superuser') === false || LocalStorage.get.item('is_superuser') === 'undefined' || LocalStorage.get.item('is_superuser') === null) {
-      //   this.$router.push({path: '/login'})
-      //   this.$root.alertNotify('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
-      // }
       if (LocalStorage.get.item('groups') === undefined || LocalStorage.get.item('groups') === null) {
         this.$router.push({path: '/login'})
-        this.$root.alertNotify('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
       }
     },
     removeStorage () {
