@@ -1,75 +1,77 @@
 <template>
   <q-page padding>
-    <div class="title">
-      <h4>Control del menor</h4>
-    </div>
     <div class="container">
-      <div class="row xl-gutter">
-        <div class="col-lg-4 col-xs-6 padding">
-          <q-input float-label="Documento del menor" v-model="document" placeholder="Ingrese el documento del menor" maxlength="20"/>
-          <div class="lbl-error" v-if="errors.document != 0 && errors.document != null">
-              {{ errors.document[0] }}
-          </div>
-        </div>
-        <q-btn round color="secondary" size="md" @click="searchChild">
-          <q-icon name="fas fa-search" />
-          <q-tooltip>Buscar</q-tooltip>
-        </q-btn>
+      <div class="title">
+        <h4>Control del menor</h4>
       </div>
-      <div class="bottom"></div>
-      <div v-show="controlFields.child != null">
-        <q-alert color="tertiary">
-          Información del menor
-        </q-alert>
-        <div class="bottom"></div>
-        <read-only-child-component ref="readonlyChildComponent" v-bind:age="age">
-        </read-only-child-component>
-        <div v-show="!showGraph" class="padding text-left">
-          <q-btn icon="fas fa-chart-line" color="deep-orange" label="Ver gráfica" @click="drawGraph">
+      <div class="container">
+        <div class="row xl-gutter">
+          <div class="col-lg-4 col-xs-6 padding">
+            <q-input float-label="Documento del menor" v-model="document" placeholder="Ingrese el documento del menor" maxlength="20"/>
+            <div class="lbl-error" v-if="errors.document != 0 && errors.document != null">
+                {{ errors.document[0] }}
+            </div>
+          </div>
+          <q-btn round color="secondary" size="md" @click="searchChild">
+            <q-icon name="fas fa-search" />
+            <q-tooltip>Buscar</q-tooltip>
           </q-btn>
         </div>
-        <div v-show="!showGraph">
+        <div class="bottom"></div>
+        <div v-show="controlFields.child != null">
+          <q-alert color="tertiary">
+            Información del menor
+          </q-alert>
+          <div class="bottom"></div>
+          <read-only-child-component ref="readonlyChildComponent" v-bind:age="age">
+          </read-only-child-component>
+          <div v-show="!showGraph" class="padding text-left">
+            <q-btn icon="fas fa-chart-line" color="deep-orange" label="Ver gráfica" @click="drawGraph">
+            </q-btn>
+          </div>
+          <div v-show="!showGraph">
+            <br>
+            <q-alert color="tertiary">
+              Registrar control
+            </q-alert>
+            <br>
+            <div class="row xl-gutter">
+              <div class="col-lg-4 col-xs-12 padding">
+                <q-input float-label="Altura (cm)" v-model="controlFields.height" placeholder="Ingrese la altura (cm)" maxlength="10"/>
+                <div class="lbl-error" v-if="errorsControlFields.height != 0 && errorsControlFields.height != null">
+                    {{ errorsControlFields.height[0] }}
+                </div>
+              </div>
+              <div class="col-lg-4 col-xs-12 padding">
+                <q-input float-label="Peso (kg)" v-model="controlFields.weight" placeholder="Ingrese el peso (kg)" maxlength="10"/>
+                <div class="lbl-error" v-if="errorsControlFields.weight != 0 && errorsControlFields.weight != null">
+                    {{ errorsControlFields.weight[0] }}
+                </div>
+              </div>
+              <div class="padding text-left">
+                <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
+              </div>
+            </div>
+            <br>
+            <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"
+              v-bind:editUrl="editUrlTable" v-bind:visibleColumns="visibleColumns" v-bind:filterFields="filterFields"
+              v-bind:urlDelete="urlDelete"
+            >
+            </grid-table>
+          </div>
+        </div>
+        <div v-if="showGraph">
+          <div class="padding text-left">
+            <q-btn color="secondary" label="Ir a registrar control" @click="addControl" v-show="showRegisterControl">
+            </q-btn>
+          </div>
           <br>
           <q-alert color="tertiary">
-            Registrar control
+              Gráficas
           </q-alert>
-          <br>
-          <div class="row xl-gutter">
-            <div class="col-lg-4 col-xs-12 padding">
-              <q-input float-label="Altura (cm)" v-model="controlFields.height" placeholder="Ingrese la altura (cm)" maxlength="10"/>
-              <div class="lbl-error" v-if="errorsControlFields.height != 0 && errorsControlFields.height != null">
-                  {{ errorsControlFields.height[0] }}
-              </div>
-            </div>
-            <div class="col-lg-4 col-xs-12 padding">
-              <q-input float-label="Peso (kg)" v-model="controlFields.weight" placeholder="Ingrese el peso (kg)" maxlength="10"/>
-              <div class="lbl-error" v-if="errorsControlFields.weight != 0 && errorsControlFields.weight != null">
-                  {{ errorsControlFields.weight[0] }}
-              </div>
-            </div>
-            <div class="padding text-left">
-              <q-btn color="primary" @click="registerControl">Guardar Control<span slot="loading">Procesando...</span></q-btn>
-            </div>
-          </div>
-          <br>
-          <grid-table ref="table" v-bind:columns="columns" v-bind:nameTable="nameTable" v-bind:urlParent="urlTable"
-            v-bind:editUrl="editUrlTable" v-bind:visibleColumns="visibleColumns" v-bind:filterFields="filterFields"
-            v-bind:urlDelete="urlDelete"
-          >
-          </grid-table>
+          <child-chart-component ref="chartChild" v-bind:idChild="this.controlFields.child">
+          </child-chart-component>
         </div>
-      </div>
-      <div v-if="showGraph">
-        <div class="padding text-left">
-          <q-btn color="secondary" label="Ir a registrar control" @click="addControl" v-show="showRegisterControl">
-          </q-btn>
-        </div>
-        <br>
-        <q-alert color="tertiary">
-            Gráficas
-        </q-alert>
-        <child-chart-component ref="chartChild" v-bind:idChild="this.controlFields.child">
-        </child-chart-component>
       </div>
     </div>
   </q-page>
@@ -253,8 +255,8 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   top:-45px;
-  /* height: 250px; */
-  padding: 5% 50px;
+  height: 150px;
+  padding: 5% 40px;
 }
 h4, h2, h5, h6{
   line-height: 0;

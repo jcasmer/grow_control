@@ -164,7 +164,7 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   top:-45px;
-  /* height: 250px; */
+  height: 200px;
   padding: 5% 50px;
 }
 h4, h2, h5, h6{
