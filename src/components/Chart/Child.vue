@@ -116,7 +116,7 @@ export default {
     }
   },
   methods: {
-    drawChart (label, datas, idChart) {
+    drawChart (label, datas, idChart, oms) {
       let typeLabelChart = ''
       let labelChart = ''
       let textString = 'No. semanas apartir del nacimiento'
@@ -132,6 +132,10 @@ export default {
         typeLabelChart = 'IMC'
         textString = 'No. meses apartir del nacimiento'
       }
+      let color = 'blue'
+      if (oms) {
+        color = 'red'
+      }
       var ctx = document.getElementById(idChart)
       this.myChart = new Chart(ctx, {
         type: 'line',
@@ -141,7 +145,7 @@ export default {
             label: labelChart,
             data: datas,
             color: ['red'],
-            borderColor: 'blue',
+            borderColor: color,
             fill: false
           }]
         },
@@ -188,8 +192,8 @@ export default {
       this.$axios.get('/chart-child/', {
         params: parameters
       }).then(response => {
-        this.drawChart(response.data.label, response.data.data, 'chart')
-        this.drawChart(response.data.oms.label, response.data.oms.data, 'omsChart')
+        this.drawChart(response.data.label, response.data.data, 'chart', false)
+        this.drawChart(response.data.oms.label, response.data.oms.data, 'omsChart', true)
         this.suggestions = true
         this.status = response.data.status
       }).catch(error => {

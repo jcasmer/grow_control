@@ -113,7 +113,11 @@ export default {
     }
   },
   created () {
-    if (String(LocalStorage.get.item('groups')).toLowerCase() !== 'administrador') {
+    let group = LocalStorage.get.item('groups')
+    if (typeof group === 'undefined' || group === null) {
+      this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+      this.$router.push({path: '/login'})
+    } else if (String(LocalStorage.get.item('groups')).toLowerCase() !== 'administrador') {
       this.$router.push({path: '/controlchilds'})
       // this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
     }

@@ -1,5 +1,8 @@
 <template>
   <q-page padding>
+    <div class="title">
+      <h4>Control del menor</h4>
+    </div>
     <div class="row xl-gutter">
       <div class="col-lg-4 col-xs-6 padding">
         <q-input float-label="Documento del menor" v-model="document" placeholder="Ingrese el documento del menor" maxlength="20"/>
@@ -213,7 +216,13 @@ export default {
     }
   },
   created () {
-    let group = String(LocalStorage.get.item('groups')).toLowerCase()
+    let group = LocalStorage.get.item('groups')
+    if (typeof group === 'undefined' || group === null) {
+      this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
+      this.$router.push({path: '/login'})
+    } else {
+      group = String(LocalStorage.get.item('groups')).toLowerCase()
+    }
     if (group !== 'administrador' && group !== 'registro información' && group !== 'consulta') {
       this.$root.alert('negative', 'Debe iniciar sesión', 'red', 'thumb_down', 'top')
       this.$router.push({path: '/login'})

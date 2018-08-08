@@ -15,8 +15,7 @@
           <q-icon name="menu" />
         </q-btn>
 
-        <q-toolbar-title>
-          Crecimiento y Desarrollo
+        <q-toolbar-title>Crecimiento y Desarrollo
           <div slot="subtitle"></div>
         </q-toolbar-title>
       </q-toolbar>

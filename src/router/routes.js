@@ -15,14 +15,14 @@ export default [
     ]
   },
   // Administrator
-  {
-    path: '/diagnostic',
-    component: () => import('layouts/default'),
-    children: [
-      { path: '/diagnostic', name: 'diagnostic', component: () => import('pages/TypeDiagnostic/Diagnostic') },
-      { path: '/diagnostic/:id', component: () => import('pages/TypeDiagnostic/EditDiagnostic') }
-    ]
-  },
+  // {
+  //   path: '/diagnostic',
+  //   component: () => import('layouts/default'),
+  //   children: [
+  //     { path: '/diagnostic', name: 'diagnostic', component: () => import('pages/TypeDiagnostic/Diagnostic') },
+  //     { path: '/diagnostic/:id', component: () => import('pages/TypeDiagnostic/EditDiagnostic') }
+  //   ]
+  // },
   {
     path: '/advice',
     component: () => import('layouts/default'),
