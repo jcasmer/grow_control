@@ -1,9 +1,11 @@
 <template>
-  <q-page class="background-page">
+  <q-page>
+    <!-- <div class="bg-star">
+    </div> -->
     <div class="bg-home"></div>
     <div class="title">
       <div class="container-form">
-        <q-card color="grey-1">
+        <q-card color="grey-2">
         <q-card-title>
           <h4>Bienvenido</h4>
         <small>Ingresa tus datos</small>
@@ -67,7 +69,7 @@ export default {
         this.$axios.defaults.headers.common['Authorization'] = 'JWT ' + LocalStorage.get.item('token')
         this.credentials.username = ''
         this.credentials.password = ''
-        this.$router.push({path: '/diagnostic'})
+        this.$router.push({path: '/advice'})
       }).catch(error => {
         this.errors = []
         if (error.response !== undefined) {
@@ -124,8 +126,8 @@ export default {
     width: 400px;
     margin: auto;
     padding: 20px;
-    box-shadow: 0 0 10px white;
-    border-radius: 5px;
+    /* box-shadow: 0 0 10px grey; */
+    /* border-radius: 5px; */
   }
   .bg-star{
     position: fixed;
@@ -134,8 +136,8 @@ export default {
     background: linear-gradient(-90deg, #1f4399, #22c0f0);
     text-align: center;
     z-index: -10;
-    animation-name: fade-star;
-    animation-duration: 2s;
+    /* animation-name: fade-star;
+    animation-duration: 2s; */
     top: 0;
     left: 0;
   }
@@ -144,17 +146,17 @@ export default {
     50%   {opacity: 0; opacity: 1; z-index: 10}
     100% {opacity: 1; opacity: 0; z-index: 10}
 }
-  .Logo-co{
+  /* .Logo-co{
     position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    /* background-image: url(~assets/Logoco-brand.png); */
+    background-image: url(~assets/42.png);
     background-size: 500px;
     background-position: center;
     background-repeat: no-repeat;
-  }
+  } */
   h4{
     line-height: 0px !important;
   }
@@ -207,15 +209,6 @@ export default {
     0%   {opacity: 0}
     50%   {opacity: 0; margin-top: 150px;}
     100% {opacity: 1; margin-top: 5%;}
-  }
-  .emtelco{
-    position: fixed;
-    bottom: 20px;
-    right: 20px;;
-    width: 150px;
-  }
-  .Logo-co{
-    background-size: 90%;
   }
   small {
     position: relative;
