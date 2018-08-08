@@ -2,7 +2,8 @@
   <q-page padding>
     <div class="container">
       <div class="title">
-        <h4>Administrador de parentescos</h4>
+        <h4>Administrador de</h4>
+        <h2>parentescos</h2>
       </div>
       <div class="container">
         <div class="row xl-gutter" id="form-diagnostic">
@@ -146,6 +147,10 @@ h4, h2, h5, h6{
 }
 h4{
   color: #1f4399;
+  font-weight: 600;
+}
+h2{
+  color: #ff5722;
   font-weight: 600;
 }
 .container{
