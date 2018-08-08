@@ -2,7 +2,8 @@
   <q-page padding>
     <div class="container">
       <div class="title">
-        <h4>Editar parentesco</h4>
+        <h4>Editar</h4>
+        <h2>parentesco</h2>
       </div>
       <div class="container">
         <div class="row xl-gutter" id="form-diagnostic">
@@ -124,6 +125,10 @@ h4, h2, h5, h6{
 }
 h4{
   color: #1f4399;
+  font-weight: 600;
+}
+h2{
+  color: #ff5722;
   font-weight: 600;
 }
 .container{

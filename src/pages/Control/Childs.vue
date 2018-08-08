@@ -265,6 +265,10 @@ h4{
   color: #1f4399;
   font-weight: 600;
 }
+h2{
+  color: #ff5722;
+  font-weight: 600;
+}
 .container{
   width: 95%;
   margin: auto;
