@@ -66,10 +66,10 @@
             </q-btn>
           </div>
           <br>
-          <q-alert color="tertiary">
+          <q-alert color="tertiary" v-show="controlFields.child != null">
               Gráficas
           </q-alert>
-          <child-chart-component ref="chartChild" v-bind:idChild="this.controlFields.child">
+          <child-chart-component ref="chartChild" v-bind:idChild="this.controlFields.child" v-show="controlFields.child != null">
           </child-chart-component>
         </div>
       </div>
