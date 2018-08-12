@@ -29,7 +29,7 @@
       @mouseover="leftDrawerOpen = true"
       @mouseout="leftDrawerOpen = false"
     >
-      <list-masters></list-masters>
+      <list-masters v-show="admin"></list-masters>
       <hr>
       <list-application></list-application>
       <hr>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { openURL } from 'quasar'
+import { openURL, LocalStorage } from 'quasar'
 import ListMasters from 'components/Menu/Masters.vue'
 import ListApplication from 'components/Menu/Application.vue'
 
@@ -57,7 +57,8 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
-      overlay: true
+      overlay: true,
+      admin: false
     }
   },
   components: {
@@ -69,6 +70,12 @@ export default {
   },
   created () {
     this.$root.validateSesion()
+    let group = LocalStorage.get.item('groups')
+    if (typeof group !== 'undefined' && group !== null) {
+      if (String(group).toLowerCase() === 'administrador') {
+        this.admin = true
+      }
+    }
   }
 }
 </script>
