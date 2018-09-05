@@ -10,11 +10,11 @@
       <q-item-main label="Diagnósticos" sublabel="" />
     </q-item> -->
     <q-item  :to="{ name: 'advice' }" exact>
-      <q-item-side icon="fas fa-book" />
+      <q-item-side icon="fas fa-notes-medical" />
       <q-item-main label="Recomendaciones" sublabel="por diagnóstico" />
     </q-item>
     <q-item  :to="{ name: 'relationship' }" exact>
-      <q-item-side icon="fas fa-handshake" />
+      <q-item-side icon="fas fa-user-friends" />
       <q-item-main label="Parentescos" sublabel="" />
     </q-item>
     <q-item  :to="{ name: 'user' }" exact>
