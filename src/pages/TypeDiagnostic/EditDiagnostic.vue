@@ -103,7 +103,7 @@ export default {
 
 <style scoped>
 .title{
-  background-image: url(~assets/42.png);
+  background-image: url(~assets/childs.png);
   background-position: right center;
   background-size: auto 150%;
   background-repeat: no-repeat;

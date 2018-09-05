@@ -1,6 +1,6 @@
 {
   "name": "grow_control",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Aplicación para controlar la curva de crecimiento y desarrollo de los niños menores a 5 años, realiza recomendaciones y muestra graficas de crecimiento",
   "productName": "App Curva Crecimiento",
   "cordovaId": "org.cordova.quasar.app",
