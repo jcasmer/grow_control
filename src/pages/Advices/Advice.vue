@@ -79,8 +79,8 @@ export default {
       ],
       columns: [
         { name: 'id', label: '#', field: 'id', sortable: true },
-        { name: 'description', label: 'Recomendación', field: 'description', sortable: true },
         { name: 'type_diagnostic', label: 'Diagnóstico', field: 'type_diagnostic', sortable: true },
+        { name: 'description', label: 'Recomendación', field: 'description', sortable: true },
         { name: 'is_active', label: 'Estado', field: 'is_active_display', sortable: true },
         { name: 'created_at', label: 'Fecha Creación', field: 'created_at', sortable: true },
         { name: 'created_by', label: 'Creado Por', field: 'created_by', sortable: true },
