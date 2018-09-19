@@ -44,7 +44,7 @@
       </div>
     </div>
     <br>
-    <q-modal v-model="opened" :content-css="{padding: '0px', minWidth: '50vw'}" no-backdrop-dismiss
+    <q-modal v-model="opened"  :content-css="{maxWidth: '80vw', minHeight: '50vh'}" no-backdrop-dismiss
       no-esc-dismiss
     >
       <q-modal-layout>
@@ -55,8 +55,9 @@
         </q-toolbar>
         <q-list highlight>
           <q-list-header><hr></q-list-header>
-          <q-item v-for="item in advices" :key="item.id">
-            {{item.description}}
+          <q-item v-for="item in advices" :key="item.id" class="col-lg-6 col-xs-6">
+             <q-item-side left icon="fas fa-circle" />
+             {{item.description}}
           </q-item>
         </q-list>
         <br>
