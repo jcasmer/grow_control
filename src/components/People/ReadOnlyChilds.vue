@@ -32,7 +32,7 @@
         <q-input readonly float-label="Edad (años)" v-model="age" placeholder="Edad"/>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input readonly float-label="Altura al nacer (cm)" v-model="childsfields.height_born" placeholder="Ingrese la altura al nacer (cm)" maxlength="5"/>
+        <q-input readonly float-label="Talla al nacer (cm)" v-model="childsfields.height_born" placeholder="Ingrese la talla al nacer (cm)" maxlength="5"/>
         <div class="lbl-error" v-if="errorsChildsFields.height_born != 0 && errorsChildsFields.height_born != null">
             {{ errorsChildsFields.height_born[0] }}
         </div>
@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="col-lg-4 col-xs-12 padding">
-        <q-input readonly float-label="Edad en que se abandona la lactancia materna" v-model="childsfields.age_breastfeeding" placeholder="Ingrese edad en que se abandona la lactancia materna" maxlength="20"/>
+        <q-input readonly float-label="Edad (meses) en que se abandona la lactancia materna" v-model="childsfields.age_breastfeeding" placeholder="Ingrese edad (meses) en que se abandona la lactancia materna" maxlength="20"/>
         <div class="lbl-error" v-if="errorsChildsFields.age_breastfeeding != 0 && errorsChildsFields.age_breastfeeding != null">
             {{ errorsChildsFields.age_breastfeeding[0] }}
         </div>
