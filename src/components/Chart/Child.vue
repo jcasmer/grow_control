@@ -25,17 +25,9 @@
       </q-btn>
     </div>
     <hr v-show="suggestions">
-    <div class="row">
-      <!-- <div class="col-lg-6 col-xs-6 chartWrapper padding">
-        <h5 v-show="suggestions">Gráfica del menor:</h5>
-        <div class="chartAreaWrapper">
-          <div class="chart-container chart" style="position: relative; height:100%; width:40vw" v-show="suggestions">
-            <canvas id="chart" ></canvas>
-          </div>
-        </div>
-      </div> -->
-      <div class="col-lg-6 col-xs-6 chartWrapper padding">
-        <h5 v-show="suggestions">Gráfica OMS:</h5>
+    <div class="row xl-gutter">
+      <br>
+      <div class="col-lg-12 col-lg-12 chartWrapper padding">
         <div class="chartAreaWrapper">
           <div class="chart-container chart" style="position: relative; height:100%; width:60vw" v-show="suggestions">
             <canvas id="omsChart" ></canvas>
@@ -43,6 +35,7 @@
         </div>
       </div>
     </div>
+    <br>
     <br>
     <q-modal v-model="opened"  :content-css="{maxWidth: '80vw', minHeight: '50vh'}" no-backdrop-dismiss
       no-esc-dismiss
@@ -133,15 +126,10 @@ export default {
         typeLabelChart = 'IMC'
         textString = 'No. meses apartir del nacimiento'
       }
-      // let color = 'blue'
-      // if (oms) {
-      //   color = 'red'
-      // }
       var ctx = document.getElementById(idChart)
       this.myChart = new Chart(ctx, {
         type: 'scatter',
         data: {
-          // labels: label,
           datasets: [{
             label: labelChart + ' del menor',
             data: datas,
@@ -268,7 +256,7 @@ export default {
 }
 
 .chartAreaWrapper {
-    width: 800px;
+    width: 90%;
     overflow-x: scroll;
 }
 </style>
