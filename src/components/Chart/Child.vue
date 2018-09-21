@@ -25,24 +25,17 @@
       </q-btn>
     </div>
     <hr v-show="suggestions">
-    <div class="row">
-      <div class="col-lg-6 col-xs-6 chartWrapper padding">
-        <h5 v-show="suggestions">Gráfica del menor:</h5>
+    <div class="row xl-gutter">
+      <br>
+      <div class="col-lg-12 col-lg-12 chartWrapper padding">
         <div class="chartAreaWrapper">
-          <div class="chart-container chart" style="position: relative; height:100%; width:40vw" v-show="suggestions">
-            <canvas id="chart" ></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-xs-6 chartWrapper padding">
-        <h5 v-show="suggestions">Gráfica OMS:</h5>
-        <div class="chartAreaWrapper">
-          <div class="chart-container chart" style="position: relative; height:100%; width:40vw" v-show="suggestions">
+          <div class="chart-container chart" style="position: relative; height:100%; width:60vw" v-show="suggestions">
             <canvas id="omsChart" ></canvas>
           </div>
         </div>
       </div>
     </div>
+    <br>
     <br>
     <q-modal v-model="opened"  :content-css="{maxWidth: '80vw', minHeight: '50vh'}" no-backdrop-dismiss
       no-esc-dismiss
@@ -133,24 +126,29 @@ export default {
         typeLabelChart = 'IMC'
         textString = 'No. meses apartir del nacimiento'
       }
-      let color = 'blue'
-      if (oms) {
-        color = 'red'
-      }
       var ctx = document.getElementById(idChart)
       this.myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'scatter',
         data: {
-          labels: label,
           datasets: [{
-            label: labelChart,
+            label: labelChart + ' del menor',
             data: datas,
             color: ['red'],
-            borderColor: color,
-            fill: false
+            borderColor: 'red',
+            fill: false,
+            showLine: true
+          },
+          {
+            label: labelChart + ' OMS',
+            data: oms,
+            color: ['blue'],
+            borderColor: 'blue',
+            fill: false,
+            showLine: true
           }]
         },
         options: {
+          responsive: true,
           scales: {
             yAxes: [{
               ticks: {
@@ -193,8 +191,20 @@ export default {
       this.$axios.get('/chart-child/', {
         params: parameters
       }).then(response => {
-        this.drawChart(response.data.label, response.data.data, 'chart', false)
-        this.drawChart(response.data.oms.label, response.data.oms.data, 'omsChart', true)
+        let j = 0
+        let data = []
+        let jsonObj = {}
+        for (j in response.data.data) {
+          jsonObj = {x: response.data.data[j].x, y: response.data.data[j].y}
+          data.push(jsonObj)
+        }
+        let dataOms = []
+        let jsonObjOms = {}
+        for (let i in response.data.oms) {
+          jsonObjOms = {x: response.data.oms[i].x, y: response.data.oms[i].y}
+          dataOms.push(jsonObjOms)
+        }
+        this.drawChart(response.data.label, data, 'omsChart', dataOms)
         this.suggestions = true
         this.status = response.data.status
       }).catch(error => {
@@ -246,7 +256,7 @@ export default {
 }
 
 .chartAreaWrapper {
-    width: 800px;
+    width: 90%;
     overflow-x: scroll;
 }
 </style>
