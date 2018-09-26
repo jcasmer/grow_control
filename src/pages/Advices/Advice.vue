@@ -7,12 +7,15 @@
       </div>
       <div class="container">
         <div class="row xl-gutter" id="form-advice">
-          <div class="col-lg-4 col-xs-12 padding">
-            <q-input float-label="Recomendación" v-model="fields.description" placeholder="Ingrese la recomendación" maxlength="500"/>
+          <div class="col-lg-12 col-xs-12 padding">
+            <q-input type="textarea" float-label="Recomendación" v-model="fields.description" placeholder="Ingrese la recomendación" maxlength="500"/>
             <div class="lbl-error" v-if="errors.description != 0 && errors.description != null">
                 {{ errors.description[0] }}
             </div>
           </div>
+         <div class="bottom"></div>
+         <br>
+         <br>
           <div class="col-lg-4 col-xs-12 padding">
             <q-select v-model="fields.type_diagnostic" :options="selectTypeDiagnosticOptions" separator float-label="Diagnóstico"/>
             <div class="lbl-error" v-if="errors.type_diagnostic != 0 && errors.type_diagnostic != null">

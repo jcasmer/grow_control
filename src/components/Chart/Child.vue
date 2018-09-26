@@ -92,15 +92,15 @@ export default {
           value: null
         },
         {
-          label: 'Peso',
+          label: 'Peso para la edad',
           value: 1
         },
         {
-          label: 'Longitud',
+          label: 'Longitud para la edad',
           value: 2
         },
         {
-          label: 'Masa Corporal',
+          label: 'Masa Corporal para la edad',
           value: 3
         }
       ],
@@ -118,31 +118,36 @@ export default {
         typeLabelChart = 'Peso en kg'
         labelChart = 'Peso'
       } else if (this.chartType === 2) {
-        typeLabelChart = 'Altura en cms'
-        labelChart = 'Altura'
+        typeLabelChart = 'Longitud en cms'
+        labelChart = 'Longitud'
         textString = 'No. meses apartir del nacimiento'
       } else if (this.chartType === 3) {
         labelChart = 'IMC'
         typeLabelChart = 'IMC'
         textString = 'No. meses apartir del nacimiento'
       }
+      // let color = 'blue'
+      // if (oms) {
+      //   color = 'red'
+      // }
       var ctx = document.getElementById(idChart)
       this.myChart = new Chart(ctx, {
         type: 'scatter',
         data: {
+          // labels: label,
           datasets: [{
             label: labelChart + ' del menor',
             data: datas,
-            color: ['red'],
-            borderColor: 'red',
+            color: ['blue'],
+            borderColor: 'blue',
             fill: false,
             showLine: true
           },
           {
             label: labelChart + ' OMS',
             data: oms,
-            color: ['blue'],
-            borderColor: 'blue',
+            color: ['green'],
+            borderColor: 'green',
             fill: false,
             showLine: true
           }]
