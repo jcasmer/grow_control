@@ -174,12 +174,12 @@ export default {
           this.age = response.data[0].age
           this.controlFields.child = response.data[0].id
           LocalStorage.set('document', this.document)
-          this.urlTable = '/childs-detail-full-data/'
-          let filter = {
-            child__document: this.document
+          this.urlTable = '/childs-detail-full-data/?child=' + response.data[0].id
+          let filters = {
+            child: this.controlFields.child
           }
           this.$refs.table.url = this.urlTable
-          this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: filter })
+          this.$refs.table.request({ pagination: this.$refs.table.serverPagination, filter: filters })
         } else {
           this.errors.document = null
           this.document = null
