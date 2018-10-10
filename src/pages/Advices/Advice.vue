@@ -8,7 +8,7 @@
       <div class="container">
         <div class="row xl-gutter" id="form-advice">
           <div class="col-lg-12 col-xs-12 padding">
-            <q-input type="textarea" float-label="Recomendación" v-model="fields.description" placeholder="Ingrese la recomendación" maxlength="500"/>
+            <q-input type="textarea" float-label="Recomendación" v-model="fields.description" placeholder="Ingrese la recomendación" maxlength="1000"/>
             <div class="lbl-error" v-if="errors.description != 0 && errors.description != null">
                 {{ errors.description[0] }}
             </div>

@@ -40,7 +40,7 @@
     <q-modal v-model="opened"  :content-css="{maxWidth: '80vw', minHeight: '50vh'}" no-backdrop-dismiss
       no-esc-dismiss
     >
-      <q-modal-layout>
+      <q-modal-layout class="">
         <q-toolbar slot="header">
           <q-toolbar-title>
             Recomendaciones para el estado: {{status}}
@@ -50,7 +50,7 @@
           <q-list-header><hr></q-list-header>
           <q-item v-for="item in advices" :key="item.id" class="col-lg-6 col-xs-6">
              <q-item-side left icon="fas fa-circle" />
-             {{item.description}}
+             <span class="justify"> {{item.description}}</span>
           </q-item>
         </q-list>
         <br>
@@ -131,6 +131,9 @@ export default {
       //   color = 'red'
       // }
       var ctx = document.getElementById(idChart)
+      if (this.myChart !== null) {
+        this.myChart.destroy()
+      }
       this.myChart = new Chart(ctx, {
         type: 'scatter',
         data: {
