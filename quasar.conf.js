@@ -20,7 +20,7 @@ module.exports = function (ctx) {
     build: {
       env: ctx.dev
         ? { // so on dev we'll have
-          API: JSON.stringify('http://192.168.1.59:8005/api/')
+          API: JSON.stringify('http://192.168.1.65:8005/api/')
         }
         : { // and on build (production):
           API: JSON.stringify('http://jcasmer.pythonanywhere.com/api/')

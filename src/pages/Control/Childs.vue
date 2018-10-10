@@ -186,6 +186,7 @@ export default {
           this.controlFieldsidChild.child = null
           this.$root.alertNotify('negative', 'No se encontró registro para el documento ingresado', 'red', '', 'top', 3000)
         }
+        this.showGraph = false
       }).catch(error => {
         this.errors.document = null
         this.document = null
