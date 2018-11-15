@@ -127,7 +127,7 @@ export default {
       nameTable: 'Controles Realizados',
       urlTable: '',
       urlDelete: '/childs-detail/',
-      editUrlTable: 'controlchilds/editcontrol/'
+      editUrlTable: 'editcontrol/'
     }
   },
   methods: {
