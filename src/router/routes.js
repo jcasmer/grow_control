@@ -68,7 +68,8 @@ export default [
     children: [
       { path: '/controlchilds', name: 'controlchilds', component: () => import('pages/Control/Childs') },
       { path: '/controlchilds/:document', name: 'controlchilds', component: () => import('pages/Control/Childs') },
-      { path: '/controlchilds/editcontrol/:id', name: 'editcontrol', component: () => import('pages/Control/EditControl') }
+      { path: '/controlchilds/editcontrol/:id', name: 'editcontrol', component: () => import('pages/Control/EditControl') },
+      { path: '/editcontrol/:id', name: 'editcontrol', component: () => import('pages/Control/EditControl') }
     ]
   },
   { // Always leave this as last one

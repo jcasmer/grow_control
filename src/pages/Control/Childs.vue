@@ -127,7 +127,7 @@ export default {
       nameTable: 'Controles Realizados',
       urlTable: '',
       urlDelete: '/childs-detail/',
-      editUrlTable: 'controlchilds/editcontrol/'
+      editUrlTable: ''
     }
   },
   methods: {
@@ -236,6 +236,7 @@ export default {
       this.showRegisterControl = false
     }
     this.getRelationship()
+    this.editUrlTable = 'editcontrol/'
   },
   mounted () {
     if (this.$route.params.document !== null && typeof this.$route.params.document !== 'undefined') {
