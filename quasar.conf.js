@@ -2,7 +2,7 @@
 module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
-    plugins: [
+    boot: [
       'i18n',
       'axios'
     ],
@@ -10,11 +10,10 @@ module.exports = function (ctx) {
       'app.styl'
     ],
     extras: [
-      ctx.theme.mat ? 'roboto-font' : true,
       'material-icons',
-      'fontawesome'
-      // 'ionicons',
-      // 'mdi',
+      'fontawesome-v5'
+      // 'ionicons-v4',
+      // 'mdi-v4',
     ],
     supportIE: true,
     build: {
@@ -47,7 +46,7 @@ module.exports = function (ctx) {
     },
     // framework: 'all' --- includes everything; for dev only!
     framework: {
-      i18n: 'es',
+      lang: 'es',
       components: [
         'QCard',
         'QCardTitle',
@@ -102,7 +101,8 @@ module.exports = function (ctx) {
         'Loading'
       ]
     },
-    animations: 'all', //--- includes all animations
+    animations: 'all',
+    // --- includes all animations
     // animations: [
     // ],
     pwa: {
